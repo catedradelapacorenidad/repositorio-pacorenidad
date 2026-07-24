@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Personajes | Cátedra de la Pacoreñidad</title>
+
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/personajes.css?v=1">
+
+ </head>
+
+<body>
+
+  <header class="topbar">
+
+    <div class="brand">
+      <img
+        src="images/logo.png"
+        class="logo"
+        alt="Logo Cátedra de la Pacoreñidad"
+      >
+
+      <div>
+        <p class="eyebrow">Repositorio Digital</p>
+        <h1>Cátedra de la Pacoreñidad</h1>
+      </div>
+    </div>
+
+    <nav class="main-nav">
+      <a href="index.html">Inicio</a>
+      <a href="nuestra-catedra.html">Nuestra Cátedra</a>
+      <a href="historia.html">Historia</a>
+      <a href="patrimonio.html">Patrimonio</a>
+      <a href="personajes.html">Personajes</a>
+      <a href="tradicion-oral.html">Tradición Oral</a>
+      <a href="biblioteca.html">Biblioteca</a>
+      <a href="galeria.html">Galería</a>
+      <a href="mapa.html">Mapa</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+
+  </header>
+
+  <main class="personajes-publicos">
+
+    <section class="encabezado-personajes">
+      <h2>Personajes Pacoreños</h2>
+
+      <p>
+        Conoce la vida y el legado de las mujeres y hombres que han
+        contribuido al desarrollo histórico, cultural, educativo,
+        artístico, religioso y social de Pácora.
+      </p>
+    </section>
+
+    <section class="barra-personajes">
+
+      <input
+        type="search"
+        id="buscar-personaje"
+        placeholder="Buscar por nombre o descripción..."
+      >
+
+      <select id="filtrar-categoria">
+        <option value="todas">Todas las categorías</option>
+      </select>
+
+    </section>
+
+    <div id="estado-personajes">
+      Cargando personajes...
+    </div>
+
+    <section
+      id="lista-personajes-publicos"
+      class="grid-personajes-publicos"
+    ></section>
+
+  </main>
+
+  <div id="modal-personaje" class="modal-personaje">
+
+    <article class="modal-contenido-personaje">
+
+      <button
+        type="button"
+        id="cerrar-modal-personaje"
+        class="cerrar-modal-personaje"
+        aria-label="Cerrar"
+      >
+        ×
+      </button>
+
+      <div id="contenido-modal-personaje"></div>
+
+    </article>
+
+  </div>
+
+  <footer>
+    <p>
+      © 2026 Repositorio Digital de la Cátedra de la Pacoreñidad
+    </p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+
+  <script
+  type="module"
+  src="js/modules/personajes.js?v=2"
+></script>
+
+</body>
+
+</html>

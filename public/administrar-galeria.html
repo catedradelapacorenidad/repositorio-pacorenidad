@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Administrar Galería | Cátedra de la Pacoreñidad</title>
+
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f7f4ec, #eef5ed);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .galeria-admin {
+      width: 90%;
+      max-width: 1050px;
+      margin: 45px auto;
+      background: white;
+      padding: 35px;
+      border-radius: 20px;
+      border-top: 6px solid #c9a227;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, .12);
+    }
+
+    h1,
+    h2 {
+      color: #235437;
+    }
+
+    label {
+      display: block;
+      margin: 18px 0 8px;
+      color: #235437;
+      font-weight: bold;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-size: 16px;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .acciones-formulario {
+      display: flex;
+      gap: 12px;
+      margin-top: 22px;
+      flex-wrap: wrap;
+    }
+
+    button,
+    .volver {
+      padding: 13px 22px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    #subir {
+      background: #235437;
+      color: white;
+    }
+
+    #subir:hover {
+      background: #2f6f4e;
+    }
+
+    .volver {
+      background: #8b5a33;
+      color: white;
+    }
+
+    #mensaje {
+      margin-top: 18px;
+      font-weight: bold;
+    }
+
+    .separador {
+      margin: 45px 0;
+      border: 0;
+      border-top: 1px solid #ddd;
+    }
+
+    #lista-admin-galeria {
+      margin-top: 25px;
+    }
+    .grid-admin-multimedia {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
+}
+
+.tarjeta-admin-multimedia {
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 14px;
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.08);
+}
+
+.vista-previa-multimedia {
+  display: flex;
+  min-height: 190px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #eeeeee;
+}
+
+.vista-previa-multimedia img,
+.vista-previa-multimedia video {
+  display: block;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.vista-previa-multimedia audio {
+  width: calc(100% - 30px);
+  margin: 15px;
+}
+
+.icono-audio {
+  font-size: 55px;
+  text-align: center;
+}
+
+.informacion-multimedia {
+  padding: 18px;
+}
+
+.informacion-multimedia h3 {
+  margin: 0 0 8px;
+  color: #235437;
+}
+
+.informacion-multimedia p {
+  line-height: 1.5;
+}
+
+.categoria-multimedia {
+  display: inline-block;
+  margin: 0 0 10px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background: #eef5ed;
+  color: #235437;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.informacion-multimedia small {
+  display: block;
+  margin-top: 12px;
+  color: #777777;
+  overflow-wrap: anywhere;
+}
+
+.acciones-multimedia {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.boton-abrir,
+.boton-eliminar {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.boton-abrir {
+  background: #235437;
+  color: #ffffff;
+}
+
+.boton-eliminar {
+  background: #b52b2b;
+  color: #ffffff;
+}
+
+.boton-eliminar:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+  </style>
+</head>
+
+<body>
+
+  <main class="galeria-admin">
+
+    <h1>Administrar Galería Multimedia</h1>
+
+    <label for="titulo">Título</label>
+    <input
+      type="text"
+      id="titulo"
+      placeholder="Título del contenido"
+    >
+
+    <label for="descripcion">Descripción</label>
+    <textarea
+      id="descripcion"
+      placeholder="Descripción opcional"
+    ></textarea>
+
+    <label for="categoria">Categoría</label>
+    <select id="categoria">
+      <option value="Fotografías">Fotografías</option>
+      <option value="Videos">Videos</option>
+      <option value="Audios">Audios</option>
+      <option value="Eventos">Eventos</option>
+      <option value="Patrimonio">Patrimonio</option>
+      <option value="Otros">Otros</option>
+    </select>
+
+    <label for="archivo">Archivo multimedia</label>
+    <input
+      type="file"
+      id="archivo"
+      accept="image/*,video/*,audio/*"
+    >
+
+    <div class="acciones-formulario">
+      <button type="button" id="subir">
+        Publicar contenido
+      </button>
+
+      <a href="admin.html" class="volver">
+        Volver al panel
+      </a>
+    </div>
+
+    <div id="mensaje"></div>
+
+    <hr class="separador">
+
+    <h2>Contenido publicado</h2>
+
+    <div id="lista-admin-galeria">
+      Cargando contenido...
+    </div>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+
+  <!-- Este debe ser type="module" porque utilizará storage.js y database.js -->
+  <script
+    type="module"
+    src="js/admin/galeria-admin.js?v=1">
+  </script>
+
+</body>
+</html>

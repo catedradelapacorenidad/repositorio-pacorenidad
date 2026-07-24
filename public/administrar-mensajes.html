@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Mensajes de contacto | Cátedra de la Pacoreñidad</title>
+
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    body {
+      background: #f7f4ef;
+    }
+
+    .mensajes-container {
+      max-width: 1100px;
+      margin: 50px auto;
+      padding: 24px;
+    }
+
+    .mensajes-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 30px;
+      background: white;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+    }
+
+    .mensajes-header h1 {
+      margin: 0;
+      color: #184d2b;
+    }
+
+    .mensajes-header p {
+      margin: 7px 0 0;
+      color: #666;
+    }
+
+    .volver-button {
+      display: inline-block;
+      padding: 11px 17px;
+      border-radius: 8px;
+      background: #184d2b;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .mensajes-lista {
+      display: grid;
+      gap: 18px;
+    }
+
+    .mensaje-card {
+      background: white;
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      border-left: 6px solid #aaa;
+    }
+
+    .mensaje-card.no-leido {
+      border-left-color: #d5a900;
+      background: #fffdf3;
+    }
+
+    .mensaje-superior {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: flex-start;
+      margin-bottom: 14px;
+    }
+
+    .mensaje-card h2 {
+      margin: 0 0 7px;
+      color: #184d2b;
+      font-size: 21px;
+    }
+
+    .mensaje-correo {
+      color: #666;
+      margin: 0;
+    }
+
+    .mensaje-fecha {
+      color: #777;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    .mensaje-asunto {
+      margin: 12px 0;
+      font-weight: bold;
+      color: #6e532d;
+    }
+
+    .mensaje-texto {
+      white-space: pre-wrap;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    .mensaje-acciones {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .accion-button,
+    .responder-link {
+      border: none;
+      border-radius: 8px;
+      padding: 10px 15px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .leer-button {
+      background: #184d2b;
+      color: white;
+    }
+
+    .eliminar-button {
+      background: #b52b2b;
+      color: white;
+    }
+
+    .responder-link {
+      background: #6e532d;
+      color: white;
+    }
+
+    .estado {
+      text-align: center;
+      padding: 25px;
+      background: white;
+      border-radius: 12px;
+      color: #666;
+    }
+
+    #contenidoMensajes {
+      display: none;
+    }
+
+    @media (max-width: 650px) {
+      .mensajes-container {
+        margin-top: 20px;
+        padding: 14px;
+      }
+
+      .mensajes-header,
+      .mensaje-superior {
+        flex-direction: column;
+      }
+
+      .volver-button {
+        width: 100%;
+        text-align: center;
+      }
+
+      .mensaje-fecha {
+        white-space: normal;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <p id="loading" class="estado">
+    Verificando acceso...
+  </p>
+
+  <main id="contenidoMensajes" class="mensajes-container">
+
+    <section class="mensajes-header">
+
+      <div>
+        <h1>Mensajes de contacto</h1>
+        <p>Consulta y administra los mensajes enviados desde el repositorio.</p>
+      </div>
+
+      <a href="admin.html" class="volver-button">
+        Volver al panel
+      </a>
+
+    </section>
+
+    <p id="estadoMensajes" class="estado">
+      Cargando mensajes...
+    </p>
+
+    <section id="listaMensajes" class="mensajes-lista"></section>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/administrar-mensajes.js"></script>
+
+</body>
+
+</html>

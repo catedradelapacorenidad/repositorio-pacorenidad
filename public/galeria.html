@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Galería Multimedia | Cátedra de la Pacoreñidad</title>
+
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    .galeria-publica {
+      max-width: 1200px;
+      margin: 120px auto 50px;
+      padding: 20px;
+    }
+
+    .galeria-encabezado {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .galeria-encabezado h2 {
+      color: #184d2b;
+      font-size: 34px;
+      margin-bottom: 12px;
+    }
+
+    .galeria-encabezado p {
+      max-width: 850px;
+      margin: 0 auto;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    .filtros-galeria {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 35px 0;
+    }
+
+    .filtro-galeria {
+      border: none;
+      border-radius: 25px;
+      padding: 10px 18px;
+      background: #e8eee9;
+      color: #184d2b;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .filtro-galeria:hover,
+    .filtro-galeria.activo {
+      background: #184d2b;
+      color: white;
+    }
+
+    .estado-galeria {
+      text-align: center;
+      padding: 30px;
+      color: #666;
+    }
+
+    .grid-galeria-publica {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 24px;
+    }
+
+    .tarjeta-galeria-publica {
+      overflow: hidden;
+      background: white;
+      border-radius: 16px;
+      border: 1px solid #ddd;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.09);
+      transition: transform 0.2s ease;
+    }
+
+    .tarjeta-galeria-publica:hover {
+      transform: translateY(-4px);
+    }
+
+    .vista-galeria-publica {
+      min-height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #eeeeee;
+    }
+
+    .vista-galeria-publica img,
+    .vista-galeria-publica video {
+      display: block;
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+    }
+
+    .vista-galeria-publica audio {
+      width: calc(100% - 30px);
+      margin: 25px 15px;
+    }
+
+    .icono-audio-publico {
+      font-size: 60px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .contenido-galeria-publica {
+      padding: 20px;
+    }
+
+    .contenido-galeria-publica h3 {
+      margin: 0 0 10px;
+      color: #184d2b;
+    }
+
+    .contenido-galeria-publica p {
+      color: #555;
+      line-height: 1.5;
+    }
+
+    .categoria-galeria-publica {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 5px 11px;
+      border-radius: 20px;
+      background: #eef5ed;
+      color: #184d2b;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .abrir-multimedia {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 10px 16px;
+      border-radius: 8px;
+      background: #184d2b;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .abrir-multimedia:hover {
+      background: #0f351d;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+
+    <div class="brand">
+      <img
+        src="images/logo.png"
+        class="logo"
+        alt="Logo Cátedra de la Pacoreñidad"
+      >
+
+      <div>
+        <p class="eyebrow">Repositorio Digital</p>
+        <h1>Cátedra de la Pacoreñidad</h1>
+      </div>
+    </div>
+
+    <nav class="main-nav">
+      <a href="index.html">Inicio</a>
+      <a href="nuestra-catedra.html">Nuestra Cátedra</a>
+      <a href="historia.html">Historia</a>
+      <a href="patrimonio.html">Patrimonio</a>
+      <a href="personajes.html">Personajes</a>
+      <a href="tradicion-oral.html">Tradición Oral</a>
+      <a href="biblioteca.html">Biblioteca</a>
+      <a href="galeria.html">Galería</a>
+      <a href="mapa.html">Mapa</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+
+  </header>
+
+  <main class="galeria-publica">
+
+    <section class="galeria-encabezado">
+      <h2>Galería Multimedia</h2>
+
+      <p>
+        Explora fotografías, videos y audios relacionados con la memoria
+        histórica, cultural, educativa y patrimonial de Pácora.
+      </p>
+    </section>
+
+    <section class="filtros-galeria">
+
+      <button
+        type="button"
+        class="filtro-galeria activo"
+        data-filtro="todos"
+      >
+        Todo
+      </button>
+
+      <button
+        type="button"
+        class="filtro-galeria"
+        data-filtro="imagen"
+      >
+        Fotografías
+      </button>
+
+      <button
+        type="button"
+        class="filtro-galeria"
+        data-filtro="video"
+      >
+        Videos
+      </button>
+
+      <button
+        type="button"
+        class="filtro-galeria"
+        data-filtro="audio"
+      >
+        Audios
+      </button>
+
+    </section>
+
+    <section>
+      <div id="estado-galeria" class="estado-galeria">
+        Cargando contenido...
+      </div>
+
+      <div
+        id="galeria-publica"
+        class="grid-galeria-publica"
+      ></div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      © 2026 Repositorio Digital de la Cátedra de la Pacoreñidad
+    </p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+
+  <script
+    type="module"
+    src="js/modules/galeria.js?v=1"
+  ></script>
+
+</body>
+</html>

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Administrar personajes | Cátedra de la Pacoreñidad</title>
+
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f7f4ec, #eef5ed);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .personajes-admin {
+      width: 92%;
+      max-width: 1100px;
+      margin: 45px auto;
+      padding: 35px;
+      background: white;
+      border-radius: 20px;
+      border-top: 6px solid #c9a227;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+    }
+
+    h1,
+    h2 {
+      color: #235437;
+    }
+
+    .descripcion-inicial {
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .campo-completo {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: #235437;
+      font-weight: bold;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 16px;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    #biografia {
+      min-height: 220px;
+    }
+
+    .vista-imagen {
+      display: none;
+      width: 180px;
+      height: 180px;
+      margin-top: 15px;
+      overflow: hidden;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      background: #eee;
+    }
+
+    .vista-imagen img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .acciones-formulario {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    button,
+    .volver {
+      padding: 13px 22px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    #guardar-personaje {
+      background: #235437;
+      color: white;
+    }
+
+    #guardar-personaje:hover {
+      background: #2f6f4e;
+    }
+
+    #cancelar-edicion {
+      display: none;
+      background: #777;
+      color: white;
+    }
+
+    .volver {
+      background: #8b5a33;
+      color: white;
+    }
+
+    #mensaje {
+      min-height: 24px;
+      margin-top: 18px;
+      font-weight: bold;
+    }
+
+    .separador {
+      margin: 45px 0 30px;
+      border: 0;
+      border-top: 1px solid #ddd;
+    }
+
+    .grid-personajes-admin {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 22px;
+      margin-top: 25px;
+    }
+
+    .tarjeta-personaje-admin {
+      overflow: hidden;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 14px;
+      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.08);
+    }
+
+    .imagen-personaje-admin {
+      display: flex;
+      height: 230px;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #e9ece9;
+    }
+
+    .imagen-personaje-admin img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .sin-imagen-personaje {
+      padding: 20px;
+      color: #666;
+      text-align: center;
+    }
+
+    .informacion-personaje-admin {
+      padding: 18px;
+    }
+
+    .informacion-personaje-admin h3 {
+      margin: 0 0 10px;
+      color: #235437;
+    }
+
+    .categoria-personaje {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 5px 10px;
+      border-radius: 20px;
+      background: #eef5ed;
+      color: #235437;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .informacion-personaje-admin p {
+      color: #555;
+      line-height: 1.5;
+    }
+
+    .acciones-personaje {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .boton-editar,
+    .boton-eliminar {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .boton-editar {
+      background: #235437;
+    }
+
+    .boton-eliminar {
+      background: #b52b2b;
+    }
+
+    button:disabled {
+      opacity: 0.65;
+      cursor: wait;
+    }
+
+    @media (max-width: 720px) {
+      .personajes-admin {
+        width: 95%;
+        padding: 22px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .campo-completo {
+        grid-column: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="personajes-admin">
+
+    <h1>Administrar personajes</h1>
+
+    <p class="descripcion-inicial">
+      Registra y administra personajes destacados de la historia,
+      la cultura y la vida comunitaria de Pácora.
+    </p>
+
+    <form id="form-personaje">
+
+      <input type="hidden" id="personaje-id">
+
+      <div class="form-grid">
+
+        <div>
+          <label for="nombre">Nombre completo</label>
+          <input
+            type="text"
+            id="nombre"
+            placeholder="Ej. Nombre del personaje"
+            required
+          >
+        </div>
+
+        <div>
+          <label for="categoria">Categoría</label>
+          <select id="categoria" required>
+            <option value="">Selecciona una categoría</option>
+            <option value="Educación">Educación</option>
+            <option value="Cultura">Cultura</option>
+            <option value="Arte">Arte</option>
+            <option value="Música">Música</option>
+            <option value="Literatura">Literatura</option>
+            <option value="Política">Política</option>
+            <option value="Religión">Religión</option>
+            <option value="Deporte">Deporte</option>
+            <option value="Historia">Historia</option>
+            <option value="Liderazgo comunitario">
+              Liderazgo comunitario
+            </option>
+            <option value="Otros">Otros</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="fecha-nacimiento">Fecha de nacimiento</label>
+          <input
+            type="text"
+            id="fecha-nacimiento"
+            placeholder="Ej. 15 de marzo de 1940"
+          >
+        </div>
+
+        <div>
+          <label for="fecha-fallecimiento">
+            Fecha de fallecimiento
+          </label>
+          <input
+            type="text"
+            id="fecha-fallecimiento"
+            placeholder="Déjalo vacío si no corresponde"
+          >
+        </div>
+
+        <div class="campo-completo">
+          <label for="lugar-nacimiento">Lugar de nacimiento</label>
+          <input
+            type="text"
+            id="lugar-nacimiento"
+            placeholder="Ej. Pácora, Caldas"
+          >
+        </div>
+
+        <div class="campo-completo">
+          <label for="descripcion-corta">Descripción corta</label>
+          <textarea
+            id="descripcion-corta"
+            placeholder="Resumen breve que aparecerá en la tarjeta del personaje"
+            required
+          ></textarea>
+        </div>
+
+        <div class="campo-completo">
+          <label for="biografia">Biografía</label>
+          <textarea
+            id="biografia"
+            placeholder="Escribe la biografía completa del personaje"
+            required
+          ></textarea>
+        </div>
+
+        <div class="campo-completo">
+          <label for="imagen">Fotografía</label>
+          <input
+            type="file"
+            id="imagen"
+            accept="image/jpeg,image/png,image/webp"
+          >
+
+          <div id="vista-imagen" class="vista-imagen">
+            <img
+              id="imagen-previa"
+              src=""
+              alt="Vista previa de la fotografía"
+            >
+          </div>
+        </div>
+
+      </div>
+
+      <div class="acciones-formulario">
+
+        <button type="submit" id="guardar-personaje">
+          Publicar personaje
+        </button>
+
+        <button type="button" id="cancelar-edicion">
+          Cancelar edición
+        </button>
+
+        <a href="admin.html" class="volver">
+          Volver al panel
+        </a>
+
+      </div>
+
+      <div id="mensaje" role="status"></div>
+
+    </form>
+
+    <hr class="separador">
+
+    <h2>Personajes publicados</h2>
+
+    <div id="lista-personajes">
+      Cargando personajes...
+    </div>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+
+  <script
+    type="module"
+    src="js/admin/personajes-admin.js?v=1"
+  ></script>
+
+</body>
+
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto | Cátedra de la Pacoreñidad</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <div class="brand">
+        <img src="images/logo.png" class="logo" alt="Logo">
+
+        <div>
+            <p class="eyebrow">Repositorio Digital</p>
+            <h1>Cátedra de la Pacoreñidad</h1>
+        </div>
+    </div>
+
+    <nav class="main-nav">
+        <a href="index.html">Inicio</a>
+        <a href="nuestra-catedra.html">Nuestra Cátedra</a>
+        <a href="historia.html">Historia</a>
+        <a href="patrimonio.html">Patrimonio</a>
+        <a href="personajes.html">Personajes</a>
+        <a href="tradicion-oral.html">Tradición Oral</a>
+        <a href="biblioteca.html">Biblioteca</a>
+        <a href="galeria.html">Galería</a>
+        <a href="mapa.html">Mapa</a>
+        <a href="contacto.html" class="active">Contacto</a>
+    </nav>
+
+</header>
+
+<main>
+
+<section class="intro">
+
+<h2>Contáctanos</h2>
+
+<p>
+La Cátedra de la Pacoreñidad es una construcción colectiva.
+Si deseas aportar fotografías, documentos, historias,
+corregir información o participar en este proyecto,
+estaremos encantados de escucharte.
+</p>
+
+</section>
+
+<section class="cards-section">
+
+<h2>¿Cómo deseas comunicarte?</h2>
+
+<div class="cards-grid">
+
+<article class="info-card">
+
+<span>📧</span>
+
+<h3>Correo electrónico</h3>
+
+<p>
+catedrapacorenidad@gmail.com
+</p>
+
+</article>
+
+<article class="info-card">
+
+<span>📱</span>
+
+<h3>WhatsApp</h3>
+
+<p>
+Próximamente
+</p>
+
+</article>
+
+<article class="info-card">
+
+<span>📍</span>
+
+<h3>Dirección</h3>
+
+<p>
+Institución Educativa Marco Fidel Suárez
+<br>
+Pácora - Caldas
+</p>
+
+</article>
+
+<article class="info-card">
+
+<span>🌐</span>
+
+<h3>Redes Sociales</h3>
+
+<p>
+Próximamente
+</p>
+
+</article>
+
+</div>
+
+</section>
+
+<section class="content-grid">
+
+<section>
+
+<h2>Envíanos un mensaje</h2>
+
+<form id="form-contacto">
+
+<label>Nombre</label>
+
+<input
+id="nombre"
+type="text"
+required
+>
+
+<label>Correo electrónico</label>
+
+<input
+id="correo"
+type="email"
+required
+>
+
+<label>Asunto</label>
+
+<select id="asunto" required>
+
+<option value="">Seleccione...</option>
+
+<option>Consulta</option>
+
+<option>Aporte histórico</option>
+
+<option>Corrección de información</option>
+
+<option>Donación de material</option>
+
+<option>Propuesta</option>
+
+<option>Otro</option>
+
+</select>
+
+<label>Mensaje</label>
+
+<textarea
+id="mensaje"
+rows="8"
+required
+></textarea>
+
+<button
+type="submit"
+id="btn-enviar"
+>
+
+Enviar mensaje
+
+</button>
+
+<p id="estado-contacto"></p>
+
+</form>
+
+</section>
+
+<aside class="upload-panel">
+
+<h2>¿Cómo puedes colaborar?</h2>
+
+<ul>
+
+<li>📚 Donando libros.</li>
+<li>📸 Compartiendo fotografías.</li>
+<li>🎥 Compartiendo videos.</li>
+<li>🎙️ Relatos de tradición oral.</li>
+<li>🏛️ Corrigiendo información histórica.</li>
+<li>👥 Agregando personajes.</li>
+<li>🗺️ Registrando patrimonio.</li>
+<li>🌳 Información ambiental.</li>
+<li>🏫 Investigaciones escolares.</li>
+
+</ul>
+
+</aside>
+
+</section>
+
+<section class="info-section">
+
+<h2>Equipo de la Cátedra</h2>
+
+<p>
+
+Este proyecto es liderado por docentes,
+investigadores,
+estudiantes y comunidad del municipio de Pácora.
+
+</p>
+
+</section>
+
+</main>
+
+<footer>
+
+<p>
+
+Repositorio Digital de la Cátedra de la Pacoreñidad
+
+<br>
+
+Pácora - Caldas
+
+</p>
+
+</footer>
+
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- Cliente Supabase -->
+<script src="js/supabase-client.js"></script>
+
+<!-- Contacto -->
+<script src="js/contacto.js"></script>
+
+</body>
+
+</html>

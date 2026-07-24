@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Administrar Biblioteca</title>
+
+<link rel="stylesheet" href="css/styles.css">
+
+<style>
+
+.admin-box{
+    max-width:900px;
+    margin:50px auto;
+    background:white;
+    padding:35px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.12);
+}
+
+.admin-box h1{
+    color:#14532d;
+    margin-bottom:20px;
+}
+
+input,
+textarea,
+select{
+    width:100%;
+    padding:12px;
+    margin-bottom:18px;
+    border:1px solid #ccc;
+    border-radius:10px;
+    font-size:16px;
+}
+
+button{
+    background:#14532d;
+    color:white;
+    border:none;
+    padding:14px 28px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+button:hover{
+    background:#0d3b1f;
+}
+
+#mensaje{
+    margin-top:20px;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="admin-box">
+
+<h1>Biblioteca Digital</h1>
+
+<input
+id="titulo"
+placeholder="Título del documento">
+
+<textarea
+id="descripcion"
+placeholder="Descripción"></textarea>
+
+<select id="categoria">
+
+<option value="Cartillas">Cartillas</option>
+<option value="Libros">Libros</option>
+<option value="Guías">Guías</option>
+<option value="Investigación">Investigación</option>
+<option value="Otros">Otros</option>
+
+</select>
+
+<input
+type="file"
+id="archivo">
+
+<button id="subir">
+
+Subir documento
+
+</button>
+
+<div id="mensaje"></div>
+<hr style="margin:50px 0;">
+
+<h2>Documentos publicados</h2>
+
+<div id="lista-admin-documentos">
+    Cargando documentos...
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/administrar-biblioteca.js?v=5"></script>
+
+</body>
+</html>

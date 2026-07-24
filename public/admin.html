@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Panel de administración | Cátedra de la Pacoreñidad</title>
+
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    body {
+      background: #f7f4ef;
+    }
+
+    .admin-container {
+      max-width: 1180px;
+      margin: 60px auto 50px;
+      padding: 24px;
+    }
+
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 30px;
+      padding: 28px;
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .admin-header h1 {
+      margin: 0;
+      color: #184d2b;
+      font-size: 32px;
+    }
+
+    .admin-header p {
+      margin: 8px 0 0;
+      color: #666;
+    }
+
+    .logout-button {
+      background-color: #b52b2b;
+      color: white;
+      border: none;
+      border-radius: 9px;
+      padding: 12px 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .logout-button:hover {
+      background-color: #8f2020;
+    }
+
+    .section-title {
+      margin: 40px 0 18px;
+      color: #184d2b;
+      font-size: 25px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 18px;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+      border-left: 6px solid #d5a900;
+    }
+
+    .stat-icon {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .stat-number {
+      display: block;
+      font-size: 32px;
+      font-weight: bold;
+      color: #184d2b;
+    }
+
+    .stat-label {
+      color: #666;
+      margin-top: 4px;
+    }
+
+    .admin-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 22px;
+    }
+
+    .admin-card {
+      background: white;
+      border-radius: 16px;
+      padding: 25px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.09);
+      border-top: 5px solid #d5a900;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .admin-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .admin-card .card-icon {
+      font-size: 34px;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .admin-card h2 {
+      margin: 0 0 10px;
+      color: #184d2b;
+      font-size: 21px;
+    }
+
+    .admin-card p {
+      color: #555;
+      line-height: 1.5;
+      min-height: 72px;
+    }
+
+    .admin-button {
+      display: inline-block;
+      border-radius: 8px;
+      padding: 11px 18px;
+      font-weight: bold;
+      text-decoration: none;
+      background-color: #184d2b;
+      color: white;
+    }
+
+    .admin-button:hover {
+      background-color: #0f351d;
+    }
+
+    .admin-button.secondary {
+      background-color: #6e532d;
+    }
+
+    .admin-button.secondary:hover {
+      background-color: #523d20;
+    }
+
+    .status-message {
+      padding: 18px;
+      margin-top: 20px;
+      background: white;
+      border-radius: 12px;
+      color: #666;
+      text-align: center;
+    }
+
+    #loading {
+      text-align: center;
+      margin-top: 150px;
+      font-size: 18px;
+      color: #184d2b;
+    }
+
+    #adminContent {
+      display: none;
+    }
+
+    @media (max-width: 650px) {
+      .admin-container {
+        margin-top: 20px;
+        padding: 14px;
+      }
+
+      .admin-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .admin-header h1 {
+        font-size: 27px;
+      }
+
+      .logout-button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="loading">
+    Verificando acceso...
+  </div>
+
+  <main id="adminContent" class="admin-container">
+
+    <section class="admin-header">
+
+      <div>
+        <h1>Panel de administración</h1>
+        <p id="userEmail">Usuario conectado</p>
+      </div>
+
+      <button id="logoutButton" class="logout-button">
+        Cerrar sesión
+      </button>
+
+    </section>
+
+    <h2 class="section-title">Resumen del repositorio</h2>
+
+    <section class="stats-grid">
+
+      <article class="stat-card">
+        <div class="stat-icon">👤</div>
+        <span id="totalPersonajes" class="stat-number">—</span>
+        <div class="stat-label">Personajes registrados</div>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-icon">📚</div>
+        <span id="totalDocumentos" class="stat-number">—</span>
+        <div class="stat-label">Documentos publicados</div>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-icon">🖼️</div>
+        <span id="totalGaleria" class="stat-number">—</span>
+        <div class="stat-label">Archivos en galería</div>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-icon">🗺️</div>
+        <span id="totalLugares" class="stat-number">—</span>
+        <div class="stat-label">Lugares registrados</div>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-icon">✉️</div>
+        <span id="totalMensajes" class="stat-number">—</span>
+        <div class="stat-label">Mensajes sin leer</div>
+      </article>
+
+    </section>
+
+    <p id="estadoEstadisticas" class="status-message">
+      Cargando estadísticas...
+    </p>
+
+    <h2 class="section-title">Administrar contenidos</h2>
+
+    <section class="admin-grid">
+
+      <article class="admin-card">
+        <span class="card-icon">📖</span>
+        <h2>Historia de Pácora</h2>
+        <p>
+          Edita y actualiza el contenido histórico publicado en la plataforma.
+        </p>
+        <a href="editar-historia.html" class="admin-button">
+          Administrar
+        </a>
+      </article>
+
+      <article class="admin-card">
+        <span class="card-icon">👤</span>
+        <h2>Personajes</h2>
+        <p>
+          Agrega, modifica o elimina personajes destacados de la historia pacoreña.
+        </p>
+        <a href="administrar-personajes.html" class="admin-button">
+          Administrar
+        </a>
+      </article>
+
+      <article class="admin-card">
+        <span class="card-icon">📚</span>
+        <h2>Biblioteca digital</h2>
+        <p>
+          Sube documentos, cartillas, libros y recursos educativos.
+        </p>
+        <a href="administrar-biblioteca.html" class="admin-button">
+          Administrar
+        </a>
+      </article>
+
+      <article class="admin-card">
+        <span class="card-icon">🖼️</span>
+        <h2>Galería multimedia</h2>
+        <p>
+          Publica fotografías, videos y audios relacionados con Pácora.
+        </p>
+        <a href="administrar-galeria.html" class="admin-button">
+          Administrar
+        </a>
+      </article>
+
+      <article class="admin-card">
+        <span class="card-icon">🗺️</span>
+        <h2>Lugares y mapa</h2>
+        <p>
+          Administra sitios históricos, turísticos, culturales y patrimoniales.
+        </p>
+        <a href="administrar-lugares.html" class="admin-button">
+          Administrar
+        </a>
+      </article>
+
+      <article class="admin-card">
+        <span class="card-icon">✉️</span>
+        <h2>Mensajes de contacto</h2>
+        <p>
+          Consulta los mensajes enviados por docentes, estudiantes y comunidad.
+        </p>
+        <a href="administrar-mensajes.html" class="admin-button secondary">
+          Ver mensajes
+        </a>
+      </article>
+
+    </section>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/admin-dashboard.js"></script>
+
+</body>
+
+</html>

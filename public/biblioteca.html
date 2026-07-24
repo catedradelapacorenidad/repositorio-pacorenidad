@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biblioteca Digital | Cátedra de la Pacoreñidad</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <img src="images/logo.png" class="logo" alt="Logo Cátedra de la Pacoreñidad">
+    <div>
+      <p class="eyebrow">Repositorio Digital</p>
+      <h1>Cátedra de la Pacoreñidad</h1>
+    </div>
+  </div>
+
+  <nav class="main-nav">
+    <a href="index.html">Inicio</a>
+    <a href="nuestra-catedra.html">Nuestra Cátedra</a>
+    <a href="historia.html">Historia</a>
+    <a href="patrimonio.html">Patrimonio</a>
+    <a href="personajes.html">Personajes</a>
+    <a href="tradicion-oral.html">Tradición Oral</a>
+    <a href="biblioteca.html">Biblioteca</a>
+    <a href="galeria.html">Galería</a>
+    <a href="mapa.html">Mapa</a>
+    <a href="contacto.html">Contacto</a>
+  </nav>
+</header>
+
+<main>
+
+  <section class="intro">
+    <h2>Biblioteca Digital Pacoreña</h2>
+    <p>
+      Espacio para consultar libros, cartillas, investigaciones y publicaciones
+      escritas sobre Pácora o por autores pacoreños. Los documentos podrán ser
+      visualizados en línea para preservar y difundir la memoria escrita del municipio.
+    </p>
+  </section>
+
+  <section class="cards-section">
+    <h2>Categorías de la biblioteca</h2>
+
+    <div class="cards-grid">
+      <a class="info-card" href="#libros-pacora">
+        <span>📘</span>
+        <h3>Libros sobre Pácora</h3>
+        <p>Obras históricas, culturales, patrimoniales y académicas sobre el municipio.</p>
+      </a>
+
+      <a class="info-card" href="#autores-pacorenos">
+        <span>✍️</span>
+        <h3>Autores pacoreños</h3>
+        <p>Libros, poemas, crónicas, ensayos y textos escritos por autores nacidos o vinculados a Pácora.</p>
+      </a>
+
+      <a class="info-card" href="#cartillas">
+        <span>📚</span>
+        <h3>Cartillas educativas</h3>
+        <p>Material pedagógico para estudiantes, docentes e investigadores.</p>
+      </a>
+
+      <a class="info-card" href="#investigaciones">
+        <span>🔎</span>
+        <h3>Investigaciones</h3>
+        <p>Trabajos académicos, tesis, artículos y documentos de consulta.</p>
+      </a>
+    </div>
+  </section>
+
+  <section id="libros-pacora" class="info-section">
+    <h2>Libros sobre Pácora</h2>
+    <p>
+      Aquí se podrán consultar libros y publicaciones relacionadas con la historia,
+      cultura, patrimonio y memoria del municipio.
+    </p>
+  </section>
+
+  <section id="autores-pacorenos" class="info-section">
+    <h2>Autores pacoreños</h2>
+    <p>
+      Este espacio reúne obras literarias, poéticas, narrativas, históricas y académicas
+      creadas por escritores pacoreños o personas vinculadas al municipio.
+    </p>
+  </section>
+
+  <section id="cartillas" class="info-section">
+    <h2>Cartillas educativas</h2>
+    <p>
+      Material diseñado para apoyar procesos pedagógicos relacionados con la Cátedra de la Pacoreñidad.
+    </p>
+  </section>
+
+  <section id="investigaciones" class="info-section">
+    <h2>Investigaciones</h2>
+    <p>
+      Documentos académicos, proyectos escolares, trabajos universitarios y estudios sobre Pácora.
+    </p>
+  </section>
+
+  <section class="info-section">
+    <h2>Visor de libros</h2>
+    <p>
+      En esta sección se visualizarán los libros cargados al sistema. La descarga estará restringida.
+    </p>
+
+    <div id="lista-documentos">
+
+    <p>Cargando documentos...</p>
+
+</div>
+  </section>
+
+  <section class="info-section">
+    <h2>Aportes bibliográficos</h2>
+    <p>
+      Los usuarios autorizados podrán cargar libros o documentos para revisión. El administrador
+      decidirá si el material se publica en modo de solo lectura.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <p>© 2026 Repositorio Digital de la Cátedra de la Pacoreñidad</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/biblioteca.js?v=1"></script>
+
+</body>
+</html>

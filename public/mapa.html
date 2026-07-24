@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Mapa Turístico Interactivo | Cátedra de la Pacoreñidad</title>
+
+  <link rel="stylesheet" href="css/styles.css">
+  <link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+  crossorigin=""
+>
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <img
+      src="images/logo.png"
+      class="logo"
+      alt="Logo de la Cátedra de la Pacoreñidad"
+    >
+
+    <div>
+      <p class="eyebrow">Repositorio Digital</p>
+      <h1>Cátedra de la Pacoreñidad</h1>
+    </div>
+  </div>
+
+  <nav class="main-nav">
+    <a href="index.html">Inicio</a>
+    <a href="nuestra-catedra.html">Nuestra Cátedra</a>
+    <a href="historia.html">Historia</a>
+    <a href="patrimonio.html">Patrimonio</a>
+    <a href="personajes.html">Personajes</a>
+    <a href="tradicion-oral.html">Tradición Oral</a>
+    <a href="biblioteca.html">Biblioteca</a>
+    <a href="galeria.html">Galería</a>
+    <a href="mapa.html">Mapa</a>
+    <a href="contacto.html">Contacto</a>
+  </nav>
+</header>
+
+<main>
+
+  <section class="intro">
+    <div>
+      <p class="eyebrow">Pácora, Caldas</p>
+
+      <h2>Mapa Turístico Interactivo</h2>
+
+      <p>
+        Explora y registra lugares turísticos, patrimoniales, históricos,
+        culturales y naturales del municipio de Pácora.
+      </p>
+    </div>
+  </section>
+
+  <section class="map-layout">
+
+    <section class="map-panel">
+
+      <div class="section-heading">
+        <div>
+          <h2>Mapa de lugares</h2>
+          <p>Haz clic sobre el mapa para seleccionar una ubicación.</p>
+        </div>
+      </div>
+
+      <div class="map-search">
+        <input
+          id="place-search"
+          type="text"
+          placeholder="Buscar dirección o lugar en Pácora"
+          autocomplete="off"
+        >
+
+        <button id="locate-button" type="button">
+          Usar mi ubicación
+        </button>
+      </div>
+
+      <div id="map"></div>
+
+      <p id="map-status" class="form-message" role="status">
+        Selecciona un punto en el mapa.
+      </p>
+
+    </section>
+
+    <aside class="upload-panel">
+
+      <h2>Agregar un lugar</h2>
+
+      <p class="map-help">
+        Busca el lugar o haz clic sobre el mapa. Después completa la información.
+      </p>
+
+      <form id="place-form">
+
+        <label>
+          Nombre del lugar
+          <input
+            id="place-name"
+            name="name"
+            type="text"
+            required
+            placeholder="Ej. Templo San José"
+          >
+        </label>
+
+        <label>
+          Categoría
+          <select id="place-category" name="category" required>
+            <option value="">Selecciona una categoría</option>
+            <option value="Sitio turístico">Sitio turístico</option>
+            <option value="Patrimonio arquitectónico">
+              Patrimonio arquitectónico
+            </option>
+            <option value="Patrimonio natural">Patrimonio natural</option>
+            <option value="Lugar histórico">Lugar histórico</option>
+            <option value="Paisaje Cultural Cafetero">
+              Paisaje Cultural Cafetero
+            </option>
+            <option value="Espacio cultural">Espacio cultural</option>
+            <option value="Institución educativa">
+              Institución educativa
+            </option>
+            <option value="Comercio tradicional">
+              Comercio tradicional
+            </option>
+            <option value="Punto de referencia">
+              Punto de referencia
+            </option>
+            <option value="Otro">Otro</option>
+          </select>
+        </label>
+
+        <label>
+          Descripción
+          <textarea
+            id="place-description"
+            name="description"
+            rows="5"
+            required
+            placeholder="Describe su importancia, historia o atractivo."
+          ></textarea>
+        </label>
+
+        <label>
+          Dirección o referencia
+          <input
+            id="place-address"
+            name="address"
+            type="text"
+            placeholder="Ej. Parque principal de Pácora"
+          >
+        </label>
+
+        <label>
+          Autor del aporte
+          <input
+            id="place-author"
+            name="author"
+            type="text"
+            placeholder="Nombre de la persona o institución"
+          >
+        </label>
+
+        <div class="coordinates-grid">
+          <label>
+            Latitud
+            <input
+              id="place-latitude"
+              name="latitude"
+              type="text"
+              readonly
+              required
+            >
+          </label>
+
+          <label>
+            Longitud
+            <input
+              id="place-longitude"
+              name="longitude"
+              type="text"
+              readonly
+              required
+            >
+          </label>
+        </div>
+
+        <button type="submit">
+          Agregar indicador
+        </button>
+
+        <p id="place-message" class="form-message" role="status"></p>
+
+      </form>
+
+    </aside>
+
+  </section>
+
+  <section class="info-section">
+    <h2>Lugares registrados</h2>
+
+    <p>
+      Los lugares agregados durante esta prueba aparecerán aquí y en el mapa.
+      En la siguiente etapa serán almacenados en Supabase y revisados antes de
+      publicarse.
+    </p>
+
+    <div id="places-list" class="places-list">
+      <p class="empty-places">Todavía no se han agregado lugares.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>© 2026 Repositorio Digital de la Cátedra de la Pacoreñidad</p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="js/supabase-client.js"></script>
+
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossorigin="">
+</script>
+
+<script src="js/mapa.js?v=3"></script>
+
+
+</body>
+</html>
