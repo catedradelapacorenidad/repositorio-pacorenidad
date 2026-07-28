@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Restablecer contraseña | Cátedra de la Pacoreñidad
+    </title>
+
+    <link rel="stylesheet" href="css/styles.css">
+
+    <style>
+        body {
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: #f5f3ed;
+            font-family: Arial, sans-serif;
+        }
+
+        .reset-card {
+            width: 100%;
+            max-width: 470px;
+            padding: 36px;
+            background: #ffffff;
+            border-radius: 20px;
+            border-top: 7px solid #d6aa00;
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.13);
+        }
+
+        .reset-logo {
+            display: block;
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 16px;
+            object-fit: contain;
+        }
+
+        .reset-card h1 {
+            margin: 0 0 10px;
+            color: #14552f;
+            text-align: center;
+            font-size: 32px;
+        }
+
+        .reset-description {
+            margin: 0 0 28px;
+            color: #5f5f5f;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .reset-card label {
+            display: block;
+            margin: 16px 0 7px;
+            color: #382a22;
+            font-weight: 700;
+        }
+
+        .reset-card input {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 14px;
+            border: 1px solid #d5d5d5;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .reset-card input:focus {
+            outline: 2px solid rgba(20, 85, 47, 0.25);
+            border-color: #14552f;
+        }
+
+        .reset-card button {
+            width: 100%;
+            margin-top: 22px;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #246b43, #684115);
+            color: #ffffff;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .reset-card button:disabled {
+            cursor: not-allowed;
+            opacity: 0.65;
+        }
+
+        #estado {
+            min-height: 24px;
+            margin: 18px 0 0;
+            text-align: center;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .volver-login {
+            display: block;
+            margin-top: 22px;
+            color: #14552f;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        @media (max-width: 520px) {
+            .reset-card {
+                padding: 26px 20px;
+            }
+
+            .reset-card h1 {
+                font-size: 27px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="reset-card">
+
+        <img
+            src="images/logo.png"
+            alt="Logo de la Cátedra de la Pacoreñidad"
+            class="reset-logo"
+        >
+
+        <h1>Nueva contraseña</h1>
+
+        <p class="reset-description">
+            Escribe una contraseña nueva para recuperar el acceso
+            al panel de administración.
+        </p>
+
+        <form id="form-restablecer">
+
+            <label for="nueva-contrasena">
+                Nueva contraseña
+            </label>
+
+            <input
+                type="password"
+                id="nueva-contrasena"
+                minlength="8"
+                autocomplete="new-password"
+                placeholder="Mínimo 8 caracteres"
+                required
+            >
+
+            <label for="confirmar-contrasena">
+                Confirmar contraseña
+            </label>
+
+            <input
+                type="password"
+                id="confirmar-contrasena"
+                minlength="8"
+                autocomplete="new-password"
+                placeholder="Repite la contraseña"
+                required
+            >
+
+            <button
+                type="submit"
+                id="btn-guardar"
+                disabled
+            >
+                Guardar nueva contraseña
+            </button>
+
+            <p
+                id="estado"
+                role="status"
+                aria-live="polite"
+            >
+                Verificando enlace de recuperación...
+            </p>
+
+        </form>
+
+        <a
+            href="login.html"
+            class="volver-login"
+        >
+            ← Volver al inicio de sesión
+        </a>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+
+    <script>
+        const formulario = document.getElementById(
+            "form-restablecer"
+        );
+
+        const nuevaContrasena = document.getElementById(
+            "nueva-contrasena"
+        );
+
+        const confirmarContrasena = document.getElementById(
+            "confirmar-contrasena"
+        );
+
+        const botonGuardar = document.getElementById(
+            "btn-guardar"
+        );
+
+        const estado = document.getElementById("estado");
+
+        let enlaceValido = false;
+
+        function mostrarEstado(mensaje, color) {
+            estado.textContent = mensaje;
+            estado.style.color = color;
+        }
+
+        async function verificarEnlaceRecuperacion() {
+            try {
+                const {
+                    data: { session },
+                    error
+                } = await supabaseClient.auth.getSession();
+
+                if (error) {
+                    throw error;
+                }
+
+                if (session) {
+                    enlaceValido = true;
+                    botonGuardar.disabled = false;
+
+                    mostrarEstado(
+                        "Enlace verificado. Ahora puedes escribir tu nueva contraseña.",
+                        "#247a3c"
+                    );
+
+                    return;
+                }
+
+                mostrarEstado(
+                    "El enlace no es válido, ya fue utilizado o ha vencido. Solicita un correo nuevo.",
+                    "#b52b2b"
+                );
+
+            } catch (error) {
+                console.error(
+                    "Error al verificar el enlace:",
+                    error
+                );
+
+                mostrarEstado(
+                    "No fue posible verificar el enlace de recuperación.",
+                    "#b52b2b"
+                );
+            }
+        }
+
+        supabaseClient.auth.onAuthStateChange(
+            function (evento, session) {
+
+                if (
+                    evento === "PASSWORD_RECOVERY" ||
+                    evento === "SIGNED_IN"
+                ) {
+                    enlaceValido = true;
+                    botonGuardar.disabled = false;
+
+                    mostrarEstado(
+                        "Enlace verificado. Ahora puedes escribir tu nueva contraseña.",
+                        "#247a3c"
+                    );
+                }
+            }
+        );
+
+        formulario.addEventListener(
+            "submit",
+            async function (evento) {
+
+                evento.preventDefault();
+
+                if (!enlaceValido) {
+                    mostrarEstado(
+                        "El enlace de recuperación no es válido.",
+                        "#b52b2b"
+                    );
+
+                    return;
+                }
+
+                const password = nuevaContrasena.value;
+                const confirmacion = confirmarContrasena.value;
+
+                if (password.length < 8) {
+                    mostrarEstado(
+                        "La contraseña debe tener al menos 8 caracteres.",
+                        "#b52b2b"
+                    );
+
+                    return;
+                }
+
+                if (password !== confirmacion) {
+                    mostrarEstado(
+                        "Las contraseñas no coinciden.",
+                        "#b52b2b"
+                    );
+
+                    return;
+                }
+
+                botonGuardar.disabled = true;
+                botonGuardar.textContent = "Guardando...";
+
+                mostrarEstado(
+                    "Estamos actualizando tu contraseña...",
+                    "#805019"
+                );
+
+                try {
+                    const { error } =
+                        await supabaseClient.auth.updateUser({
+                            password: password
+                        });
+
+                    if (error) {
+                        throw error;
+                    }
+
+                    await supabaseClient.auth.signOut();
+
+                    mostrarEstado(
+                        "Contraseña actualizada correctamente. Serás enviado al inicio de sesión.",
+                        "#247a3c"
+                    );
+
+                    formulario.reset();
+
+                    setTimeout(function () {
+                        window.location.href = "login.html";
+                    }, 2500);
+
+                } catch (error) {
+                    console.error(
+                        "Error al actualizar contraseña:",
+                        error
+                    );
+
+                    mostrarEstado(
+                        "No fue posible actualizar la contraseña. Solicita un enlace nuevo.",
+                        "#b52b2b"
+                    );
+
+                    botonGuardar.disabled = false;
+                    botonGuardar.textContent =
+                        "Guardar nueva contraseña";
+                }
+            }
+        );
+
+        verificarEnlaceRecuperacion();
+    </script>
+
+</body>
+</html>
