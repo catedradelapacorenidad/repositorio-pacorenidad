@@ -1,142 +1,58 @@
-/* =====================================================
-   ENCABEZADO GENERAL
-   ===================================================== */
-
 :root {
-  --header-height: 92px;
+  --header-height: 105px;
 }
 
-body {
-  padding-top: calc(var(--header-height) + 12px);
+body{
+    padding-top:calc(var(--header-height) + 12px);
 }
 
-.topbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
+.topbar{
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:1000;
 
-  min-height: var(--header-height);
-  padding: 10px 20px;
+    display:grid;
+    grid-template-columns:auto 1fr auto;
+    align-items:center;
+    gap:25px;
 
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 20px;
+    min-height:var(--header-height);
+    padding:12px 28px;
 
-  background: rgba(255, 255, 255, 0.94);
-  border-bottom: 1px solid rgba(47, 111, 78, 0.12);
-  box-shadow: 0 5px 20px rgba(22, 28, 20, 0.08);
-  backdrop-filter: blur(8px);
+    background:rgba(255,255,255,.95);
+    border-bottom:1px solid rgba(47,111,78,.12);
+    box-shadow:0 5px 18px rgba(0,0,0,.08);
+    backdrop-filter:blur(8px);
 }
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  min-width: 0;
+.brand{
+    display:flex;
+    align-items:center;
+    gap:18px;
 }
 
 .brand .logo{
-    width:50px;
-    height:50px;
+    width:90px;
+    height:90px;
     object-fit:contain;
-}
-
-.brand > div {
-  min-width: 0;
-}
-
-.brand .eyebrow {
-  margin: 0 0 4px;
-  color: #2f6f4e;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.brand h1 {
-  margin: 0;
-  color: #3b2f2a;
-  font-family: "Merriweather", serif;
-  font-size: clamp(20px, 2.3vw, 32px);
-  line-height: 1.1;
-}
-
-/* Tablet */
-@media (max-width: 1100px) {
-  :root {
-    --header-height: 84px;
-  }
-
-  .topbar {
-    padding: 9px 15px;
-    gap: 14px;
-  }
-
-  .brand .logo {
-    width: 64px;
-    height: 64px;
-  }
-
-  .brand h1 {
-    font-size: 24px;
-  }.brand h1{
-    font-size:2rem;
-    line-height:1.1;
+    flex-shrink:0;
 }
 
 .brand .eyebrow{
-    font-size:.9rem;
+    margin:0;
+    color:#2f6f4e;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:.12em;
+    text-transform:uppercase;
 }
 
-/* Celular */
-@media (max-width: 700px) {
-  :root {
-    --header-height: 74px;
-  }
-
-  body {
-    padding-top: calc(var(--header-height) + 8px);
-  }
-
-  .topbar {
-    grid-template-columns: 1fr auto;
-    padding: 8px 12px;
-  }
-
-  .brand {
-    gap: 9px;
-  }
-
-  .brand .logo {
-    width: 52px;
-    height: 52px;
-  }
-
-  .brand .eyebrow {
-    font-size: 10px;
-  }
-
-  .brand h1 {
-    font-size: 18px;
-  }
-}
-
-/* Celulares pequeños */
-@media (max-width: 380px) {
-  .brand .logo {
-    width: 46px;
-    height: 46px;
-  }
-
-  .brand .eyebrow {
-    display: none;
-  }
-
-  .brand h1 {
-    font-size: 17px;
-  }
+.brand h1{
+    margin:4px 0 0;
+    font-family:"Merriweather",serif;
+    color:#3b2f2a;
+    font-size:clamp(30px,2.5vw,46px);
+    line-height:1.05;
 }

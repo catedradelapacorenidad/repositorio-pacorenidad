@@ -385,9 +385,10 @@
                     );
 
                     mostrarMensaje(
-                        "No fue posible enviar el correo de recuperación.",
-                        "#b52b2b"
-                    );
+    JSON.stringify(error),
+    "#b52b2b"
+);
+                    
 
                 } finally {
                     enlaceRecuperacion.style.pointerEvents = "auto";
