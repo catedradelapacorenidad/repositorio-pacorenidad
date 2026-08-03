@@ -932,4 +932,163 @@ img {
     height: auto;
     object-fit: contain;
   }
+}.mensaje-panel {
+  grid-column: 1 / -1;
+  padding: 25px;
+  background: white;
+  border-radius: 14px;
+  color: #555;
+  text-align: center;
+  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.08);
+}
+
+.mensaje-error {
+  color: #a32020;
+}
+
+.tarjeta-articulo {
+  overflow: hidden;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 18px;
+  box-shadow: 0 7px 22px rgba(0, 0, 0, 0.1);
+}
+
+.imagen-articulo {
+  display: flex;
+  height: 240px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #e9ece9;
+}
+
+.imagen-articulo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sin-imagen {
+  color: #777;
+  font-weight: bold;
+}
+
+.contenido-tarjeta {
+  padding: 22px;
+}
+
+.etiquetas-articulo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 14px;
+}
+
+.etiqueta,
+.estado {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.etiqueta {
+  background: #eef5ed;
+  color: #235437;
+}
+
+.estado-pendiente {
+  background: #fff3cd;
+  color: #7a5b00;
+}
+
+.estado-publicado {
+  background: #d8f3df;
+  color: #145c2c;
+}
+
+.estado-rechazado {
+  background: #f8d7da;
+  color: #8b1e25;
+}
+
+.tarjeta-articulo h2 {
+  margin: 0 0 12px;
+  color: #235437;
+  font-size: 23px;
+}
+
+.descripcion-articulo {
+  color: #555;
+  line-height: 1.6;
+}
+
+.datos-articulo {
+  margin: 18px 0;
+  padding: 14px;
+  background: #faf8f2;
+  border-radius: 10px;
+  color: #555;
+  font-size: 14px;
+}
+
+.datos-articulo p {
+  margin: 5px 0;
+}
+
+.contenido-completo {
+  margin: 18px 0;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.contenido-completo summary {
+  color: #235437;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.texto-completo {
+  margin-top: 14px;
+  color: #444;
+  line-height: 1.7;
+  white-space: pre-line;
+}
+
+.acciones-articulo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.acciones-articulo button {
+  flex: 1;
+  min-width: 95px;
+  padding: 11px 14px;
+  border: none;
+  border-radius: 9px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.boton-publicar {
+  background: #235437;
+}
+
+.boton-rechazar {
+  background: #b17719;
+}
+
+.boton-eliminar {
+  background: #b52b2b;
+}
+
+.acciones-articulo button:disabled {
+  cursor: wait;
+  opacity: 0.6;
 }
