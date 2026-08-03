@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Realizar un aporte | Cátedra de la Pacoreñidad</title>
+
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f7f4ec, #eef5ed);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .aporte-container {
+      width: 92%;
+      max-width: 980px;
+      margin: 45px auto;
+      padding: 36px;
+      background: white;
+      border-top: 6px solid #c9a227;
+      border-radius: 22px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+    }
+
+    .aporte-container h1 {
+      margin: 0 0 12px;
+      color: #235437;
+    }
+
+    .introduccion {
+      margin-bottom: 30px;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    .usuario-activo {
+      margin-bottom: 28px;
+      padding: 14px 18px;
+      background: #eef5ed;
+      border-left: 5px solid #235437;
+      border-radius: 10px;
+      color: #235437;
+      font-weight: bold;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .campo-completo {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: #235437;
+      font-weight: bold;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    #contenido {
+      min-height: 260px;
+    }
+
+    .ayuda {
+      display: block;
+      margin-top: 6px;
+      color: #777;
+      font-size: 13px;
+      font-weight: normal;
+    }
+
+    .autor-box {
+      padding: 20px;
+      background: #faf8f2;
+      border: 1px solid #e4dfd3;
+      border-radius: 14px;
+    }
+
+    .autorizacion {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-top: 15px;
+      color: #444;
+      font-weight: normal;
+      line-height: 1.5;
+    }
+
+    .autorizacion input {
+      width: auto;
+      margin-top: 4px;
+    }
+
+    .vista-imagen {
+      display: none;
+      width: 100%;
+      max-width: 420px;
+      height: 250px;
+      margin-top: 16px;
+      overflow: hidden;
+      background: #eee;
+      border: 1px solid #ddd;
+      border-radius: 14px;
+    }
+
+    .vista-imagen img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .acciones {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .acciones button,
+    .volver {
+      padding: 13px 22px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    #enviar-aporte {
+      background: #235437;
+      color: white;
+    }
+
+    #enviar-aporte:hover {
+      background: #2f6f4e;
+    }
+
+    .volver {
+      background: #8b5a33;
+      color: white;
+    }
+
+    #mensaje {
+      min-height: 25px;
+      margin-top: 20px;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    button:disabled {
+      cursor: wait;
+      opacity: 0.65;
+    }
+
+    @media (max-width: 720px) {
+      .aporte-container {
+        width: 95%;
+        padding: 24px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .campo-completo {
+        grid-column: auto;
+      }
+
+      .acciones {
+        flex-direction: column;
+      }
+
+      .acciones button,
+      .volver {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="aporte-container">
+
+    <h1>Realizar un aporte</h1>
+
+    <p class="introduccion">
+      Comparte información relacionada con la historia, el patrimonio,
+      la cultura y la memoria de Pácora. El aporte será revisado por el
+      equipo editorial antes de aparecer públicamente en el repositorio.
+    </p>
+
+    <div id="usuario-activo" class="usuario-activo">
+      Verificando sesión...
+    </div>
+
+    <form id="form-aporte">
+
+      <div class="form-grid">
+
+        <div class="campo-completo">
+          <label for="titulo">Título del aporte</label>
+
+          <input
+            type="text"
+            id="titulo"
+            placeholder="Ej. Casa tradicional de la carrera quinta"
+            required
+          >
+        </div>
+
+        <div>
+          <label for="tipo">Sección</label>
+
+          <select id="tipo" required>
+            <option value="">Selecciona una sección</option>
+            <option value="patrimonio">Patrimonio</option>
+            <option value="historia">Historia</option>
+            <option value="tradicion-oral">Tradición oral</option>
+            <option value="turismo">Turismo</option>
+            <option value="cultura">Cultura</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="categoria">Categoría</label>
+
+          <select id="categoria" required disabled>
+            <option value="">
+              Primero selecciona una sección
+            </option>
+          </select>
+
+          <small class="ayuda">
+            Las categorías se cargarán automáticamente.
+          </small>
+        </div>
+
+        <div class="campo-completo">
+          <label for="descripcion-corta">Descripción corta</label>
+
+          <textarea
+            id="descripcion-corta"
+            placeholder="Escribe un resumen que aparecerá en la tarjeta del aporte."
+            required
+          ></textarea>
+        </div>
+
+        <div class="campo-completo">
+          <label for="contenido">Contenido completo</label>
+
+          <textarea
+            id="contenido"
+            placeholder="Describe la historia, características, importancia y demás información relevante."
+            required
+          ></textarea>
+        </div>
+
+        <div>
+          <label for="ubicacion">Ubicación</label>
+
+          <input
+            type="text"
+            id="ubicacion"
+            placeholder="Ej. Parque principal de Pácora"
+          >
+        </div>
+
+        <div>
+          <label for="fecha-referencia">Fecha o periodo de referencia</label>
+
+          <input
+            type="text"
+            id="fecha-referencia"
+            placeholder="Ej. Década de 1930"
+          >
+        </div>
+
+        <div>
+          <label for="estado-conservacion">
+            Estado de conservación
+          </label>
+
+          <select id="estado-conservacion">
+            <option value="">No aplica o se desconoce</option>
+            <option value="Excelente">Excelente</option>
+            <option value="Bueno">Bueno</option>
+            <option value="Regular">Regular</option>
+            <option value="Deteriorado">Deteriorado</option>
+            <option value="Desaparecido">Desaparecido</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="fuente">Fuente de la información</label>
+
+          <input
+            type="text"
+            id="fuente"
+            placeholder="Libro, entrevista, archivo, testimonio o enlace"
+          >
+        </div>
+
+        <div class="campo-completo">
+          <label for="imagen">Fotografía principal</label>
+
+          <input
+            type="file"
+            id="imagen"
+            accept="image/jpeg,image/png,image/webp"
+          >
+
+          <small class="ayuda">
+            Formatos permitidos: JPG, PNG y WEBP. Tamaño recomendado: máximo 5 MB.
+          </small>
+
+          <div id="vista-imagen" class="vista-imagen">
+            <img
+              id="imagen-previa"
+              src=""
+              alt="Vista previa de la fotografía"
+            >
+          </div>
+        </div>
+
+        <div class="campo-completo autor-box">
+          <label for="autor-nombre">
+            Nombre que aparecerá como autor del aporte
+          </label>
+
+          <input
+            type="text"
+            id="autor-nombre"
+            placeholder="Nombre completo"
+          >
+
+          <label class="autorizacion">
+            <input
+              type="checkbox"
+              id="mostrar-autor"
+            >
+
+            <span>
+              Autorizo que mi nombre aparezca públicamente como autor
+              del aporte. Si no marco esta opción, se mostrará
+              “Aporte comunitario”.
+            </span>
+          </label>
+        </div>
+
+      </div>
+
+      <div class="acciones">
+        <button type="submit" id="enviar-aporte">
+          Enviar para revisión
+        </button>
+
+        <a href="index.html" class="volver">
+          Volver al sitio
+        </a>
+      </div>
+
+      <div id="mensaje" role="status"></div>
+
+    </form>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/aportar-articulo.js"></script>
+
+</body>
+</html>

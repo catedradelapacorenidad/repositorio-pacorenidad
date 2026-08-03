@@ -175,24 +175,29 @@
     }
 
     @media (max-width: 650px) {
-      .admin-container {
-        margin-top: 20px;
-        padding: 14px;
-      }
+  .admin-container {
+    margin-top: 20px;
+    padding: 14px;
+  }
 
-      .admin-header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
+  .admin-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-      .admin-header h1 {
-        font-size: 27px;
-      }
+  .admin-header h1 {
+    font-size: 27px;
+  }
 
-      .logout-button {
-        width: 100%;
-      }
-    }
+  .logout-button {
+    width: 100%;
+  }
+}
+
+.admin-card .admin-button {
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
   </style>
 </head>
 
@@ -220,6 +225,18 @@
     <h2 class="section-title">Resumen del repositorio</h2>
 
     <section class="stats-grid">
+
+      <article class="stat-card">
+  <div class="stat-icon">📝</div>
+  <span id="totalArticulos" class="stat-number">—</span>
+  <div class="stat-label">Artículos registrados</div>
+</article>
+
+<article class="stat-card">
+  <div class="stat-icon">⏳</div>
+  <span id="totalArticulosPendientes" class="stat-number">—</span>
+  <div class="stat-label">Artículos pendientes</div>
+</article>
 
       <article class="stat-card">
         <div class="stat-icon">👤</div>
@@ -260,6 +277,24 @@
     <h2 class="section-title">Administrar contenidos</h2>
 
     <section class="admin-grid">
+      <article class="admin-card">
+  <span class="card-icon">📝</span>
+
+  <h2>Artículos y aportes</h2>
+
+  <p>
+    Revisa, corrige, aprueba y publica aportes relacionados con
+    patrimonio, historia, tradición oral, turismo y cultura.
+  </p>
+
+  <a href="administrar-articulos.html" class="admin-button">
+    Administrar
+  </a>
+
+  <a href="aportar-articulo.html" class="admin-button secondary">
+    Nuevo artículo
+  </a>
+</article>
 
       <article class="admin-card">
         <span class="card-icon">📖</span>
