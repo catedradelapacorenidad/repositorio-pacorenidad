@@ -254,7 +254,7 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus { outline: 3px 
   transform:translateY(-3px);
   box-shadow:0 10px 22px rgba(0,0,0,.14);
 }
-}.main-nav{
+.main-nav{
   display:flex;
   align-items:center;
   gap:12px;
@@ -858,6 +858,23 @@ body {
   width: 100%;
   max-width: 100%;
   overflow-x: hidden;
+}.articulo-enlace {
+  display: inline-flex;
+  margin-top: 18px;
+  padding: 11px 18px;
+  border-radius: 999px;
+  background: #235437;
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.articulo-enlace:hover {
+  background: #2f6f4e;
+  transform: translateY(-2px);
 }
 
 *,
@@ -1219,4 +1236,22 @@ img {
   .articulo-contenido {
     padding: 18px;
   }
+}.articulo-enlace 
+{
+  display: inline-flex;
+  margin-top: 18px;
+  padding: 11px 18px;
+  border-radius: 999px;
+  background: #235437;
+  color: #ffffff;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+.articulo-enlace:hover {
+  background: #2f6f4e;
+  transform: translateY(-2px);
 }

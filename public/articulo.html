@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Artículo | Cátedra de la Pacoreñidad</title>
+
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/menu.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <style>
+    body {
+      background: #f7f4ef;
+    }
+
+    .articulo-pagina {
+      width: 92%;
+      max-width: 1050px;
+      margin: 45px auto 70px;
+    }
+
+    .volver-seccion {
+      display: inline-block;
+      margin-bottom: 22px;
+      color: #235437;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .volver-seccion:hover {
+      text-decoration: underline;
+    }
+
+    .articulo-ficha {
+      overflow: hidden;
+      background: white;
+      border: 1px solid rgba(35, 84, 55, 0.12);
+      border-radius: 22px;
+      box-shadow: 0 12px 35px rgba(24, 77, 43, 0.11);
+    }
+
+    .articulo-portada {
+      display: none;
+      width: 100%;
+      max-height: 560px;
+      object-fit: cover;
+    }
+
+    .articulo-cuerpo {
+      padding: 42px;
+    }
+
+    .articulo-etiquetas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .articulo-etiqueta {
+      padding: 6px 12px;
+      border-radius: 20px;
+      background: #eef5ed;
+      color: #235437;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    #articulo-titulo {
+      margin: 0 0 18px;
+      color: #235437;
+      font-family: "Merriweather", Georgia, serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      line-height: 1.15;
+    }
+
+    #articulo-resumen {
+      margin-bottom: 30px;
+      color: #666;
+      font-size: 1.15rem;
+      line-height: 1.7;
+    }
+
+    .articulo-datos {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 32px;
+      padding: 20px;
+      border-radius: 14px;
+      background: #faf8f2;
+    }
+
+    .articulo-datos p {
+      margin: 0;
+      color: #555;
+      line-height: 1.55;
+    }
+
+    #articulo-contenido {
+      color: #3f3f3f;
+      font-size: 1.05rem;
+      line-height: 1.9;
+      white-space: pre-line;
+    }
+
+    .articulo-fuente {
+      margin-top: 35px;
+      padding: 18px;
+      border-left: 5px solid #c9a227;
+      border-radius: 8px;
+      background: #faf8f2;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .articulo-autor {
+      margin-top: 30px;
+      padding-top: 16px;
+      border-top: 1px solid #e7e2d7;
+      color: #777;
+      font-size: 0.82rem;
+      font-style: italic;
+    }
+
+    .estado-carga {
+      padding: 45px;
+      background: white;
+      border-radius: 18px;
+      color: #555;
+      text-align: center;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    @media (max-width: 700px) {
+      .articulo-pagina {
+        width: 95%;
+        margin-top: 25px;
+      }
+
+      .articulo-cuerpo {
+        padding: 25px 20px;
+      }
+
+      .articulo-datos {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+
+    <div class="brand">
+      <img
+        src="images/logo-catedra.png"
+        class="logo"
+        alt="Logo Cátedra de la Pacoreñidad"
+      >
+
+      <div>
+        <p class="eyebrow">Repositorio Digital</p>
+        <h1>Cátedra de la Pacoreñidad</h1>
+      </div>
+    </div>
+
+    <button
+      id="menuButton"
+      class="menu-button"
+      type="button"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+    >
+      ☰
+    </button>
+
+    <nav id="mainNav" class="main-nav">
+      <a href="index.html">Inicio</a>
+      <a href="nuestra-catedra.html">Nuestra Cátedra</a>
+      <a href="historia.html">Historia</a>
+      <a href="patrimonio.html">Patrimonio</a>
+      <a href="personajes.html">Personajes</a>
+      <a href="tradicion-oral.html">Tradición Oral</a>
+      <a href="biblioteca.html">Biblioteca</a>
+      <a href="galeria.html">Galería</a>
+      <a href="mapa.html">Mapa</a>
+      <a href="contacto.html">Contacto</a>
+    </nav>
+
+  </header>
+
+  <main class="articulo-pagina">
+
+    <a
+      id="volver-seccion"
+      href="index.html"
+      class="volver-seccion"
+    >
+      ← Volver
+    </a>
+
+    <div id="estado-carga" class="estado-carga">
+      Cargando artículo...
+    </div>
+
+    <article id="articulo-ficha" class="articulo-ficha" hidden>
+
+      <img
+        id="articulo-imagen"
+        class="articulo-portada"
+        src=""
+        alt=""
+      >
+
+      <div class="articulo-cuerpo">
+
+        <div class="articulo-etiquetas">
+          <span id="articulo-tipo" class="articulo-etiqueta"></span>
+          <span id="articulo-categoria" class="articulo-etiqueta"></span>
+        </div>
+
+        <h2 id="articulo-titulo"></h2>
+
+        <p id="articulo-resumen"></p>
+
+        <div id="articulo-datos" class="articulo-datos">
+          <p id="dato-ubicacion"></p>
+          <p id="dato-fecha"></p>
+          <p id="dato-conservacion"></p>
+          <p id="dato-publicacion"></p>
+        </div>
+
+        <div id="articulo-contenido"></div>
+
+        <div
+          id="articulo-fuente"
+          class="articulo-fuente"
+          hidden
+        ></div>
+
+        <p id="articulo-autor" class="articulo-autor"></p>
+
+      </div>
+
+    </article>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/articulo.js"></script>
+
+</body>
+</html>

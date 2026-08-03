@@ -82,35 +82,12 @@ document.addEventListener("DOMContentLoaded", async () => {
               : ""
           }
 
-          <details class="articulo-detalle">
-            <summary>Leer más</summary>
-
-            <div class="articulo-texto">
-              ${escaparHTML(articulo.contenido)}
-            </div>
-
-            ${
-              articulo.fecha_referencia
-                ? `
-                  <p>
-                    <strong>Fecha o periodo:</strong>
-                    ${escaparHTML(articulo.fecha_referencia)}
-                  </p>
-                `
-                : ""
-            }
-
-            ${
-              articulo.fuente
-                ? `
-                  <p>
-                    <strong>Fuente:</strong>
-                    ${escaparHTML(articulo.fuente)}
-                  </p>
-                `
-                : ""
-            }
-          </details>
+          <a
+  class="articulo-enlace"
+  href="articulo.html?id=${articulo.id}"
+>
+  Leer artículo completo →
+</a>
 
           <p class="autor-aporte">
             ${escaparHTML(autor)}
