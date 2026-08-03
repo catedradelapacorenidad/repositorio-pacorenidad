@@ -222,10 +222,12 @@ a:focus, button:focus, input:focus, select:focus, textarea:focus { outline: 3px 
   gap:18px;
 }
 
-.logo{
-  width:80px;
-  height:80px;
-  object-fit:contain;
+.logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
   .main-nav{
   display:flex;
   align-items:center;
