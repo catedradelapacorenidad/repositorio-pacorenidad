@@ -15,15 +15,31 @@
 <body>
 
 <header class="topbar">
+
   <div class="brand">
-    <img src="images/logo-catedra.png" class="logo" alt="Logo Cátedra de la Pacoreñidad">
+    <img
+      src="images/logo-catedra.png"
+      class="logo"
+      alt="Logo Cátedra de la Pacoreñidad"
+    >
+
     <div>
       <p class="eyebrow">Repositorio Digital</p>
       <h1>Cátedra de la Pacoreñidad</h1>
     </div>
   </div>
 
-  <nav class="main-nav">
+  <button
+    id="menuButton"
+    class="menu-button"
+    type="button"
+    aria-label="Abrir menú"
+    aria-expanded="false"
+  >
+    ☰
+  </button>
+
+  <nav id="mainNav" class="main-nav">
     <a href="index.html">Inicio</a>
     <a href="nuestra-catedra.html">Nuestra Cátedra</a>
     <a href="historia.html">Historia</a>
@@ -34,6 +50,8 @@
     <a href="galeria.html">Galería</a>
     <a href="mapa.html">Mapa</a>
     <a href="contacto.html">Contacto</a>
+
+    <a href="login.html" class="login-btn">Acceso</a>
   </nav>
 </header>
 
@@ -116,5 +134,6 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-client.js"></script>
 <script src="js/patrimonio.js"></script>
+<script src="js/menu.js"></script>
 </body>
 </html>
