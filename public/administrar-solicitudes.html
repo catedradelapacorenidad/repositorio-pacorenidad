@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Solicitudes de colaboradores | Cátedra de la Pacoreñidad</title>
+
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    body {
+      background: #f7f4ef;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .solicitudes-container {
+      width: 92%;
+      max-width: 1200px;
+      margin: 45px auto 70px;
+    }
+
+    .encabezado-solicitudes {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 28px;
+      padding: 28px;
+      background: white;
+      border-top: 6px solid #c9a227;
+      border-radius: 18px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.09);
+    }
+
+    .encabezado-solicitudes h1 {
+      margin: 0 0 8px;
+      color: #235437;
+    }
+
+    .encabezado-solicitudes p {
+      margin: 0;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .volver-panel {
+      display: inline-block;
+      padding: 12px 18px;
+      border-radius: 10px;
+      background: #8b5a33;
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .filtros {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding: 18px;
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 5px 16px rgba(0, 0, 0, 0.07);
+    }
+
+    .filtros button {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 999px;
+      background: #eef5ed;
+      color: #235437;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .filtros button.activo {
+      background: #235437;
+      color: white;
+    }
+
+    #lista-solicitudes {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 22px;
+    }
+
+    .mensaje-panel {
+      grid-column: 1 / -1;
+      padding: 24px;
+      background: white;
+      border-radius: 14px;
+      color: #666;
+      text-align: center;
+      box-shadow: 0 5px 16px rgba(0, 0, 0, 0.07);
+    }
+
+    @media (max-width: 700px) {
+      .encabezado-solicitudes {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .volver-panel {
+        width: 100%;
+        text-align: center;
+      }
+
+      #lista-solicitudes {
+        grid-template-columns: 1fr;
+      }
+    }.solicitud-card {
+  padding: 24px;
+  background: white;
+  border: 1px solid #ddd;
+  border-top: 5px solid #c9a227;
+  border-radius: 17px;
+  box-shadow: 0 7px 22px rgba(0, 0, 0, 0.09);
+}
+
+.solicitud-superior {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 18px;
+}
+
+.solicitud-superior h2 {
+  margin: 0 0 9px;
+  color: #235437;
+  font-size: 22px;
+}
+
+.fecha-solicitud {
+  color: #777;
+  font-size: 13px;
+  text-align: right;
+}
+
+.estado-solicitud {
+  display: inline-block;
+  padding: 6px 11px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.estado-pendiente {
+  background: #fff3cd;
+  color: #7a5b00;
+}
+
+.estado-aprobada {
+  background: #d8f3df;
+  color: #145c2c;
+}
+
+.estado-rechazada {
+  background: #f8d7da;
+  color: #8b1e25;
+}
+
+.datos-solicitud {
+  padding: 16px;
+  background: #faf8f2;
+  border-radius: 11px;
+}
+
+.datos-solicitud p {
+  margin: 7px 0;
+  color: #555;
+  line-height: 1.5;
+}
+
+.datos-solicitud a {
+  color: #235437;
+  overflow-wrap: anywhere;
+}
+
+.motivo-solicitud {
+  margin-top: 18px;
+  color: #444;
+}
+
+.motivo-solicitud p {
+  margin-top: 8px;
+  white-space: pre-line;
+}
+
+.fecha-revision {
+  margin-top: 15px;
+  color: #777;
+  font-size: 13px;
+  font-style: italic;
+}
+
+.acciones-solicitud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 22px;
+}
+
+.acciones-solicitud button {
+  flex: 1;
+  min-width: 115px;
+  padding: 11px 13px;
+  border: none;
+  border-radius: 9px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.boton-aprobar {
+  background: #235437;
+}
+
+.boton-rechazar-solicitud {
+  background: #b17719;
+}
+
+.boton-copiar {
+  background: #536b78;
+}
+
+.boton-eliminar-solicitud {
+  background: #b52b2b;
+}
+
+.acciones-solicitud button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.mensaje-error {
+  color: #a32020;
+}
+
+@media (max-width: 600px) {
+  .solicitud-superior {
+    flex-direction: column;
+  }
+
+  .fecha-solicitud {
+    text-align: left;
+  }
+
+  .acciones-solicitud {
+    flex-direction: column;
+  }
+
+  .acciones-solicitud button {
+    width: 100%;
+  }
+}
+  </style>
+</head>
+
+<body>
+
+  <main class="solicitudes-container">
+
+    <section class="encabezado-solicitudes">
+      <div>
+        <h1>Solicitudes de colaboradores</h1>
+        <p>
+          Revisa las solicitudes recibidas y decide si cada persona
+          puede continuar con el proceso de vinculación.
+        </p>
+      </div>
+
+      <a href="admin.html" class="volver-panel">
+        Volver al panel
+      </a>
+    </section>
+
+    <section class="filtros">
+      <button type="button" class="activo" data-filtro="todas">
+        Todas
+      </button>
+
+      <button type="button" data-filtro="pendiente">
+        Pendientes
+      </button>
+
+      <button type="button" data-filtro="aprobada">
+        Aprobadas
+      </button>
+
+      <button type="button" data-filtro="rechazada">
+        Rechazadas
+      </button>
+    </section>
+
+    <section id="lista-solicitudes">
+      <div class="mensaje-panel">
+        Cargando solicitudes...
+      </div>
+    </section>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+
+  <script
+    type="module"
+    src="js/admin/solicitudes-admin.js"
+  ></script>
+
+</body>
+</html>
