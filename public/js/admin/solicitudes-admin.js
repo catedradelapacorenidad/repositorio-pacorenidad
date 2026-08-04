@@ -254,12 +254,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         const accion = boton.dataset.accion;
 
         if (accion === "aprobar") {
-          await cambiarEstado(
-            boton.dataset.id,
-            "aprobada",
-            boton
-          );
-        }
+  await aprobarColaborador(
+    boton.dataset.id,
+    boton
+  );
+}
 
         if (accion === "rechazar") {
           await cambiarEstado(
@@ -283,6 +282,117 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
+  async function aprobarColaborador(id, boton) {
+  const confirmar = confirm(
+    "¿Deseas aprobar esta solicitud y enviar la invitación al colaborador?"
+  );
+
+  if (!confirmar) {
+    return;
+  }
+
+  const textoOriginal = boton.textContent;
+
+  boton.disabled = true;
+  boton.textContent = "Creando acceso...";
+
+  try {
+    // Confirmamos que todavía exista una sesión válida.
+    const {
+      data: { session },
+      error: errorSesion
+    } = await supabaseClient.auth.getSession();
+
+    if (errorSesion) {
+      throw errorSesion;
+    }
+
+    if (!session) {
+      alert(
+        "Tu sesión venció. Inicia sesión nuevamente."
+      );
+
+      window.location.href = "login.html";
+      return;
+    }
+
+    // Llamamos a la Edge Function segura.
+    const { data, error } =
+      await supabaseClient.functions.invoke(
+        "aprobar-colaborador",
+        {
+          body: {
+            solicitud_id: id
+          }
+        }
+      );
+
+    if (error) {
+      console.error(
+        "Error al ejecutar aprobar-colaborador:",
+        error
+      );
+
+      let detalle = "";
+
+      /*
+       * Cuando la función devuelve un error HTTP,
+       * Supabase puede incluir la respuesta en context.
+       */
+      if (error.context) {
+        try {
+          const respuestaError =
+            await error.context.json();
+
+          detalle =
+            respuestaError?.detalle ||
+            respuestaError?.error ||
+            "";
+        } catch (errorLectura) {
+          console.warn(
+            "No fue posible leer el detalle:",
+            errorLectura
+          );
+        }
+      }
+
+      throw new Error(
+        detalle ||
+        error.message ||
+        "No fue posible aprobar al colaborador."
+      );
+    }
+
+    if (!data?.ok) {
+      throw new Error(
+        data?.detalle ||
+        data?.error ||
+        "La función no confirmó la aprobación."
+      );
+    }
+
+    alert(
+      data.mensaje ||
+      "Colaborador aprobado e invitación enviada correctamente."
+    );
+
+    await cargarSolicitudes();
+
+  } catch (error) {
+    console.error(
+      "Error al aprobar colaborador:",
+      error
+    );
+
+    alert(
+      error.message ||
+      "No fue posible crear el acceso del colaborador."
+    );
+
+    boton.disabled = false;
+    boton.textContent = textoOriginal;
+  }
+}
   async function cambiarEstado(id, nuevoEstado, boton) {
     const mensaje =
       nuevoEstado === "aprobada"
