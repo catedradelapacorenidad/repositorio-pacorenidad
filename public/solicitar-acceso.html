@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Solicitar acceso | Cátedra de la Pacoreñidad
+  </title>
+
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/menu.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <style>
+    body {
+      background: linear-gradient(
+        135deg,
+        #f7f4ec,
+        #eef5ed
+      );
+    }
+
+    .solicitud-container {
+      width: 92%;
+      max-width: 920px;
+      margin: 45px auto 70px;
+      padding: 38px;
+      background: #ffffff;
+      border-top: 6px solid #c9a227;
+      border-radius: 22px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+    }
+
+    .solicitud-container h2 {
+      margin: 0 0 14px;
+      color: #235437;
+      font-family: "Merriweather", Georgia, serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+    }
+
+    .introduccion {
+      margin-bottom: 30px;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    .aviso {
+      margin-bottom: 28px;
+      padding: 18px;
+      border-left: 5px solid #235437;
+      border-radius: 10px;
+      background: #eef5ed;
+      color: #355c43;
+      line-height: 1.6;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .campo-completo {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: #235437;
+      font-weight: 700;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 160px;
+      resize: vertical;
+    }
+
+    .ayuda {
+      display: block;
+      margin-top: 6px;
+      color: #777;
+      font-size: 13px;
+    }
+
+    .acciones {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .acciones button,
+    .volver-login {
+      padding: 13px 22px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    #enviar-solicitud {
+      background: #235437;
+      color: white;
+    }
+
+    #enviar-solicitud:hover {
+      background: #2f6f4e;
+    }
+
+    .volver-login {
+      background: #8b5a33;
+      color: white;
+    }
+
+    #mensaje {
+      min-height: 28px;
+      margin-top: 20px;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    button:disabled {
+      cursor: wait;
+      opacity: 0.65;
+    }
+
+    @media (max-width: 700px) {
+      .solicitud-container {
+        width: 95%;
+        margin-top: 25px;
+        padding: 24px 20px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .campo-completo {
+        grid-column: auto;
+      }
+
+      .acciones {
+        flex-direction: column;
+      }
+
+      .acciones button,
+      .volver-login {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+
+    <div class="brand">
+      <img
+        src="images/logo-catedra.png"
+        class="logo"
+        alt="Logo Cátedra de la Pacoreñidad"
+      >
+
+      <div>
+        <p class="eyebrow">Repositorio Digital</p>
+        <h1>Cátedra de la Pacoreñidad</h1>
+      </div>
+    </div>
+
+    <button
+      id="menuButton"
+      class="menu-button"
+      type="button"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+    >
+      ☰
+    </button>
+
+    <nav id="mainNav" class="main-nav">
+
+      <a href="index.html">Inicio</a>
+      <a href="nuestra-catedra.html">Nuestra Cátedra</a>
+      <a href="historia.html">Historia</a>
+      <a href="patrimonio.html">Patrimonio</a>
+      <a href="personajes.html">Personajes</a>
+      <a href="tradicion-oral.html">Tradición Oral</a>
+      <a href="biblioteca.html">Biblioteca</a>
+      <a href="galeria.html">Galería</a>
+      <a href="mapa.html">Mapa</a>
+      <a href="contacto.html">Contacto</a>
+      <a href="login.html" class="login-btn">Acceso</a>
+
+    </nav>
+
+  </header>
+
+  <main class="solicitud-container">
+
+    <h2>Solicitar acceso como colaborador</h2>
+
+    <p class="introduccion">
+      La Cátedra de la Pacoreñidad invita a docentes,
+      estudiantes, investigadores, portadores de tradición
+      y ciudadanos a contribuir con la conservación de la
+      memoria histórica, cultural y patrimonial de Pácora.
+    </p>
+
+    <div class="aviso">
+      La solicitud será revisada por el equipo administrador.
+      Si es aprobada, recibirás instrucciones para activar
+      tu cuenta y comenzar a realizar aportes.
+    </div>
+
+    <form id="form-solicitud">
+
+      <div class="form-grid">
+
+        <div class="campo-completo">
+          <label for="nombre">
+            Nombre completo
+          </label>
+
+          <input
+            type="text"
+            id="nombre"
+            placeholder="Ej. María Elena Ramírez"
+            maxlength="120"
+            required
+          >
+        </div>
+
+        <div>
+          <label for="correo">
+            Correo electrónico
+          </label>
+
+          <input
+            type="email"
+            id="correo"
+            placeholder="correo@ejemplo.com"
+            maxlength="180"
+            required
+          >
+        </div>
+
+        <div>
+          <label for="telefono">
+            Teléfono
+          </label>
+
+          <input
+            type="tel"
+            id="telefono"
+            placeholder="Ej. 300 000 0000"
+            maxlength="30"
+          >
+        </div>
+
+        <div>
+          <label for="institucion">
+            Institución u organización
+          </label>
+
+          <input
+            type="text"
+            id="institucion"
+            placeholder="Institución educativa, fundación o colectivo"
+            maxlength="180"
+          >
+        </div>
+
+        <div>
+          <label for="municipio">
+            Municipio
+          </label>
+
+          <input
+            type="text"
+            id="municipio"
+            value="Pácora"
+            maxlength="100"
+            required
+          >
+        </div>
+
+        <div class="campo-completo">
+          <label for="mensaje">
+            ¿Por qué deseas colaborar?
+          </label>
+
+          <textarea
+            id="mensaje"
+            placeholder="Cuéntanos brevemente qué tipo de información, experiencia o contenidos deseas aportar."
+            maxlength="1500"
+            required
+          ></textarea>
+
+          <small class="ayuda">
+            Máximo 1.500 caracteres.
+          </small>
+        </div>
+
+      </div>
+
+      <div class="acciones">
+
+        <button
+          type="submit"
+          id="enviar-solicitud"
+        >
+          Enviar solicitud
+        </button>
+
+        <a
+          href="login.html"
+          class="volver-login"
+        >
+          Volver al ingreso
+        </a>
+
+      </div>
+
+      <div
+        id="mensaje-estado"
+        role="status"
+        aria-live="polite"
+      ></div>
+
+    </form>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/solicitar-acceso.js"></script>
+  <script src="js/menu.js"></script>
+
+</body>
+</html>
