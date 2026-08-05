@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Panel del colaborador | Cátedra de la Pacoreñidad
+    </title>
+
+    <link rel="stylesheet" href="css/styles.css">
+
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: #f7f4ef;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #333;
+        }
+
+        .panel-container {
+            max-width: 1180px;
+            margin: 0 auto;
+            padding: 40px 24px 60px;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+            padding: 28px;
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .header-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .panel-logo {
+            width: 90px;
+            height: 90px;
+            object-fit: contain;
+        }
+
+        .panel-header h1 {
+            margin: 0;
+            color: #184d2b;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 32px;
+        }
+
+        .panel-header p {
+            margin: 8px 0 0;
+            color: #666;
+        }
+
+        .logout-button {
+            padding: 12px 18px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #246b43, #684115);
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .logout-button:hover {
+            opacity: 0.92;
+        }
+
+        .welcome-box {
+            margin-top: 28px;
+            padding: 25px;
+            background: #eef5ee;
+            border-left: 6px solid #d5a900;
+            border-radius: 14px;
+        }
+
+        .welcome-box h2 {
+            margin: 0 0 10px;
+            color: #184d2b;
+        }
+
+        .welcome-box p {
+            margin: 0;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .section-title {
+            margin: 38px 0 18px;
+            color: #184d2b;
+            font-size: 26px;
+        }
+
+        .panel-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(250px, 1fr));
+            gap: 22px;
+        }
+
+        .panel-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 25px;
+            border-top: 5px solid #d5a900;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.09);
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .panel-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-icon {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 36px;
+        }
+
+        .panel-card h3 {
+            margin: 0 0 10px;
+            color: #184d2b;
+            font-size: 22px;
+        }
+
+        .panel-card p {
+            min-height: 76px;
+            margin: 0 0 20px;
+            color: #555;
+            line-height: 1.55;
+        }
+
+        .panel-button {
+            display: inline-block;
+            padding: 11px 18px;
+            border-radius: 8px;
+            background: #184d2b;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .panel-button:hover {
+            background: #0f351d;
+        }
+
+        .panel-button.secondary {
+            background: #6e532d;
+        }
+
+        #loading {
+            margin-top: 180px;
+            text-align: center;
+            color: #184d2b;
+            font-size: 18px;
+        }
+
+        #panelContent {
+            display: none;
+        }
+
+        @media (max-width: 700px) {
+            .panel-container {
+                padding: 20px 14px 40px;
+            }
+
+            .panel-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .header-info {
+                align-items: flex-start;
+            }
+
+            .panel-logo {
+                width: 70px;
+                height: 70px;
+            }
+
+            .panel-header h1 {
+                font-size: 27px;
+            }
+
+            .logout-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loading">
+        Verificando acceso...
+    </div>
+
+    <main
+        id="panelContent"
+        class="panel-container"
+    >
+
+        <section class="panel-header">
+
+            <div class="header-info">
+
+                <img
+                    src="images/logo-catedra.png"
+                    alt="Logo de la Cátedra de la Pacoreñidad"
+                    class="panel-logo"
+                >
+
+                <div>
+                    <h1>Panel del colaborador</h1>
+
+                    <p id="userEmail">
+                        Usuario conectado
+                    </p>
+                </div>
+
+            </div>
+
+            <button
+                id="logoutButton"
+                class="logout-button"
+            >
+                Cerrar sesión
+            </button>
+
+        </section>
+
+        <section class="welcome-box">
+
+            <h2>
+                Bienvenido a la Cátedra de la Pacoreñidad
+            </h2>
+
+            <p>
+                Desde este espacio puedes aportar contenidos,
+                consultar tus artículos y participar en la
+                construcción colectiva del repositorio digital.
+            </p>
+
+        </section>
+
+        <h2 class="section-title">
+            Mis opciones
+        </h2>
+
+        <section class="panel-grid">
+
+            <article class="panel-card">
+
+                <span class="card-icon">📝</span>
+
+                <h3>Crear un artículo</h3>
+
+                <p>
+                    Envía un nuevo aporte relacionado con la
+                    historia, el patrimonio, la tradición oral,
+                    el turismo o la cultura de Pácora.
+                </p>
+
+                <a
+                    href="aportar-articulo.html"
+                    class="panel-button"
+                >
+                    Crear artículo
+                </a>
+
+            </article>
+
+            <article class="panel-card">
+
+                <span class="card-icon">📄</span>
+
+                <h3>Mis aportes</h3>
+
+                <p>
+                    Consulta los artículos que has enviado y
+                    revisa su estado de publicación.
+                </p>
+
+                <a
+                    href="mis-articulos.html"
+                    class="panel-button"
+                >
+                    Ver mis aportes
+                </a>
+
+            </article>
+
+            <article class="panel-card">
+
+                <span class="card-icon">📚</span>
+
+                <h3>Biblioteca digital</h3>
+
+                <p>
+                    Consulta cartillas, documentos, libros y
+                    recursos educativos relacionados con Pácora.
+                </p>
+
+                <a
+                    href="biblioteca.html"
+                    class="panel-button secondary"
+                >
+                    Ir a la biblioteca
+                </a>
+
+            </article>
+
+            <article class="panel-card">
+
+                <span class="card-icon">🖼️</span>
+
+                <h3>Galería multimedia</h3>
+
+                <p>
+                    Explora fotografías, videos y audios
+                    publicados en el repositorio.
+                </p>
+
+                <a
+                    href="galeria.html"
+                    class="panel-button secondary"
+                >
+                    Ver galería
+                </a>
+
+            </article>
+
+            <article class="panel-card">
+
+                <span class="card-icon">🗺️</span>
+
+                <h3>Mapa de Pácora</h3>
+
+                <p>
+                    Recorre los lugares históricos, turísticos,
+                    culturales y patrimoniales del municipio.
+                </p>
+
+                <a
+                    href="mapa.html"
+                    class="panel-button secondary"
+                >
+                    Ver mapa
+                </a>
+
+            </article>
+
+            <article class="panel-card">
+
+                <span class="card-icon">🏠</span>
+
+                <h3>Volver al sitio</h3>
+
+                <p>
+                    Regresa a la página principal de la
+                    Cátedra de la Pacoreñidad.
+                </p>
+
+                <a
+                    href="index.html"
+                    class="panel-button secondary"
+                >
+                    Ir al inicio
+                </a>
+
+            </article>
+
+        </section>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/panel-colaborador.js"></script>
+
+</body>
+
+</html>
