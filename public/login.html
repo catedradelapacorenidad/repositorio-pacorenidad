@@ -319,11 +319,48 @@
                     }
 
                     mostrarMensaje(
-                        "Acceso correcto. Redirigiendo...",
-                        "#247a3c"
-                    );
+    "Acceso correcto. Verificando permisos...",
+    "#247a3c"
+);
 
-                    window.location.href = "admin.html";
+const usuario = data.session.user;
+
+const {
+    data: perfil,
+    error: errorPerfil
+} = await supabaseClient
+    .from("profiles")
+    .select("rol")
+    .eq("id", usuario.id)
+    .maybeSingle();
+
+if (errorPerfil) {
+    throw errorPerfil;
+}
+
+if (!perfil || !perfil.rol) {
+    await supabaseClient.auth.signOut();
+
+    throw new Error(
+        "Esta cuenta no tiene un rol asignado."
+    );
+}
+
+if (perfil.rol === "administrador") {
+    window.location.replace("admin.html");
+    return;
+}
+
+if (perfil.rol === "colaborador") {
+    window.location.replace("panel.html");
+    return;
+}
+
+await supabaseClient.auth.signOut();
+
+throw new Error(
+    "Esta cuenta no tiene permisos para ingresar."
+);
 
                 } catch (error) {
                     console.error(
