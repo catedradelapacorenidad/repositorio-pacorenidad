@@ -2,26 +2,83 @@ const loading = document.getElementById("loading");
 const adminContent = document.getElementById("adminContent");
 const userEmail = document.getElementById("userEmail");
 const logoutButton = document.getElementById("logoutButton");
-const estadoEstadisticas = document.getElementById("estadoEstadisticas");
+const estadoEstadisticas = document.getElementById(
+    "estadoEstadisticas"
+);
 
 async function verificarSesion() {
     try {
         const {
             data: { session },
-            error
+            error: errorSesion
         } = await supabaseClient.auth.getSession();
 
-        if (error) {
-            throw error;
+        if (errorSesion) {
+            throw errorSesion;
         }
 
         if (!session) {
-            window.location.href = "login.html";
+            window.location.replace("login.html");
             return;
         }
 
+        const usuario = session.user;
+
+        /*
+         * Consultar el rol real del usuario
+         * en la tabla profiles.
+         */
+        const {
+            data: perfil,
+            error: errorPerfil
+        } = await supabaseClient
+            .from("profiles")
+            .select("rol")
+            .eq("id", usuario.id)
+            .maybeSingle();
+
+        if (errorPerfil) {
+            console.error(
+                "Error consultando el perfil:",
+                errorPerfil
+            );
+
+            throw errorPerfil;
+        }
+
+        /*
+         * Solo los administradores pueden
+         * entrar a esta página.
+         */
+        if (
+            !perfil ||
+            perfil.rol !== "administrador"
+        ) {
+            loading.textContent =
+                "No tienes permisos para acceder al panel de administración.";
+
+            loading.style.color = "#b52b2b";
+
+            /*
+             * Cerramos la sesión para evitar que
+             * el usuario permanezca dentro de una
+             * ruta administrativa.
+             */
+            await supabaseClient.auth.signOut();
+
+            setTimeout(() => {
+                window.location.replace("login.html");
+            }, 1800);
+
+            return;
+        }
+
+        /*
+         * Solo se muestra el panel después
+         * de comprobar el rol.
+         */
         userEmail.textContent =
-            "Sesión iniciada como: " + session.user.email;
+            "Sesión iniciada como: " + usuario.email;
 
         loading.style.display = "none";
         adminContent.style.display = "block";
@@ -29,12 +86,26 @@ async function verificarSesion() {
         await cargarEstadisticas();
 
     } catch (error) {
-        console.error("Error al verificar la sesión:", error);
-        window.location.href = "login.html";
+        console.error(
+            "Error al verificar el acceso:",
+            error
+        );
+
+        loading.textContent =
+            "No fue posible verificar tus permisos.";
+
+        loading.style.color = "#b52b2b";
+
+        setTimeout(() => {
+            window.location.replace("login.html");
+        }, 1800);
     }
 }
 
-async function obtenerCantidad(tabla, filtro = null) {
+async function obtenerCantidad(
+    tabla,
+    filtro = null
+) {
     let consulta = supabaseClient
         .from(tabla)
         .select("*", {
@@ -43,13 +114,20 @@ async function obtenerCantidad(tabla, filtro = null) {
         });
 
     if (filtro) {
-        consulta = consulta.eq(filtro.campo, filtro.valor);
+        consulta = consulta.eq(
+            filtro.campo,
+            filtro.valor
+        );
     }
 
     const { count, error } = await consulta;
 
     if (error) {
-        console.error(`Error al contar registros de ${tabla}:`, error);
+        console.error(
+            `Error al contar registros de ${tabla}:`,
+            error
+        );
+
         return null;
     }
 
@@ -57,7 +135,9 @@ async function obtenerCantidad(tabla, filtro = null) {
 }
 
 async function cargarEstadisticas() {
-    estadoEstadisticas.textContent = "Cargando estadísticas...";
+    estadoEstadisticas.style.display = "block";
+    estadoEstadisticas.textContent =
+        "Cargando estadísticas...";
 
     try {
         const [
@@ -93,25 +173,39 @@ async function cargarEstadisticas() {
             )
         ]);
 
-        document.getElementById("totalArticulos").textContent =
+        document.getElementById(
+            "totalArticulos"
+        ).textContent =
             totalArticulos ?? "Error";
 
-        document.getElementById("totalArticulosPendientes").textContent =
+        document.getElementById(
+            "totalArticulosPendientes"
+        ).textContent =
             totalArticulosPendientes ?? "Error";
 
-        document.getElementById("totalPersonajes").textContent =
+        document.getElementById(
+            "totalPersonajes"
+        ).textContent =
             totalPersonajes ?? "Error";
 
-        document.getElementById("totalDocumentos").textContent =
+        document.getElementById(
+            "totalDocumentos"
+        ).textContent =
             totalDocumentos ?? "Error";
 
-        document.getElementById("totalGaleria").textContent =
+        document.getElementById(
+            "totalGaleria"
+        ).textContent =
             totalGaleria ?? "Error";
 
-        document.getElementById("totalLugares").textContent =
+        document.getElementById(
+            "totalLugares"
+        ).textContent =
             totalLugares ?? "Error";
 
-        document.getElementById("totalMensajes").textContent =
+        document.getElementById(
+            "totalMensajes"
+        ).textContent =
             totalMensajes ?? "Error";
 
         estadoEstadisticas.textContent =
@@ -122,16 +216,27 @@ async function cargarEstadisticas() {
         }, 1800);
 
     } catch (error) {
-        console.error("Error al cargar estadísticas:", error);
+        console.error(
+            "Error al cargar estadísticas:",
+            error
+        );
 
         estadoEstadisticas.textContent =
             "No fue posible cargar todas las estadísticas.";
     }
 }
 
-logoutButton.addEventListener("click", async function () {
-    await supabaseClient.auth.signOut();
-    window.location.href = "login.html";
-});
+logoutButton.addEventListener(
+    "click",
+    async function () {
+        logoutButton.disabled = true;
+        logoutButton.textContent =
+            "Cerrando sesión...";
+
+        await supabaseClient.auth.signOut();
+
+        window.location.replace("login.html");
+    }
+);
 
 verificarSesion();
