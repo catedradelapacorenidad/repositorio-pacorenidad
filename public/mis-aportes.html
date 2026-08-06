@@ -296,32 +296,8 @@ Todavía no has enviado artículos.
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script src="js/supabase-client.js"></script>
-
-<script>
-
-async function cargarUsuario(){
-
-const {data:{session}}=
-await supabaseClient.auth.getSession();
-
-if(!session){
-
-location.href="login.html";
-
-return;
-
-}
-
-document.getElementById("correoUsuario").textContent=
-"Sesión iniciada como: "+session.user.email;
-
-}
-
-cargarUsuario();
-
-</script>
+<script src="js/mis-aportes.js"></script>
 
 </body>
 
