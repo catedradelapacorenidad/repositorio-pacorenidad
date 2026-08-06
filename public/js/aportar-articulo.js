@@ -371,29 +371,34 @@ tipoSelect.addEventListener("change", () => {
         );
       }
 
-      const imagen = await subirImagen(archivoImagen);
+     const imagen = archivoImagen
+  ? await subirImagen(archivoImagen)
+  : {
+      url: null,
+      path: null
+    };
 
-      imagenSubidaPath = imagen.path;
+imagenSubidaPath = imagen.path;
 
-      const { error: errorArticulo } = await supabaseClient
-        .from("articulos")
-        .insert({
-          titulo,
-          tipo,
-          categoria,
-          descripcion_corta: descripcionCorta,
-          contenido,
-          ubicacion: ubicacion || null,
-          fecha_referencia: fechaReferencia || null,
-          estado_conservacion: estadoConservacion || null,
-          fuente: fuente || null,
-          imagen_url: imagen.url,
-          imagen_path: imagen.path,
-          autor_id: usuarioActual.id,
-          autor_nombre: autorNombre || null,
-          mostrar_autor: mostrarAutor,
-          estado: "pendiente"
-        });
+const { error: errorArticulo } = await supabaseClient
+  .from("articulos")
+  .insert({
+    titulo,
+    tipo,
+    categoria,
+    descripcion_corta: descripcionCorta,
+    contenido,
+    ubicacion: ubicacion || null,
+    fecha_referencia: fechaReferencia || null,
+    estado_conservacion: estadoConservacion || null,
+    fuente: fuente || null,
+    imagen_url: imagen.url || null,
+    imagen_path: imagen.path || null,
+    autor_id: usuarioActual.id,
+    autor_nombre: autorNombre || null,
+    mostrar_autor: mostrarAutor,
+    estado: "pendiente"
+  });
 
       if (errorArticulo) {
         throw errorArticulo;
