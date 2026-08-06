@@ -75,57 +75,149 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (perfilActual?.nombre) {
       autorNombreInput.value = perfilActual.nombre;
     }
+  }function crearSlug(texto) {
+  return texto
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function obtenerCategoriasSugeridas(nombreSeccion) {
+  const seccion = nombreSeccion
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+
+  if (seccion.includes("tradicion oral")) {
+    return [
+      "Mitos",
+      "Leyendas",
+      "Cuentos y relatos",
+      "Refranes y dichos",
+      "Coplas y canciones tradicionales",
+      "Creencias populares",
+      "Anécdotas y testimonios",
+      "Historias de vida"
+    ];
   }
 
-  async function cargarCategorias(tipo) {
+  return [];
+}
+
+async function cargarCategorias(tipo) {
+  categoriaSelect.innerHTML =
+    '<option value="">Cargando categorías...</option>';
+
+  categoriaSelect.disabled = true;
+
+  if (!tipo) {
     categoriaSelect.innerHTML =
-      '<option value="">Cargando categorías...</option>';
+      '<option value="">Primero selecciona una sección</option>';
 
-    categoriaSelect.disabled = true;
+    return;
+  }
 
-    if (!tipo) {
-      categoriaSelect.innerHTML =
-        '<option value="">Primero selecciona una sección</option>';
-      return;
-    }
+  const opcionSeleccionada =
+    tipoSelect.options[tipoSelect.selectedIndex];
 
+  const nombreSeccion =
+    opcionSeleccionada?.textContent?.trim() || tipo;
+
+  try {
     const { data, error } = await supabaseClient
       .from("categorias")
       .select("nombre, slug")
       .eq("tipo", tipo)
       .eq("activa", true)
-      .order("orden", { ascending: true });
+      .order("orden", {
+        ascending: true
+      });
 
     if (error) {
-      console.error("Error al cargar categorías:", error);
-
-      categoriaSelect.innerHTML =
-        '<option value="">No fue posible cargar las categorías</option>';
-
-      mostrarMensaje(
-        "No fue posible cargar las categorías.",
-        "error"
-      );
-
-      return;
+      throw error;
     }
 
     categoriaSelect.innerHTML =
       '<option value="">Selecciona una categoría</option>';
 
-    data.forEach((categoria) => {
-      const opcion = document.createElement("option");
+    if (data && data.length > 0) {
+      data.forEach((categoria) => {
+        const opcion = document.createElement("option");
 
-      opcion.value = categoria.slug;
-      opcion.textContent = categoria.nombre;
+        opcion.value = categoria.slug;
+        opcion.textContent = categoria.nombre;
 
-      categoriaSelect.appendChild(opcion);
-    });
+        categoriaSelect.appendChild(opcion);
+      });
+
+      categoriaSelect.disabled = false;
+      mostrarMensaje("");
+
+      return;
+    }
+
+    const sugerencias =
+      obtenerCategoriasSugeridas(nombreSeccion);
+
+    if (sugerencias.length > 0) {
+      sugerencias.forEach((nombreCategoria) => {
+        const opcion = document.createElement("option");
+
+        opcion.value = crearSlug(nombreCategoria);
+        opcion.textContent = nombreCategoria;
+
+        categoriaSelect.appendChild(opcion);
+      });
+
+      categoriaSelect.disabled = false;
+
+      mostrarMensaje(
+        `Selecciona el tipo de aporte relacionado con ${nombreSeccion}.`
+      );
+
+      return;
+    }
+
+    const opcionGeneral =
+      document.createElement("option");
+
+    opcionGeneral.value = crearSlug(nombreSeccion);
+
+    opcionGeneral.textContent =
+      `${nombreSeccion} — categoría general`;
+
+    categoriaSelect.appendChild(opcionGeneral);
+
+    categoriaSelect.value =
+      opcionGeneral.value;
 
     categoriaSelect.disabled = false;
-  }
 
-  tipoSelect.addEventListener("change", () => {
+    mostrarMensaje(
+      "Esta sección todavía no tiene subcategorías. " +
+      "El aporte se guardará en la categoría general."
+    );
+
+  } catch (error) {
+    console.error(
+      "Error al cargar categorías:",
+      error
+    );
+
+    categoriaSelect.innerHTML =
+      '<option value="">No fue posible cargar las categorías</option>';
+
+    mostrarMensaje(
+      "No fue posible cargar las categorías.",
+      "error"
+    );
+  }
+}
+
+tipoSelect.addEventListener("change", () => {
+  
     cargarCategorias(tipoSelect.value);
   });
 
