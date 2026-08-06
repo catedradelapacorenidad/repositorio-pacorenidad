@@ -363,14 +363,13 @@ document.addEventListener("DOMContentLoaded", async () => {
                 `
                 : `
                   <a
-                    href="articulo.html?id=${articulo.id}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="boton-publicar"
-                    style="text-decoration:none;"
-                  >
-                    Ver publicado
-                  </a>
+  href="articulo.html?id=${articulo.id}"
+  target="_blank"
+  rel="noopener noreferrer"
+  class="boton-publicar boton-enlace"
+>
+  Ver publicado
+</a>
                 `
             }
 
