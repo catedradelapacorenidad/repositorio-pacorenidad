@@ -438,36 +438,50 @@ document.addEventListener("DOMContentLoaded", async () => {
         nuevaImagenPath = imagen.path;
       }
 
-      const { error: errorActualizar } =
-        await supabaseClient
-          .from("articulos")
-          .update({
-            titulo,
-            tipo,
-            categoria,
-            descripcion_corta: descripcionCorta,
-            contenido,
-            ubicacion:
-              ubicacionInput.value.trim() || null,
-            fecha_referencia:
-              fechaReferenciaInput.value.trim() || null,
-            estado_conservacion:
-              estadoConservacionSelect.value || null,
-            fuente:
-              fuenteInput.value.trim() || null,
-            imagen_url: imagen.url,
-            imagen_path: imagen.path,
-            autor_nombre: autorNombre || null,
-            mostrar_autor:
-              mostrarAutorInput.checked,
-            estado: "pendiente",
-            observaciones_admin: null,
-            published_at: null,
-            updated_at:
-              new Date().toISOString()
-          })
-          .eq("id", idArticulo)
-          .eq("autor_id", usuarioActual.id);
+      const {
+  data: articuloActualizado,
+  error: errorActualizar
+} = await supabaseClient
+  .from("articulos")
+  .update({
+    titulo,
+    tipo,
+    categoria,
+    descripcion_corta: descripcionCorta,
+    contenido,
+    ubicacion:
+      ubicacionInput.value.trim() || null,
+    fecha_referencia:
+      fechaReferenciaInput.value.trim() || null,
+    estado_conservacion:
+      estadoConservacionSelect.value || null,
+    fuente:
+      fuenteInput.value.trim() || null,
+    imagen_url: imagen.url,
+    imagen_path: imagen.path,
+    autor_nombre: autorNombre || null,
+    mostrar_autor:
+      mostrarAutorInput.checked,
+    estado: "pendiente",
+    observaciones_admin: null,
+    published_at: null,
+    updated_at:
+      new Date().toISOString()
+  })
+  .eq("id", idArticulo)
+  .eq("autor_id", usuarioActual.id)
+  .select("id, estado")
+  .maybeSingle();
+
+if (errorActualizar) {
+  throw errorActualizar;
+}
+
+if (!articuloActualizado) {
+  throw new Error(
+    "No se pudo actualizar el aporte. Revisa los permisos de edición."
+  );
+}
 
       if (errorActualizar) {
         throw errorActualizar;
