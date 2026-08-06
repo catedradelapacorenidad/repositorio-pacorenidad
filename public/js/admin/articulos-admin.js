@@ -319,43 +319,92 @@ document.addEventListener("DOMContentLoaded", async () => {
       });
   }
 
-  async function cambiarEstado(id, nuevoEstado, boton) {
-    const mensaje =
-      nuevoEstado === "publicado"
-        ? "¿Deseas publicar este artículo?"
-        : "¿Deseas rechazar este artículo?";
+ async function cambiarEstado(id, nuevoEstado, boton) {
+  let observacion = null;
 
-    if (!confirm(mensaje)) {
+  if (nuevoEstado === "publicado") {
+    const confirmarPublicacion = confirm(
+      "¿Deseas publicar este artículo?"
+    );
+
+    if (!confirmarPublicacion) {
+      return;
+    }
+  }
+
+  if (nuevoEstado === "rechazado") {
+    observacion = prompt(
+      "Escribe la observación que verá el colaborador:"
+    );
+
+    if (observacion === null) {
       return;
     }
 
-    const textoOriginal = boton.textContent;
+    observacion = observacion.trim();
 
-    boton.disabled = true;
-    boton.textContent = "Procesando...";
-
-    const cambios = {
-      estado: nuevoEstado,
-      updated_at: new Date().toISOString()
-    };
-
-    if (nuevoEstado === "publicado") {
-      cambios.published_at = new Date().toISOString();
-    }
-
-    const { error } = await supabaseClient
-      .from("articulos")
-      .update(cambios)
-      .eq("id", id);
-
-    if (error) {
-      console.error("Error al cambiar el estado:", error);
-      alert("No fue posible actualizar el artículo.");
-
-      boton.disabled = false;
-      boton.textContent = textoOriginal;
+    if (!observacion) {
+      alert(
+        "Debes escribir una observación antes de rechazar el artículo."
+      );
       return;
     }
+  }
+
+  const textoOriginal = boton.textContent;
+
+  boton.disabled = true;
+  boton.textContent = "Procesando...";
+
+  const cambios = {
+    estado: nuevoEstado,
+    updated_at: new Date().toISOString()
+  };
+
+  if (nuevoEstado === "publicado") {
+    cambios.published_at = new Date().toISOString();
+    cambios.observaciones_admin = null;
+  }
+
+  if (nuevoEstado === "rechazado") {
+    cambios.observaciones_admin = observacion;
+    cambios.published_at = null;
+  }
+
+  const { error } = await supabaseClient
+    .from("articulos")
+    .update(cambios)
+    .eq("id", id);
+
+  if (error) {
+    console.error(
+      "Error al cambiar el estado:",
+      error
+    );
+
+    alert(
+      "No fue posible actualizar el artículo."
+    );
+
+    boton.disabled = false;
+    boton.textContent = textoOriginal;
+    return;
+  }
+
+  if (nuevoEstado === "publicado") {
+    alert(
+      "El artículo fue publicado correctamente."
+    );
+  }
+
+  if (nuevoEstado === "rechazado") {
+    alert(
+      "El artículo fue rechazado y la observación fue guardada."
+    );
+  }
+
+  await cargarArticulos();
+}
 
     await cargarArticulos();
   }
