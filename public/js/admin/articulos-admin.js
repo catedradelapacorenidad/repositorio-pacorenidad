@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
-  const listaArticulos = document.getElementById("listaArticulos");
+  const listaArticulos =
+    document.getElementById("listaArticulos");
 
   let usuarioActual = null;
 
@@ -61,7 +62,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     usuarioActual = session.user;
 
-    const { data: perfil, error: errorPerfil } = await supabaseClient
+    const {
+      data: perfil,
+      error: errorPerfil
+    } = await supabaseClient
       .from("profiles")
       .select("rol")
       .eq("id", usuarioActual.id)
@@ -71,8 +75,14 @@ document.addEventListener("DOMContentLoaded", async () => {
       throw errorPerfil;
     }
 
-    if (!perfil || perfil.rol !== "administrador") {
-      alert("No tienes permisos para administrar artículos.");
+    if (
+      !perfil ||
+      perfil.rol !== "administrador"
+    ) {
+      alert(
+        "No tienes permisos para administrar artículos."
+      );
+
       window.location.href = "index.html";
       return false;
     }
@@ -87,44 +97,68 @@ document.addEventListener("DOMContentLoaded", async () => {
       </div>
     `;
 
-    const { data: articulos, error } = await supabaseClient
+    const {
+      data: articulos,
+      error
+    } = await supabaseClient
       .from("articulos")
       .select("*")
-      .order("created_at", { ascending: false });
+      .order("created_at", {
+        ascending: false
+      });
 
     if (error) {
-      console.error("Error al cargar artículos:", error);
-      mostrarError("No fue posible cargar los artículos.");
+      console.error(
+        "Error al cargar artículos:",
+        error
+      );
+
+      mostrarError(
+        "No fue posible cargar los artículos."
+      );
+
       return;
     }
 
-    if (!articulos || articulos.length === 0) {
+    if (
+      !articulos ||
+      articulos.length === 0
+    ) {
       listaArticulos.innerHTML = `
         <div class="mensaje-panel">
           Todavía no hay artículos registrados.
         </div>
       `;
+
       return;
     }
 
-    listaArticulos.innerHTML = articulos
-      .map((articulo) => crearTarjetaArticulo(articulo))
-      .join("");
+    listaArticulos.innerHTML =
+      articulos
+        .map((articulo) =>
+          crearTarjetaArticulo(articulo)
+        )
+        .join("");
 
     agregarEventos();
   }
 
   function crearTarjetaArticulo(articulo) {
     const autorVisible =
-      articulo.mostrar_autor && articulo.autor_nombre
+      articulo.mostrar_autor &&
+      articulo.autor_nombre
         ? articulo.autor_nombre
         : "Aporte comunitario";
 
     const imagen = articulo.imagen_url
       ? `
         <img
-          src="${escaparHTML(articulo.imagen_url)}"
-          alt="${escaparHTML(articulo.titulo)}"
+          src="${escaparHTML(
+            articulo.imagen_url
+          )}"
+          alt="${escaparHTML(
+            articulo.titulo
+          )}"
         >
       `
       : `
@@ -132,6 +166,33 @@ document.addEventListener("DOMContentLoaded", async () => {
           Sin fotografía
         </div>
       `;
+
+    const observacion =
+      articulo.observaciones_admin
+        ? `
+          <div
+            style="
+              margin-top: 15px;
+              padding: 14px;
+              background: #fff7df;
+              border-left: 5px solid #d6aa00;
+              border-radius: 8px;
+              color: #66501b;
+              line-height: 1.5;
+            "
+          >
+            <strong>
+              Observación del administrador:
+            </strong>
+
+            <br>
+
+            ${escaparHTML(
+              articulo.observaciones_admin
+            )}
+          </div>
+        `
+        : "";
 
     return `
       <article
@@ -146,52 +207,91 @@ document.addEventListener("DOMContentLoaded", async () => {
         <div class="contenido-tarjeta">
 
           <div class="etiquetas-articulo">
+
             <span class="etiqueta">
-              ${escaparHTML(articulo.tipo)}
+              ${escaparHTML(
+                articulo.tipo
+              )}
             </span>
 
             <span class="etiqueta">
-              ${escaparHTML(articulo.categoria || "Sin categoría")}
+              ${escaparHTML(
+                articulo.categoria ||
+                "Sin categoría"
+              )}
             </span>
 
-            <span class="estado estado-${escaparHTML(articulo.estado)}">
-              ${escaparHTML(nombreEstado(articulo.estado))}
+            <span
+              class="estado estado-${escaparHTML(
+                articulo.estado
+              )}"
+            >
+              ${escaparHTML(
+                nombreEstado(
+                  articulo.estado
+                )
+              )}
             </span>
+
           </div>
 
           <h2>
-            ${escaparHTML(articulo.titulo)}
+            ${escaparHTML(
+              articulo.titulo
+            )}
           </h2>
 
           <p class="descripcion-articulo">
-            ${escaparHTML(articulo.descripcion_corta)}
+            ${escaparHTML(
+              articulo.descripcion_corta
+            )}
           </p>
 
           <div class="datos-articulo">
+
             <p>
               <strong>Autor:</strong>
-              ${escaparHTML(autorVisible)}
+              ${escaparHTML(
+                autorVisible
+              )}
             </p>
 
             <p>
               <strong>Fecha:</strong>
-              ${escaparHTML(formatearFecha(articulo.created_at))}
+              ${escaparHTML(
+                formatearFecha(
+                  articulo.created_at
+                )
+              )}
             </p>
+
           </div>
 
+          ${observacion}
+
           <details class="contenido-completo">
-            <summary>Ver contenido completo</summary>
+
+            <summary>
+              Ver contenido completo
+            </summary>
 
             <div class="texto-completo">
-              ${escaparHTML(articulo.contenido)}
+              ${escaparHTML(
+                articulo.contenido
+              )}
             </div>
 
             ${
               articulo.ubicacion
                 ? `
                   <p>
-                    <strong>Ubicación:</strong>
-                    ${escaparHTML(articulo.ubicacion)}
+                    <strong>
+                      Ubicación:
+                    </strong>
+
+                    ${escaparHTML(
+                      articulo.ubicacion
+                    )}
                   </p>
                 `
                 : ""
@@ -201,8 +301,13 @@ document.addEventListener("DOMContentLoaded", async () => {
               articulo.fecha_referencia
                 ? `
                   <p>
-                    <strong>Fecha o periodo:</strong>
-                    ${escaparHTML(articulo.fecha_referencia)}
+                    <strong>
+                      Fecha o periodo:
+                    </strong>
+
+                    ${escaparHTML(
+                      articulo.fecha_referencia
+                    )}
                   </p>
                 `
                 : ""
@@ -212,8 +317,13 @@ document.addEventListener("DOMContentLoaded", async () => {
               articulo.estado_conservacion
                 ? `
                   <p>
-                    <strong>Estado de conservación:</strong>
-                    ${escaparHTML(articulo.estado_conservacion)}
+                    <strong>
+                      Estado de conservación:
+                    </strong>
+
+                    ${escaparHTML(
+                      articulo.estado_conservacion
+                    )}
                   </p>
                 `
                 : ""
@@ -223,12 +333,18 @@ document.addEventListener("DOMContentLoaded", async () => {
               articulo.fuente
                 ? `
                   <p>
-                    <strong>Fuente:</strong>
-                    ${escaparHTML(articulo.fuente)}
+                    <strong>
+                      Fuente:
+                    </strong>
+
+                    ${escaparHTML(
+                      articulo.fuente
+                    )}
                   </p>
                 `
                 : ""
             }
+
           </details>
 
           <div class="acciones-articulo">
@@ -245,7 +361,17 @@ document.addEventListener("DOMContentLoaded", async () => {
                     Publicar
                   </button>
                 `
-                : ""
+                : `
+                  <a
+                    href="articulo.html?id=${articulo.id}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="boton-publicar"
+                    style="text-decoration:none;"
+                  >
+                    Ver publicado
+                  </a>
+                `
             }
 
             ${
@@ -287,129 +413,166 @@ document.addEventListener("DOMContentLoaded", async () => {
     document
       .querySelectorAll("[data-accion]")
       .forEach((boton) => {
-        boton.addEventListener("click", async () => {
-          const accion = boton.dataset.accion;
-          const articuloId = boton.dataset.id;
-          const imagenPath = boton.dataset.imagenPath || null;
+        boton.addEventListener(
+          "click",
+          async () => {
+            const accion =
+              boton.dataset.accion;
 
-          if (accion === "publicar") {
-            await cambiarEstado(
-              articuloId,
-              "publicado",
-              boton
-            );
-          }
+            const articuloId =
+              boton.dataset.id;
 
-          if (accion === "rechazar") {
-            await cambiarEstado(
-              articuloId,
-              "rechazado",
-              boton
-            );
-          }
+            const imagenPath =
+              boton.dataset.imagenPath ||
+              null;
 
-          if (accion === "eliminar") {
-            await eliminarArticulo(
-              articuloId,
-              imagenPath,
-              boton
-            );
+            if (accion === "publicar") {
+              await cambiarEstado(
+                articuloId,
+                "publicado",
+                boton
+              );
+            }
+
+            if (accion === "rechazar") {
+              await cambiarEstado(
+                articuloId,
+                "rechazado",
+                boton
+              );
+            }
+
+            if (accion === "eliminar") {
+              await eliminarArticulo(
+                articuloId,
+                imagenPath,
+                boton
+              );
+            }
           }
-        });
+        );
       });
   }
 
- async function cambiarEstado(id, nuevoEstado, boton) {
-  let observacion = null;
+  async function cambiarEstado(
+    id,
+    nuevoEstado,
+    boton
+  ) {
+    let observacion = null;
 
-  if (nuevoEstado === "publicado") {
-    const confirmarPublicacion = confirm(
-      "¿Deseas publicar este artículo?"
-    );
+    if (nuevoEstado === "publicado") {
+      const confirmarPublicacion =
+        confirm(
+          "¿Deseas publicar este artículo?"
+        );
 
-    if (!confirmarPublicacion) {
-      return;
-    }
-  }
-
-  if (nuevoEstado === "rechazado") {
-    observacion = prompt(
-      "Escribe la observación que verá el colaborador:"
-    );
-
-    if (observacion === null) {
-      return;
+      if (!confirmarPublicacion) {
+        return;
+      }
     }
 
-    observacion = observacion.trim();
-
-    if (!observacion) {
-      alert(
-        "Debes escribir una observación antes de rechazar el artículo."
+    if (nuevoEstado === "rechazado") {
+      observacion = prompt(
+        "Escribe la observación que verá el colaborador:"
       );
+
+      if (observacion === null) {
+        return;
+      }
+
+      observacion =
+        observacion.trim();
+
+      if (!observacion) {
+        alert(
+          "Debes escribir una observación antes de rechazar el artículo."
+        );
+
+        return;
+      }
+    }
+
+    const textoOriginal =
+      boton.textContent;
+
+    boton.disabled = true;
+    boton.textContent =
+      "Procesando...";
+
+    const cambios = {
+      estado: nuevoEstado,
+      updated_at:
+        new Date().toISOString()
+    };
+
+    if (
+      nuevoEstado === "publicado"
+    ) {
+      cambios.published_at =
+        new Date().toISOString();
+
+      cambios.observaciones_admin =
+        null;
+    }
+
+    if (
+      nuevoEstado === "rechazado"
+    ) {
+      cambios.observaciones_admin =
+        observacion;
+
+      cambios.published_at =
+        null;
+    }
+
+    const { error } =
+      await supabaseClient
+        .from("articulos")
+        .update(cambios)
+        .eq("id", id);
+
+    if (error) {
+      console.error(
+        "Error al cambiar el estado:",
+        error
+      );
+
+      alert(
+        "No fue posible actualizar el artículo."
+      );
+
+      boton.disabled = false;
+      boton.textContent =
+        textoOriginal;
+
       return;
     }
-  }
 
-  const textoOriginal = boton.textContent;
+    if (
+      nuevoEstado === "publicado"
+    ) {
+      alert(
+        "El artículo fue publicado correctamente."
+      );
+    }
 
-  boton.disabled = true;
-  boton.textContent = "Procesando...";
-
-  const cambios = {
-    estado: nuevoEstado,
-    updated_at: new Date().toISOString()
-  };
-
-  if (nuevoEstado === "publicado") {
-    cambios.published_at = new Date().toISOString();
-    cambios.observaciones_admin = null;
-  }
-
-  if (nuevoEstado === "rechazado") {
-    cambios.observaciones_admin = observacion;
-    cambios.published_at = null;
-  }
-
-  const { error } = await supabaseClient
-    .from("articulos")
-    .update(cambios)
-    .eq("id", id);
-
-  if (error) {
-    console.error(
-      "Error al cambiar el estado:",
-      error
-    );
-
-    alert(
-      "No fue posible actualizar el artículo."
-    );
-
-    boton.disabled = false;
-    boton.textContent = textoOriginal;
-    return;
-  }
-
-  if (nuevoEstado === "publicado") {
-    alert(
-      "El artículo fue publicado correctamente."
-    );
-  }
-
-  if (nuevoEstado === "rechazado") {
-    alert(
-      "El artículo fue rechazado y la observación fue guardada."
-    );
-  }
-
-  await cargarArticulos();
-}
+    if (
+      nuevoEstado === "rechazado"
+    ) {
+      alert(
+        "El artículo fue rechazado y la observación fue guardada."
+      );
+    }
 
     await cargarArticulos();
   }
 
-  async function eliminarArticulo(id, imagenPath, boton) {
+  async function eliminarArticulo(
+    id,
+    imagenPath,
+    boton
+  ) {
     const confirmar = confirm(
       "¿Deseas eliminar definitivamente este artículo? " +
       "Esta acción no se puede deshacer."
@@ -420,9 +583,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     boton.disabled = true;
-    boton.textContent = "Eliminando...";
+    boton.textContent =
+      "Eliminando...";
 
-    const { error: errorArticulo } = await supabaseClient
+    const {
+      error: errorArticulo
+    } = await supabaseClient
       .from("articulos")
       .delete()
       .eq("id", id);
@@ -433,15 +599,21 @@ document.addEventListener("DOMContentLoaded", async () => {
         errorArticulo
       );
 
-      alert("No fue posible eliminar el artículo.");
+      alert(
+        "No fue posible eliminar el artículo."
+      );
 
       boton.disabled = false;
-      boton.textContent = "Eliminar";
+      boton.textContent =
+        "Eliminar";
+
       return;
     }
 
     if (imagenPath) {
-      const { error: errorImagen } =
+      const {
+        error: errorImagen
+      } =
         await supabaseClient.storage
           .from("articulos")
           .remove([imagenPath]);
