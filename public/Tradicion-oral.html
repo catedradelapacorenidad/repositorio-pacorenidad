@@ -1,148 +1,378 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tradición Oral | Cátedra de la Pacoreñidad</title>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Tradición Oral | Cátedra de la Pacoreñidad
+  </title>
+
   <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    .publicaciones-section {
+      width: 92%;
+      max-width: 1180px;
+      margin: 45px auto;
+    }
+
+    .publicaciones-section > h2 {
+      margin-bottom: 8px;
+      color: #235437;
+      font-size: 30px;
+    }
+
+    .publicaciones-intro {
+      margin: 0 0 25px;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .publicaciones-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .publicacion-card {
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      background: #ffffff;
+      border-radius: 17px;
+      border-top: 5px solid #c9a227;
+      box-shadow: 0 7px 20px rgba(0, 0, 0, 0.09);
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .publicacion-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 11px 27px rgba(0, 0, 0, 0.13);
+    }
+
+    .publicacion-imagen {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      background: #ece9df;
+    }
+
+    .publicacion-sin-imagen {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 210px;
+      background: #eef4ed;
+      font-size: 58px;
+    }
+
+    .publicacion-contenido {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      padding: 23px;
+    }
+
+    .publicacion-categoria {
+      display: inline-block;
+      align-self: flex-start;
+      margin-bottom: 12px;
+      padding: 6px 11px;
+      border-radius: 20px;
+      background: #eef5ed;
+      color: #235437;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .publicacion-card h3 {
+      margin: 0 0 12px;
+      color: #235437;
+      font-size: 22px;
+      line-height: 1.3;
+    }
+
+    .publicacion-card p {
+      flex: 1;
+      margin: 0 0 20px;
+      color: #5d5d5d;
+      line-height: 1.6;
+    }
+
+    .publicacion-datos {
+      margin-bottom: 18px;
+      color: #777;
+      font-size: 13px;
+    }
+
+    .publicacion-enlace {
+      display: inline-block;
+      align-self: flex-start;
+      padding: 11px 17px;
+      border-radius: 8px;
+      background: #235437;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .publicacion-enlace:hover {
+      background: #163b27;
+    }
+
+    .estado-publicaciones {
+      padding: 28px;
+      border-radius: 14px;
+      background: #ffffff;
+      color: #666;
+      text-align: center;
+      box-shadow: 0 5px 16px rgba(0, 0, 0, 0.07);
+    }
+
+    @media (max-width: 650px) {
+      .publicaciones-section {
+        width: 95%;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<header class="topbar">
-  <div class="brand">
-    <img src="images/logo-catedra.png" class="logo" alt="Logo Cátedra de la Pacoreñidad">
-    <div>
-      <p class="eyebrow">Repositorio Digital</p>
-      <h1>Cátedra de la Pacoreñidad</h1>
-    </div>
-  </div>
+  <header class="topbar">
 
-  <nav class="main-nav">
-    <a href="index.html">Inicio</a>
-    <a href="nuestra-catedra.html">Nuestra Cátedra</a>
-    <a href="historia.html">Historia</a>
-    <a href="patrimonio.html">Patrimonio</a>
-    <a href="personajes.html">Personajes</a>
-    <a href="tradicion-oral.html">Tradición Oral</a>
-    <a href="index.html#repositorio">Biblioteca</a>
-    <a href="galeria.html">Galería</a>
-    <a href="mapa.html">Mapa</a>
-    <a href="contacto.html">Contacto</a>
+    <div class="brand">
 
-    <a href="login.html" class="login-btn">Acceso</a>
-  </nav>
-</header>
+      <img
+        src="images/logo-catedra.png"
+        class="logo"
+        alt="Logo Cátedra de la Pacoreñidad"
+      >
 
-<main>
-
-  <section class="intro">
-    <h2>Tradición Oral</h2>
-    <p>
-      Este espacio recoge los relatos, mitos, leyendas, fiestas, costumbres,
-      expresiones populares y memorias transmitidas de generación en generación
-      por la comunidad pacoreña.
-    </p>
-  </section>
-
-  <section class="cards-section">
-    <h2>Ayudanos a construir nuestra tradición oral</h2>
-
-    <div class="cards-grid">
-
-      <a class="info-card" href="#mitos-leyendas">
-        <span>📖</span>
-        <h3>Mitos y leyendas</h3>
-        <p>Relatos tradicionales, seres fantásticos, historias populares y narraciones de los mayores.</p>
-      </a>
-
-      <a class="info-card" href="#matraca">
-        <span>🪇</span>
-        <h3>La matraca pacoreña</h3>
-        <p>Historia, uso, significado cultural y memoria sonora de esta tradición local.</p>
-      </a>
-
-      <a class="info-card" href="#fiestas-agua">
-        <span>🎉</span>
-        <h3>Fiestas del Agua</h3>
-        <p>Origen, evolución, personajes, programación, memoria festiva y registros audiovisuales.</p>
-      </a>
-
-      <a class="info-card" href="#costumbres">
-        <span>☕</span>
-        <h3>Costumbres y saberes</h3>
-        <p>Prácticas cotidianas, oficios, comidas, dichos, juegos, música y formas de vida.</p>
-      </a>
-
-      <a class="info-card" href="#relatos-comunidad">
-        <span>🎙️</span>
-        <h3>Relatos de la comunidad</h3>
-        <p>Testimonios, entrevistas, audios, videos e historias compartidas por habitantes de Pácora.</p>
-      </a>
-
-      <a class="info-card" href="#aportes">
-        <span>➕</span>
-        <h3>Aportes ciudadanos</h3>
-        <p>Espacio futuro para que usuarios registrados agreguen relatos y material multimedia.</p>
-      </a>
+      <div>
+        <p class="eyebrow">Repositorio Digital</p>
+        <h1>Cátedra de la Pacoreñidad</h1>
+      </div>
 
     </div>
-  </section>
 
-  <section id="mitos-leyendas" class="info-section">
-    <h2>Mitos y leyendas</h2>
+    <nav class="main-nav">
+      <a href="index.html">Inicio</a>
+      <a href="nuestra-catedra.html">Nuestra Cátedra</a>
+      <a href="historia.html">Historia</a>
+      <a href="patrimonio.html">Patrimonio</a>
+      <a href="personajes.html">Personajes</a>
+      <a href="tradicion-oral.html">Tradición Oral</a>
+      <a href="biblioteca.html">Biblioteca</a>
+      <a href="galeria.html">Galería</a>
+      <a href="mapa.html">Mapa</a>
+      <a href="contacto.html">Contacto</a>
+      <a href="login.html" class="login-btn">Acceso</a>
+    </nav>
+
+  </header>
+
+  <main>
+
+    <section class="intro">
+
+      <h2>Tradición Oral</h2>
+
+      <p>
+        Este espacio recoge los relatos, mitos, leyendas,
+        fiestas, costumbres, expresiones populares y memorias
+        transmitidas de generación en generación por la
+        comunidad pacoreña.
+      </p>
+
+    </section>
+
+    <section class="cards-section">
+
+      <h2>Ayúdanos a construir nuestra tradición oral</h2>
+
+      <div class="cards-grid">
+
+        <a class="info-card" href="#publicaciones">
+
+          <span>📖</span>
+
+          <h3>Mitos, cuentos y leyendas</h3>
+
+          <p>
+            Relatos tradicionales, seres fantásticos,
+            historias populares y narraciones de los mayores.
+          </p>
+
+        </a>
+
+        <a class="info-card" href="#matraca">
+
+          <span>🪇</span>
+
+          <h3>La matraca pacoreña</h3>
+
+          <p>
+            Historia, uso, significado cultural y memoria
+            sonora de esta tradición local.
+          </p>
+
+        </a>
+
+        <a class="info-card" href="#fiestas-agua">
+
+          <span>🎉</span>
+
+          <h3>Fiestas del Agua</h3>
+
+          <p>
+            Origen, evolución, personajes, programación,
+            memoria festiva y registros audiovisuales.
+          </p>
+
+        </a>
+
+        <a class="info-card" href="#costumbres">
+
+          <span>☕</span>
+
+          <h3>Costumbres y saberes</h3>
+
+          <p>
+            Prácticas cotidianas, oficios, comidas, dichos,
+            juegos, música y formas de vida.
+          </p>
+
+        </a>
+
+        <a class="info-card" href="#relatos-comunidad">
+
+          <span>🎙️</span>
+
+          <h3>Relatos de la comunidad</h3>
+
+          <p>
+            Testimonios, entrevistas, audios, videos e historias
+            compartidas por habitantes de Pácora.
+          </p>
+
+        </a>
+
+        <a
+          class="info-card"
+          href="solicitar-acceso.html"
+        >
+
+          <span>➕</span>
+
+          <h3>Aportes ciudadanos</h3>
+
+          <p>
+            Solicita acceso para compartir relatos, fotografías,
+            documentos y otros materiales.
+          </p>
+
+        </a>
+
+      </div>
+
+    </section>
+
+    <!-- Artículos cargados automáticamente desde Supabase -->
+
+    <section
+      id="publicaciones"
+      class="publicaciones-section"
+    >
+
+      <h2>Relatos y aportes publicados</h2>
+
+      <p class="publicaciones-intro">
+        Explora los artículos de tradición oral compartidos por
+        colaboradores y aprobados para su publicación.
+      </p>
+
+      <div
+        id="estado-publicaciones"
+        class="estado-publicaciones"
+      >
+        Cargando publicaciones...
+      </div>
+
+      <div
+        id="lista-publicaciones"
+        class="publicaciones-grid"
+      ></div>
+
+    </section>
+
+    <section id="matraca" class="info-section">
+
+      <h2>La matraca pacoreña</h2>
+
+      <p>
+        Este apartado está dedicado a la matraca como expresión
+        cultural de Pácora: su historia, fabricación, sonidos,
+        usos festivos, fotografías, audios, videos y testimonios.
+      </p>
+
+    </section>
+
+    <section id="fiestas-agua" class="info-section">
+
+      <h2>Fiestas del Agua</h2>
+
+      <p>
+        En esta sección se documentará la memoria de las Fiestas
+        del Agua: origen, evolución, reinas, comparsas, pregones,
+        fotografías, videos, afiches y relatos de la comunidad.
+      </p>
+
+    </section>
+
+    <section id="costumbres" class="info-section">
+
+      <h2>Costumbres y saberes populares</h2>
+
+      <p>
+        Aquí se podrán registrar recetas tradicionales, oficios,
+        juegos, dichos, refranes, música, formas de hablar,
+        celebraciones familiares y prácticas cotidianas.
+      </p>
+
+    </section>
+
+    <section id="relatos-comunidad" class="info-section">
+
+      <h2>Relatos de la comunidad</h2>
+
+      <p>
+        Espacio para entrevistas, testimonios, crónicas, audios
+        y videos de personas que conservan la memoria viva del
+        municipio.
+      </p>
+
+    </section>
+
+  </main>
+
+  <footer>
     <p>
-      Aquí se recopilarán mitos, leyendas, cuentos populares, relatos de espantos,
-      historias de caminos, montañas, casas antiguas y narraciones transmitidas por tradición oral.
+      © 2026 Repositorio Digital de la Cátedra de la Pacoreñidad
     </p>
-  </section>
+  </footer>
 
-  <section id="matraca" class="info-section">
-    <h2>La matraca pacoreña</h2>
-    <p>
-      Este apartado estará dedicado a la matraca como expresión cultural de Pácora:
-      su historia, fabricación, sonidos, usos festivos, fotografías, audios, videos y testimonios.
-    </p>
-  </section>
-
-  <section id="fiestas-agua" class="info-section">
-    <h2>Fiestas del Agua</h2>
-    <p>
-      En esta sección se documentará la memoria de las Fiestas del Agua: origen,
-      evolución, reinas, comparsas, pregones, programación, fotografías, videos,
-      afiches y relatos de la comunidad.
-    </p>
-  </section>
-
-  <section id="costumbres" class="info-section">
-    <h2>Costumbres y saberes populares</h2>
-    <p>
-      Aquí se podrán registrar recetas tradicionales, oficios, juegos, dichos,
-      refranes, música, formas de hablar, celebraciones familiares y prácticas cotidianas.
-    </p>
-  </section>
-
-  <section id="relatos-comunidad" class="info-section">
-    <h2>Relatos de la comunidad</h2>
-    <p>
-      Espacio para entrevistas, testimonios, crónicas, audios y videos de personas
-      que conservan la memoria viva del municipio.
-    </p>
-  </section>
-
-  <section id="aportes" class="info-section">
-    <h2>Aportes ciudadanos</h2>
-    <p>
-      Próximamente los usuarios registrados podrán aportar relatos, fotografías,
-      audios, videos y documentos. Cada contribución será revisada antes de ser publicada.
-    </p>
-  </section>
-
-</main>
-
-<footer>
-  <p>© 2026 Repositorio Digital de la Cátedra de la Pacoreñidad</p>
-</footer>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/tradicion-oral.js"></script>
 
 </body>
 </html>
