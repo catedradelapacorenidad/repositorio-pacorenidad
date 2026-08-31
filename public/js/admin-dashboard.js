@@ -143,23 +143,32 @@ async function cargarEstadisticas() {
         const [
             totalArticulos,
             totalArticulosPendientes,
+            totalSolicitudesPendientes,
             totalPersonajes,
             totalDocumentos,
             totalGaleria,
             totalLugares,
             totalMensajes
         ] = await Promise.all([
-            obtenerCantidad("articulos"),
+   obtenerCantidad("articulos"),
 
-            obtenerCantidad(
-                "articulos",
-                {
-                    campo: "estado",
-                    valor: "pendiente"
-                }
-            ),
+obtenerCantidad(
+    "articulos",
+    {
+        campo: "estado",
+        valor: "pendiente"
+    }
+),
 
-            obtenerCantidad("personajes"),
+obtenerCantidad(
+    "solicitudes_colaborador",
+    {
+        campo: "estado",
+        valor: "pendiente"
+    }
+),
+
+obtenerCantidad("personajes"),
             obtenerCantidad("documentos"),
             obtenerCantidad("galeria"),
             obtenerCantidad("lugares"),
@@ -182,6 +191,11 @@ async function cargarEstadisticas() {
             "totalArticulosPendientes"
         ).textContent =
             totalArticulosPendientes ?? "Error";
+
+            document.getElementById(
+    "totalSolicitudesPendientes"
+).textContent =
+    totalSolicitudesPendientes ?? "Error";
 
         document.getElementById(
             "totalPersonajes"
