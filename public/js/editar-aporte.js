@@ -482,10 +482,40 @@ if (!articuloActualizado) {
     "No se pudo actualizar el aporte. Revisa los permisos de edición."
   );
 }
+// Notificar al administrador que el aporte fue corregido.
+// Si la notificación falla, las correcciones permanecen guardadas.
+try {
 
-      if (errorActualizar) {
-        throw errorActualizar;
+  const { error: errorNotificacion } =
+    await supabaseClient.functions.invoke(
+      "send-admin-notification",
+      {
+        body: {
+          tipo_notificacion: "aporte_corregido",
+          titulo,
+          autor:
+            autorNombre ||
+            usuarioActual.email ||
+            "Colaborador"
+        }
       }
+    );
+
+  if (errorNotificacion) {
+    console.error(
+      "El aporte fue corregido, pero no se pudo notificar al administrador:",
+      errorNotificacion
+    );
+  }
+
+} catch (errorNotificacion) {
+
+  console.error(
+    "Error al notificar el reenvío del aporte:",
+    errorNotificacion
+  );
+
+}
 
       if (
         imagen.reemplazada &&
