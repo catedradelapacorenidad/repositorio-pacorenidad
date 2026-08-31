@@ -403,7 +403,43 @@ const { error: errorArticulo } = await supabaseClient
       if (errorArticulo) {
         throw errorArticulo;
       }
+// Notificar al administrador sobre el nuevo aporte.
+// Si la notificación falla, el aporte permanece guardado.
+try {
 
+  const { error: errorNotificacion } =
+    await supabaseClient.functions.invoke(
+      "send-admin-notification",
+      {
+        body: {
+          tipo_notificacion: "nuevo_aporte",
+          titulo,
+          autor:
+            autorNombre ||
+            usuarioActual.email ||
+            "Colaborador",
+          tipo_aporte: tipo,
+          categoria,
+          descripcion: descripcionCorta
+        }
+      }
+    );
+
+  if (errorNotificacion) {
+    console.error(
+      "El aporte se guardó, pero no se pudo notificar al administrador:",
+      errorNotificacion
+    );
+  }
+
+} catch (errorNotificacion) {
+
+  console.error(
+    "Error al notificar el nuevo aporte:",
+    errorNotificacion
+  );
+
+}
       formAporte.reset();
 
       categoriaSelect.disabled = true;
