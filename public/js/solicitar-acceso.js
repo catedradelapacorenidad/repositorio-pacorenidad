@@ -120,7 +120,40 @@ document.addEventListener("DOMContentLoaded", () => {
         if (error) {
           throw error;
         }
+// Notificar al administrador sobre la nueva solicitud.
+// Si el correo falla, la solicitud permanece guardada.
+try {
 
+  const { error: errorNotificacion } =
+    await supabaseClient.functions.invoke(
+      "send-admin-notification",
+      {
+        body: {
+          nombre,
+          correo,
+          telefono,
+          institucion,
+          municipio,
+          mensaje
+        }
+      }
+    );
+
+  if (errorNotificacion) {
+    console.error(
+      "La solicitud se guardó, pero no se pudo notificar al administrador:",
+      errorNotificacion
+    );
+  }
+
+} catch (errorNotificacion) {
+
+  console.error(
+    "Error al enviar la notificación al administrador:",
+    errorNotificacion
+  );
+
+}
         formulario.reset();
 
         document.getElementById(
