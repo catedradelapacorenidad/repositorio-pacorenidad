@@ -31,7 +31,10 @@ document.addEventListener("DOMContentLoaded", async () => {
       return "publicado";
     }
 
-    if (estado === "rechazado") {
+    if (
+      estado === "rechazado" ||
+      estado === "correcciones"
+    ) {
       return "rechazado";
     }
 
@@ -45,6 +48,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (estado === "rechazado") {
       return "Rechazado";
+    }
+
+    if (estado === "correcciones") {
+      return "Requiere correcciones";
     }
 
     return "Pendiente";
@@ -82,6 +89,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     mostrarVacio("Cargando tus aportes...");
 
+    // ==============================
+    // CARGAR ARTÍCULOS
+    // ==============================
+
     const {
       data: articulos,
       error: errorArticulos
@@ -105,33 +116,105 @@ document.addEventListener("DOMContentLoaded", async () => {
       throw errorArticulos;
     }
 
-    if (!articulos || articulos.length === 0) {
+    // ==============================
+    // CARGAR RECURSOS PEDAGÓGICOS
+    // ==============================
+
+    const {
+      data: recursos,
+      error: errorRecursos
+    } = await supabaseClient
+      .from("recursos_pedagogicos")
+      .select(`
+        id,
+        titulo,
+        area,
+        eje_catedra,
+        estado,
+        observaciones_admin,
+        created_at
+      `)
+      .eq("autor_id", usuario.id)
+      .order("created_at", {
+        ascending: false
+      });
+
+    if (errorRecursos) {
+      throw errorRecursos;
+    }
+
+    // ==============================
+    // UNIR LOS DOS TIPOS DE APORTES
+    // ==============================
+
+    const listaArticulos =
+      (articulos || []).map((articulo) => ({
+        ...articulo,
+        claseAporte: "articulo"
+      }));
+
+    const listaRecursos =
+      (recursos || []).map((recurso) => ({
+        ...recurso,
+        claseAporte: "recurso"
+      }));
+
+    const aportes = [
+      ...listaArticulos,
+      ...listaRecursos
+    ].sort((a, b) => {
+      return new Date(b.created_at) -
+        new Date(a.created_at);
+    });
+
+    if (aportes.length === 0) {
       mostrarVacio(
-        "Todavía no has enviado artículos con esta cuenta."
+        "Todavía no has enviado aportes con esta cuenta."
       );
       return;
     }
 
     tablaArticulos.innerHTML = "";
 
-    articulos.forEach((articulo) => {
+    // ==============================
+    // MOSTRAR APORTES
+    // ==============================
+
+    aportes.forEach((aporte) => {
       const fila = document.createElement("tr");
 
       const estado =
-        articulo.estado || "pendiente";
+        aporte.estado || "pendiente";
 
       const titulo =
-        escaparHtml(articulo.titulo);
+        escaparHtml(aporte.titulo);
 
-      const categoria =
-        escaparHtml(
-          articulo.categoria ||
-          articulo.tipo ||
-          "General"
-        );
+      let categoria = "";
+
+      if (aporte.claseAporte === "recurso") {
+        categoria = `
+          <strong>Recurso pedagógico</strong>
+          <br>
+          ${escaparHtml(
+            aporte.area ||
+            aporte.eje_catedra ||
+            "General"
+          )}
+        `;
+      } else {
+        categoria = `
+          <strong>Artículo</strong>
+          <br>
+          ${escaparHtml(
+            aporte.categoria ||
+            aporte.tipo ||
+            "General"
+          )}
+        `;
+      }
 
       const observacion =
-        articulo.observaciones_admin
+        aporte.observaciones_admin
           ? `
             <div style="
               margin-top:8px;
@@ -142,8 +225,12 @@ document.addEventListener("DOMContentLoaded", async () => {
               border-radius:6px;
               font-size:14px;
             ">
+              <strong>
+                Observación del administrador:
+              </strong>
+              <br>
               ${escaparHtml(
-                articulo.observaciones_admin
+                aporte.observaciones_admin
               )}
             </div>
           `
@@ -151,33 +238,81 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       let acciones = "";
 
-      if (estado === "pendiente") {
-        acciones = `
-          <a
-            href="editar-aporte.html?id=${articulo.id}"
-            class="btn editar"
-          >
-            Editar
-          </a>
-        `;
-      } else if (estado === "publicado") {
-        acciones = `
-          <a
-            href="articulo.html?id=${articulo.id}"
-            class="btn ver"
-          >
-            Ver
-          </a>
-        `;
-      } else {
-        acciones = `
-          <a
-            href="editar-aporte.html?id=${articulo.id}"
-            class="btn editar"
-          >
-            Corregir
-          </a>
-        `;
+      // ==============================
+      // ACCIONES PARA RECURSOS
+      // ==============================
+
+      if (aporte.claseAporte === "recurso") {
+
+        if (estado === "publicado") {
+          acciones = `
+            <span style="
+              color:#235437;
+              font-weight:bold;
+            ">
+              ✓ Publicado
+            </span>
+          `;
+        } else if (
+          estado === "correcciones" ||
+          estado === "rechazado"
+        ) {
+          acciones = `
+            <a
+              href="editar-recurso.html?id=${aporte.id}"
+              class="btn editar"
+            >
+              Corregir recurso
+            </a>
+          `;
+        } else {
+          acciones = `
+            <a
+              href="editar-recurso.html?id=${aporte.id}"
+              class="btn editar"
+            >
+              Editar recurso
+            </a>
+          `;
+        }
+
+      }
+
+      // ==============================
+      // ACCIONES PARA ARTÍCULOS
+      // ==============================
+
+      else {
+
+        if (estado === "pendiente") {
+          acciones = `
+            <a
+              href="editar-aporte.html?id=${aporte.id}"
+              class="btn editar"
+            >
+              Editar
+            </a>
+          `;
+        } else if (estado === "publicado") {
+          acciones = `
+            <a
+              href="articulo.html?id=${aporte.id}"
+              class="btn ver"
+            >
+              Ver
+            </a>
+          `;
+        } else {
+          acciones = `
+            <a
+              href="editar-aporte.html?id=${aporte.id}"
+              class="btn editar"
+            >
+              Corregir
+            </a>
+          `;
+        }
+
       }
 
       fila.innerHTML = `
@@ -186,16 +321,21 @@ document.addEventListener("DOMContentLoaded", async () => {
           ${observacion}
         </td>
 
-        <td>${categoria}</td>
+        <td>
+          ${categoria}
+        </td>
 
         <td>
-          <span class="estado ${obtenerClaseEstado(estado)}">
+          <span class="
+            estado
+            ${obtenerClaseEstado(estado)}
+          ">
             ${obtenerTextoEstado(estado)}
           </span>
         </td>
 
         <td>
-          ${formatearFecha(articulo.created_at)}
+          ${formatearFecha(aporte.created_at)}
         </td>
 
         <td class="acciones">

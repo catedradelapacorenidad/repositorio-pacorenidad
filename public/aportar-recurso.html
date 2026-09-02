@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Aportar recurso pedagógico | Cátedra de la Pacoreñidad</title>
+
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f7f4ec, #eef5ed);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .aporte-container {
+      width: 92%;
+      max-width: 980px;
+      margin: 45px auto;
+      padding: 36px;
+      background: white;
+      border-top: 6px solid #c9a227;
+      border-radius: 22px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+    }
+
+    .aporte-container h1 {
+      margin: 0 0 12px;
+      color: #235437;
+    }
+
+    .introduccion {
+      margin-bottom: 30px;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    .usuario-activo {
+      margin-bottom: 28px;
+      padding: 14px 18px;
+      background: #eef5ed;
+      border-left: 5px solid #235437;
+      border-radius: 10px;
+      color: #235437;
+      font-weight: bold;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .campo-completo {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 7px;
+      color: #235437;
+      font-weight: bold;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      font: inherit;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    #objetivo-pedagogico {
+      min-height: 150px;
+    }
+
+    .ayuda {
+      display: block;
+      margin-top: 6px;
+      color: #777;
+      font-size: 13px;
+      font-weight: normal;
+    }
+
+    .autor-box {
+      padding: 20px;
+      background: #faf8f2;
+      border: 1px solid #e4dfd3;
+      border-radius: 14px;
+    }
+
+    .acciones {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .acciones button,
+    .volver {
+      padding: 13px 22px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    #enviar-recurso {
+      background: #235437;
+      color: white;
+    }
+
+    #enviar-recurso:hover {
+      background: #2f6f4e;
+    }
+
+    .volver {
+      background: #8b5a33;
+      color: white;
+    }
+
+    #mensaje {
+      min-height: 25px;
+      margin-top: 20px;
+      font-weight: bold;
+      line-height: 1.5;
+    }
+
+    button:disabled {
+      cursor: wait;
+      opacity: 0.65;
+    }
+
+    @media (max-width: 720px) {
+      .aporte-container {
+        width: 95%;
+        padding: 24px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .campo-completo {
+        grid-column: auto;
+      }
+
+      .acciones {
+        flex-direction: column;
+      }
+
+      .acciones button,
+      .volver {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="aporte-container">
+
+    <h1>Aportar recurso pedagógico</h1>
+
+    <p class="introduccion">
+      Comparte talleres, guías, secuencias didácticas, actividades,
+      proyectos de aula y otros recursos que ayuden a desarrollar la
+      Cátedra de la Pacoreñidad en las instituciones educativas.
+      El material será revisado antes de su publicación.
+    </p>
+
+    <div id="usuario-activo" class="usuario-activo">
+      Verificando sesión...
+    </div>
+
+    <form id="form-recurso">
+
+      <div class="form-grid">
+
+        <div class="campo-completo">
+          <label for="titulo">Título del recurso</label>
+
+          <input
+            type="text"
+            id="titulo"
+            placeholder="Ej. Taller sobre mitos y leyendas de Pácora"
+            required
+          >
+        </div>
+
+        <div>
+          <label for="institucion">Institución educativa</label>
+
+          <input
+            type="text"
+            id="institucion"
+            placeholder="Ej. I.E. Marco Fidel Suárez"
+          >
+        </div>
+
+        <div>
+          <label for="nivel">Nivel educativo</label>
+
+          <select id="nivel" required>
+            <option value="">Selecciona un nivel</option>
+            <option value="Preescolar">Preescolar</option>
+            <option value="Basica primaria">Básica primaria</option>
+            <option value="Basica secundaria">Básica secundaria</option>
+            <option value="Media">Media</option>
+            <option value="Multigrado">Multigrado</option>
+            <option value="Todos los niveles">Todos los niveles</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="grado">Grado o grados</label>
+
+          <input
+            type="text"
+            id="grado"
+            placeholder="Ej. 4° y 5°"
+          >
+        </div>
+
+        <div>
+          <label for="area">Área</label>
+
+          <select id="area" required>
+            <option value="">Selecciona un área</option>
+            <option value="Ciencias sociales">Ciencias sociales</option>
+            <option value="Lengua castellana">Lengua castellana</option>
+            <option value="Ciencias naturales">Ciencias naturales</option>
+            <option value="Educacion artistica">Educación artística</option>
+            <option value="Educacion fisica">Educación física</option>
+            <option value="Matematicas">Matemáticas</option>
+            <option value="Tecnologia e informatica">Tecnología e informática</option>
+            <option value="Etica y valores">Ética y valores</option>
+            <option value="Educacion religiosa">Educación religiosa</option>
+            <option value="Ingles">Inglés</option>
+            <option value="Transversal">Transversal</option>
+            <option value="Otra">Otra</option>
+          </select>
+        </div>
+
+        <div class="campo-completo">
+          <label for="eje-catedra">Eje o temática de la Cátedra</label>
+
+          <select id="eje-catedra" required>
+            <option value="">Selecciona una temática</option>
+            <option value="Historia local">Historia local</option>
+            <option value="Patrimonio cultural">Patrimonio cultural</option>
+            <option value="Tradicion oral">Tradición oral</option>
+            <option value="Personajes">Personajes</option>
+            <option value="Paisaje Cultural Cafetero">Paisaje Cultural Cafetero</option>
+            <option value="Turismo">Turismo</option>
+            <option value="Arte y cultura">Arte y cultura</option>
+            <option value="Identidad pacorena">Identidad pacoreña</option>
+            <option value="Medio ambiente y territorio">Medio ambiente y territorio</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+
+        <div class="campo-completo">
+          <label for="descripcion">Descripción del recurso</label>
+
+          <textarea
+            id="descripcion"
+            placeholder="Explica brevemente en qué consiste la actividad y cómo puede ser utilizada por otros docentes."
+            required
+          ></textarea>
+        </div>
+
+        <div class="campo-completo">
+          <label for="objetivo-pedagogico">Objetivo pedagógico</label>
+
+          <textarea
+            id="objetivo-pedagogico"
+            placeholder="Describe qué se espera que aprendan, comprendan o desarrollen los estudiantes."
+          ></textarea>
+        </div>
+
+        <div class="campo-completo">
+          <label for="archivo">Archivo del recurso</label>
+
+          <input
+            type="file"
+            id="archivo"
+            accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx"
+            required
+          >
+
+          <small class="ayuda">
+            Puedes subir PDF, Word, PowerPoint o Excel.
+            Tamaño máximo recomendado: 20 MB.
+          </small>
+        </div>
+
+        <div class="campo-completo autor-box">
+          <label for="autor-nombre">
+            Nombre del autor o responsable
+          </label>
+
+          <input
+            type="text"
+            id="autor-nombre"
+            placeholder="Nombre completo"
+          >
+
+          <small class="ayuda">
+            Este nombre aparecerá asociado al recurso cuando sea publicado.
+          </small>
+        </div>
+
+      </div>
+
+      <div class="acciones">
+
+        <button type="submit" id="enviar-recurso">
+          Enviar para revisión
+        </button>
+
+        <a href="panel.html" class="volver">
+          Volver al panel
+        </a>
+
+      </div>
+
+      <div id="mensaje" role="status"></div>
+
+    </form>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/aportar-recurso.js"></script>
+
+</body>
+
+</html>
