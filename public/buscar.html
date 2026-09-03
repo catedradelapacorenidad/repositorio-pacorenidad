@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Buscar | Cátedra de la Pacoreñidad</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f5ef;
+            color: #333;
+        }
+
+        .buscador-hero {
+            background: #235437;
+            color: white;
+            padding: 55px 20px;
+            text-align: center;
+        }
+
+        .buscador-hero h1 {
+            margin: 0 0 12px;
+            font-size: 2.3rem;
+        }
+
+        .buscador-hero p {
+            max-width: 750px;
+            margin: auto;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        .contenedor {
+            width: min(1100px, 92%);
+            margin: 35px auto 60px;
+        }
+
+        .caja-busqueda {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+        }
+
+        .barra-busqueda {
+            display: flex;
+            gap: 10px;
+        }
+
+        #textoBusqueda {
+            flex: 1;
+            padding: 14px 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        #textoBusqueda:focus {
+            border-color: #235437;
+        }
+
+        #btnBuscar {
+            border: none;
+            background: #c9a227;
+            color: #1f1f1f;
+            padding: 14px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #btnBuscar:hover {
+            opacity: 0.9;
+        }
+
+        .filtros {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .filtro {
+            padding: 9px 15px;
+            border: 1px solid #235437;
+            background: white;
+            color: #235437;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .filtro.activo {
+            background: #235437;
+            color: white;
+        }
+
+        .resumen-resultados {
+            margin: 30px 0 15px;
+            font-weight: bold;
+        }
+
+        #resultadosBusqueda {
+            display: grid;
+            gap: 18px;
+        }
+
+        .resultado {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            border-left: 5px solid #c9a227;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        .resultado-tipo {
+            display: inline-block;
+            background: #edf3ef;
+            color: #235437;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.82rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .resultado h2 {
+            margin: 5px 0 10px;
+            color: #235437;
+            font-size: 1.3rem;
+        }
+
+        .resultado p {
+            margin: 0 0 15px;
+            line-height: 1.55;
+        }
+
+        .resultado a {
+            color: #235437;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .resultado a:hover {
+            text-decoration: underline;
+        }
+
+        .estado-buscador {
+            background: white;
+            text-align: center;
+            padding: 35px 20px;
+            border-radius: 12px;
+            color: #666;
+        }
+
+        .volver {
+            display: inline-block;
+            margin-top: 30px;
+            color: #235437;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        @media (max-width: 650px) {
+            .barra-busqueda {
+                flex-direction: column;
+            }
+
+            #btnBuscar {
+                width: 100%;
+            }
+
+            .buscador-hero h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="buscador-hero">
+        <h1>🔎 Buscar en el repositorio</h1>
+
+        <p>
+            Explora los contenidos de la Cátedra de la Pacoreñidad:
+            historia, patrimonio, tradición oral, personajes,
+            documentos y recursos pedagógicos.
+        </p>
+    </section>
+
+    <main class="contenedor">
+
+        <section class="caja-busqueda">
+
+            <div class="barra-busqueda">
+
+                <input
+                    type="search"
+                    id="textoBusqueda"
+                    placeholder="¿Qué deseas buscar? Ej.: Cristo Rey, leyendas, café..."
+                    autocomplete="off"
+                >
+
+                <button id="btnBuscar" type="button">
+                    Buscar
+                </button>
+
+            </div>
+
+            <div class="filtros">
+
+                <button class="filtro activo" data-tipo="todos">
+                    Todos
+                </button>
+
+                <button class="filtro" data-tipo="articulo">
+                    Artículos
+                </button>
+
+                <button class="filtro" data-tipo="tradicion">
+                    Tradición oral
+                </button>
+
+                <button class="filtro" data-tipo="personaje">
+                    Personajes
+                </button>
+
+                <button class="filtro" data-tipo="patrimonio">
+                    Patrimonio
+                </button>
+
+                <button class="filtro" data-tipo="documento">
+                    Biblioteca
+                </button>
+
+                <button class="filtro" data-tipo="recurso">
+                    Recursos pedagógicos
+                </button>
+
+            </div>
+
+        </section>
+
+        <div
+            id="resumenResultados"
+            class="resumen-resultados"
+        ></div>
+
+        <section id="resultadosBusqueda">
+
+            <div class="estado-buscador">
+                Escribe una palabra o tema para comenzar la búsqueda.
+            </div>
+
+        </section>
+
+        <a href="index.html" class="volver">
+            ← Volver al inicio
+        </a>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js"></script>
+<script src="js/buscar.js"></script>
+
+</body>
+</html>

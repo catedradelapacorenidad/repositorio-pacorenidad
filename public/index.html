@@ -1,378 +1,680 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Cátedra de la Pacoreñidad</title>
+
   <link rel="stylesheet" href="css/styles.css">
-<link rel="stylesheet" href="css/header.css">
-<link rel="stylesheet" href="css/menu.css">
-<link rel="stylesheet" href="css/cards.css">
-<link rel="stylesheet" href="css/forms.css">
-<link rel="stylesheet" href="css/responsive.css">
-<link rel="stylesheet" href="css/inicio.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/menu.css">
+  <link rel="stylesheet" href="css/cards.css">
+  <link rel="stylesheet" href="css/forms.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/inicio.css">
 </head>
 
 <body>
 
-<header class="topbar">
+  <!-- ========================================
+       ENCABEZADO
+  ========================================= -->
 
-  <div class="brand">
+  <header class="topbar">
 
-    <img
-    src="images/logo-catedra.png"
-    alt="Logo Cátedra de la Pacoreñidad"
-    class="logo"
+    <div class="brand">
+
+      <img
+        src="images/logo-catedra.png"
+        alt="Logo Cátedra de la Pacoreñidad"
+        class="logo"
+      >
+
+      <div>
+        <p class="eyebrow">
+          Repositorio Digital
+        </p>
+
+        <h1>
+          Cátedra de la Pacoreñidad
+        </h1>
+      </div>
+
+    </div>
+
+    <button
+      id="menuButton"
+      class="menu-button"
+      type="button"
+      aria-label="Abrir menú"
+      aria-expanded="false"
     >
+      ☰
+    </button>
 
-    <div>
-      <p class="eyebrow">Repositorio Digital</p>
-      <h1>Cátedra de la Pacoreñidad</h1>
-    </div>
+    <nav id="mainNav" class="main-nav">
 
-  </div>
+      <a href="index.html">
+        Inicio
+      </a>
 
-  <button
-  id="menuButton"
-  class="menu-button"
-  type="button"
-  aria-label="Abrir menú"
-  aria-expanded="false"
->
-  ☰
-</button>
+      <div class="nav-dropdown">
 
-  <nav id="mainNav" class="main-nav">
+        <a
+          href="nuestra-catedra.html"
+          class="dropdown-button"
+        >
+          Nuestra cátedra ▾
+        </a>
 
-  <a href="index.html">Inicio</a>
+        <div class="dropdown-menu">
 
-  <div class="nav-dropdown">
-    <a href="nuestra-catedra.html" class="dropdown-button">
-      Nuestra cátedra ▾
-    </a>
+          <a href="nuestra-catedra.html#que-es">
+            ¿Qué es?
+          </a>
 
-    <div class="dropdown-menu">
-      <a href="nuestra-catedra.html#que-es">¿Qué es?</a>
-      <a href="nuestra-catedra.html#objetivos">Objetivos</a>
-      <a href="nuestra-catedra.html#importancia">Importancia</a>
-    </div>
-  </div>
+          <a href="nuestra-catedra.html#objetivos">
+            Objetivos
+          </a>
 
-  <a href="historia.html">Historia de Pácora</a>
+          <a href="nuestra-catedra.html#importancia">
+            Importancia
+          </a>
 
-  <div class="nav-dropdown">
-    <a href="patrimonio.html" class="dropdown-button">
-      Patrimonio ▾
-    </a>
+        </div>
 
-    <div class="dropdown-menu">
-      <a href="patrimonio.html#arquitectonico">Arquitectónico</a>
-      <a href="patrimonio.html#paisaje-cultural">Paisaje Cultural Cafetero</a>
-      <a href="patrimonio.html#natural">Natural</a>
-      <a href="patrimonio.html#religioso">Religioso</a>
-    </div>
-  </div>
+      </div>
 
-  <a href="personajes.html">Personajes</a>
+      <a href="historia.html">
+        Historia de Pácora
+      </a>
 
-  <div class="nav-dropdown">
-    <a href="tradicion-oral.html" class="dropdown-button">
-      Tradición oral ▾
-    </a>
+      <div class="nav-dropdown">
 
-    <div class="dropdown-menu">
-      <a href="tradicion-oral.html#mitos-leyendas">Mitos y leyendas</a>
-      <a href="tradicion-oral.html#matraca">La matraca</a>
-      <a href="tradicion-oral.html#fiestas-agua">Fiestas del Agua</a>
-      <a href="tradicion-oral.html#costumbres">Costumbres y saberes</a>
-    </div>
-  </div>
+        <a
+          href="patrimonio.html"
+          class="dropdown-button"
+        >
+          Patrimonio ▾
+        </a>
 
-  <a href="biblioteca.html">Biblioteca</a>
-  <a href="galeria.html">Galería</a>
-  <a href="mapa.html">Mapa</a>
-  <a href="contacto.html">Contacto</a>
+        <div class="dropdown-menu">
 
-  <a href="login.html" class="login-btn">Acceso</a>
+          <a href="patrimonio.html#arquitectonico">
+            Arquitectónico
+          </a>
 
-</nav>
+          <a href="patrimonio.html#paisaje-cultural">
+            Paisaje Cultural Cafetero
+          </a>
+
+          <a href="patrimonio.html#natural">
+            Natural
+          </a>
+
+          <a href="patrimonio.html#religioso">
+            Religioso
+          </a>
+
+        </div>
+
+      </div>
+
+      <a href="personajes.html">
+        Personajes
+      </a>
+
+      <div class="nav-dropdown">
+
+        <a
+          href="tradicion-oral.html"
+          class="dropdown-button"
+        >
+          Tradición oral ▾
+        </a>
+
+        <div class="dropdown-menu">
+
+          <a href="tradicion-oral.html#mitos-leyendas">
+            Mitos y leyendas
+          </a>
+
+          <a href="tradicion-oral.html#matraca">
+            La matraca
+          </a>
+
+          <a href="tradicion-oral.html#fiestas-agua">
+            Fiestas del Agua
+          </a>
+
+          <a href="tradicion-oral.html#costumbres">
+            Costumbres y saberes
+          </a>
+
+        </div>
+
+      </div>
+
+      <a href="biblioteca.html">
+        Biblioteca
+      </a>
+
+      <a href="galeria.html">
+        Galería
+      </a>
+
+      <a href="mapa.html">
+        Mapa
+      </a>
+
+      <a href="contacto.html">
+        Contacto
+      </a>
+
+      <a
+        href="login.html"
+        class="login-btn"
+      >
+        Acceso
+      </a>
+
+    </nav>
+
   </header>
 
- <section class="hero-slider">
 
-  <div class="slide active">
-    <img src="images/banner/banner1.jpg" alt="Vista representativa de Pácora">
-  </div>
+  <!-- ========================================
+       BANNER PRINCIPAL
+  ========================================= -->
 
-  <div class="slide">
-    <img src="images/banner/banner2.png" alt="Patrimonio de Pácora">
-  </div>
+  <section class="hero-slider">
 
-  <div class="slide">
-    <img src="images/banner/banner3.jpg" alt="Paisaje de Pácora">
-  </div>
-
-  <div class="slide">
-    <img src="images/banner/banner4.png" alt="Cultura pacoreña">
-  </div>
-
-  <div class="slide">
-    <img src="images/banner/banner5.jpeg" alt="Tradiciones de Pácora">
-  </div>
-
-  <div class="slide">
-    <img src="images/banner/banner6.jpg" alt="Territorio pacoreño">
-  </div>
-
-  <div class="slide">
-    <img src="images/banner/banner7.jpg" alt="Comunidad educativa de Pácora">
-  </div>
-
-  <div class="slide">
-    <img src="images/banner/banner8.jpg" alt="Identidad pacoreña">
-  </div>
-
-  <div class="hero-content">
-    <p class="hero-kicker">Pácora, Caldas</p>
-
-    <h1>Cátedra de la Pacoreñidad</h1>
-
-    <p class="hero-description">
-      Conociendo nuestras raíces, construimos nuestro futuro.
-    </p>
-
-    <div class="hero-actions">
-      <a href="nuestra-catedra.html" class="hero-btn">
-        Conocer la Cátedra
-      </a>
-
-      <a href="biblioteca.html" class="hero-btn hero-btn-secondary">
-        Biblioteca Digital
-      </a>
+    <div class="slide active">
+      <img
+        src="images/banner/banner1.jpg"
+        alt="Vista representativa de Pácora"
+      >
     </div>
-  </div>
 
-  <button class="prev" type="button" aria-label="Imagen anterior">
-    &#10094;
-  </button>
+    <div class="slide">
+      <img
+        src="images/banner/banner2.png"
+        alt="Patrimonio de Pácora"
+      >
+    </div>
 
-  <button class="next" type="button" aria-label="Imagen siguiente">
-    &#10095;
-  </button>
+    <div class="slide">
+      <img
+        src="images/banner/banner3.jpg"
+        alt="Paisaje de Pácora"
+      >
+    </div>
 
-<section id="secciones" class="quick-access" aria-labelledby="quick-access-title">
+    <div class="slide">
+      <img
+        src="images/banner/banner4.png"
+        alt="Cultura pacoreña"
+      >
+    </div>
 
-  <div class="section-intro">
-    <p class="section-kicker">Explora el territorio</p>
+    <div class="slide">
+      <img
+        src="images/banner/banner5.jpeg"
+        alt="Tradiciones de Pácora"
+      >
+    </div>
 
-    <h2 id="quick-access-title">
-      Descubre la Pacoreñidad
-    </h2>
+    <div class="slide">
+      <img
+        src="images/banner/banner6.jpg"
+        alt="Territorio pacoreño"
+      >
+    </div>
 
-    <p>
-      Conoce la historia, el patrimonio, los personajes y los recursos
-      que preservan la memoria cultural del municipio.
-    </p>
-  </div>
+    <div class="slide">
+      <img
+        src="images/banner/banner7.jpg"
+        alt="Comunidad educativa de Pácora"
+      >
+    </div>
 
-  <div class="quick-access-grid">
+    <div class="slide">
+      <img
+        src="images/banner/banner8.jpg"
+        alt="Identidad pacoreña"
+      >
+    </div>
 
-    <a href="historia.html" class="quick-card">
-      <span class="quick-icon">🏛️</span>
 
-      <div>
-        <h3>Historia de Pácora</h3>
-        <p>
-          Fundación, colonización, memoria local y acontecimientos
-          que marcaron el desarrollo del municipio.
+    <div class="hero-content">
+
+      <p class="hero-kicker">
+        Pácora, Caldas
+      </p>
+
+      <h1>
+        Cátedra de la Pacoreñidad
+      </h1>
+
+      <p class="hero-description">
+        Conociendo nuestras raíces, construimos nuestro futuro.
+      </p>
+
+      <div class="hero-actions">
+
+        <a
+          href="nuestra-catedra.html"
+          class="hero-btn"
+        >
+          Conocer la Cátedra
+        </a>
+
+        <a
+          href="biblioteca.html"
+          class="hero-btn hero-btn-secondary"
+        >
+          Biblioteca Digital
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <button
+      class="prev"
+      type="button"
+      aria-label="Imagen anterior"
+    >
+      &#10094;
+    </button>
+
+    <button
+      class="next"
+      type="button"
+      aria-label="Imagen siguiente"
+    >
+      &#10095;
+    </button>
+
+  </section>
+
+
+  <!-- ========================================
+       CONTENIDO PRINCIPAL
+  ========================================= -->
+
+  <main>
+
+
+    <!-- ========================================
+         ACCESOS RÁPIDOS
+    ========================================= -->
+
+    <section
+      id="secciones"
+      class="quick-access"
+      aria-labelledby="quick-access-title"
+    >
+
+      <div class="section-intro">
+
+        <p class="section-kicker">
+          Explora el territorio
         </p>
 
-        <span class="quick-link">Explorar historia →</span>
-      </div>
-    </a>
+        <h2 id="quick-access-title">
+          Descubre la Pacoreñidad
+        </h2>
 
-    <a href="patrimonio.html" class="quick-card">
-      <span class="quick-icon">🗺️</span>
-
-      <div>
-        <h3>Patrimonio</h3>
         <p>
-          Arquitectura, paisaje, tradición religiosa, patrimonio natural
-          y bienes culturales de Pácora.
+          Conoce la historia, el patrimonio, los personajes y los recursos
+          que preservan la memoria cultural del municipio.
         </p>
 
-        <span class="quick-link">Conocer el patrimonio →</span>
       </div>
-    </a>
 
-    <a href="biblioteca.html" class="quick-card">
-      <span class="quick-icon">📚</span>
 
-      <div>
-        <h3>Biblioteca Digital</h3>
-        <p>
-          Documentos, investigaciones, acuerdos municipales,
-          cartillas y recursos académicos.
-        </p>
+      <div class="quick-access-grid">
 
-        <span class="quick-link">Consultar biblioteca →</span>
-      </div>
-    </a>
 
-    <a href="galeria.html" class="quick-card">
-      <span class="quick-icon">📸</span>
+        <a
+          href="historia.html"
+          class="quick-card"
+        >
 
-      <div>
-        <h3>Galería</h3>
-        <p>
-          Fotografías antiguas y actuales que conservan
-          la memoria visual del municipio.
-        </p>
+          <span class="quick-icon">
+            🏛️
+          </span>
 
-        <span class="quick-link">Ver galería →</span>
-      </div>
-    </a>
+          <div>
 
-    <a href="tradicion-oral.html" class="quick-card">
-      <span class="quick-icon">🎙️</span>
+            <h3>
+              Historia de Pácora
+            </h3>
 
-      <div>
-        <h3>Tradición oral</h3>
-        <p>
-          Relatos, mitos, leyendas, costumbres y saberes
-          transmitidos entre generaciones.
-        </p>
+            <p>
+              Fundación, colonización, memoria local y acontecimientos
+              que marcaron el desarrollo del municipio.
+            </p>
 
-        <span class="quick-link">Escuchar la memoria →</span>
-      </div>
-    </a>
+            <span class="quick-link">
+              Explorar historia →
+            </span>
 
-    <a href="personajes.html" class="quick-card">
-      <span class="quick-icon">👥</span>
-
-      <div>
-        <h3>Personajes pacoreños</h3>
-        <p>
-          Conoce las historias de quienes han aportado
-          al desarrollo cultural y social de Pácora.
-        </p>
-
-        <span class="quick-link">Conocer personajes →</span>
-      </div>
-    </a>
-
-  </div>
-
-</section>
-<section id="historia" class="info-section">
-  <h2>Historia de Pácora</h2>
-  <p>Aquí se recopilará la memoria histórica del municipio: fundación, colonización, hechos importantes y documentos relacionados.</p>
-</section>
-
-<section id="patrimonio" class="info-section">
-  <h2>Patrimonio</h2>
-  <p>Espacio dedicado al patrimonio arquitectónico, natural, religioso, cultural e inmaterial de Pácora.</p>
-</section>
-
-<section id="personajes" class="info-section">
-  <h2>Personajes pacoreños</h2>
-  <p>Biografías, fotografías, documentos y relatos sobre personajes destacados del municipio.</p>
-</section>
-
-<section id="galeria" class="info-section">
-  <h2>Galería</h2>
-  <p>Fotografías antiguas y actuales que conservan la memoria visual de Pácora.</p>
-</section>
-
-<section id="contacto" class="info-section">
-  <h2>Contacto</h2>
-  <p>Espacio para información institucional, aportes de la comunidad y contacto del proyecto.</p>
-</section>
-    <section id="repositorio" class="repository-section">
-      <h2>Repositorio documental</h2>
-
-      <section class="toolbar" aria-label="Filtros de documentos">
-        <label for="category-filter">Categoría</label>
-        <select id="category-filter">
-          <option value="Todas">Todas</option>
-          <option value="Historia de Pácora">Historia de Pácora</option>
-          <option value="Tradición oral">Tradición oral</option>
-          <option value="Patrimonio Arquitectónico">Patrimonio Arquitectónico</option>
-          <option value="Patrimonio Natural">Patrimonio Natural</option>
-          <option value="Personajes pacoreños">Personajes pacoreños</option>
-          <option value="Paisaje cultural cafetero">Paisaje cultural cafetero</option>
-          <option value="Turismo y territorio">Turismo y territorio</option>
-          <option value="Recursos Docentes">Recursos docentes</option>
-          <option value="Producciones estudiantiles">Producciones estudiantiles</option>
-          <option value="Documentos Académicos e Institucionales">Documentos institucionales</option>
-          <option value="Fotografía, Audio y video">Fotografía, audio y video</option>
-        </select>
-      </section>
-
-      <section class="content-grid">
-        <section aria-labelledby="documents-title">
-          <div class="section-heading">
-            <h2 id="documents-title">Documentos disponibles</h2>
-            <span id="document-count">0 archivos</span>
           </div>
-          <div id="status-message" class="status">Cargando documentos...</div>
-          <div id="documents-list" class="documents-list"></div>
-        </section>
 
-        <aside id="upload-section" class="upload-panel" aria-labelledby="upload-title">
-          <h2 id="upload-title">Subir documento multimedia</h2>
-          <form id="upload-form">
-            <label>
-              Título
-              <input type="text" name="title" required placeholder="Ej. Entrevista a líder comunitario" />
-            </label>
+        </a>
 
-            <label>
-              Categoría
-              <select name="category" required>
-                <option value="">Selecciona una categoría</option>
-                <option value="Historia de Pácora">Historia de Pácora</option>
-                <option value="Tradición oral">Tradición oral</option>
-                <option value="Patrimonio Arquitectónico">Patrimonio Arquitectónico</option>
-                <option value="Patrimonio Natural">Patrimonio Natural</option>
-                <option value="Personajes pacoreños">Personajes pacoreños</option>
-                <option value="Paisaje cultural cafetero">Paisaje cultural cafetero</option>
-                <option value="Turismo y territorio">Turismo y territorio</option>
-                <option value="Recursos Docentes">Recursos docentes</option>
-                <option value="Producciones estudiantiles">Producciones estudiantiles</option>
-                <option value="Documentos Académicos e Institucionales">Documentos institucionales</option>
-                <option value="Fotografía, Audio y video">Fotografía, audio y video</option>
-              </select>
-            </label>
 
-            <label>
-              Autor o fuente
-              <input type="text" name="author" placeholder="Ej. Institución Educativa / Comunidad" />
-            </label>
+        <a
+          href="patrimonio.html"
+          class="quick-card"
+        >
 
-            <label>
-              Descripción
-              <textarea name="description" rows="4" placeholder="Describe brevemente el contenido"></textarea>
-            </label>
+          <span class="quick-icon">
+            🗺️
+          </span>
 
-            <label>
-              Archivo
-              <input type="file" name="file" required accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.mp3,.mp4,.wav" />
-            </label>
+          <div>
 
-            <button type="submit">Subir al repositorio</button>
-            <p id="upload-message" class="form-message" role="status"></p>
-          </form>
-        </aside>
-      </section>
+            <h3>
+              Patrimonio
+            </h3>
+
+            <p>
+              Arquitectura, paisaje, tradición religiosa, patrimonio natural
+              y bienes culturales de Pácora.
+            </p>
+
+            <span class="quick-link">
+              Conocer el patrimonio →
+            </span>
+
+          </div>
+
+        </a>
+
+
+        <a
+          href="biblioteca.html"
+          class="quick-card"
+        >
+
+          <span class="quick-icon">
+            📚
+          </span>
+
+          <div>
+
+            <h3>
+              Biblioteca Digital
+            </h3>
+
+            <p>
+              Documentos, investigaciones, acuerdos municipales,
+              cartillas y recursos académicos.
+            </p>
+
+            <span class="quick-link">
+              Consultar biblioteca →
+            </span>
+
+          </div>
+
+        </a>
+
+
+        <a
+          href="galeria.html"
+          class="quick-card"
+        >
+
+          <span class="quick-icon">
+            📸
+          </span>
+
+          <div>
+
+            <h3>
+              Galería
+            </h3>
+
+            <p>
+              Fotografías antiguas y actuales que conservan
+              la memoria visual del municipio.
+            </p>
+
+            <span class="quick-link">
+              Ver galería →
+            </span>
+
+          </div>
+
+        </a>
+
+
+        <a
+          href="tradicion-oral.html"
+          class="quick-card"
+        >
+
+          <span class="quick-icon">
+            🎙️
+          </span>
+
+          <div>
+
+            <h3>
+              Tradición oral
+            </h3>
+
+            <p>
+              Relatos, mitos, leyendas, costumbres y saberes
+              transmitidos entre generaciones.
+            </p>
+
+            <span class="quick-link">
+              Explorar la memoria →
+            </span>
+
+          </div>
+
+        </a>
+
+
+        <a
+          href="personajes.html"
+          class="quick-card"
+        >
+
+          <span class="quick-icon">
+            👥
+          </span>
+
+          <div>
+
+            <h3>
+              Personajes pacoreños
+            </h3>
+
+            <p>
+              Conoce las historias de quienes han aportado
+              al desarrollo cultural y social de Pácora.
+            </p>
+
+            <span class="quick-link">
+              Conocer personajes →
+            </span>
+
+          </div>
+
+        </a>
+
+
+      </div>
+
     </section>
+
+
+    <!-- ========================================
+         NOVEDADES
+    ========================================= -->
+
+    <section class="novedades-inicio">
+
+      <div class="section-intro">
+
+        <p class="section-kicker">
+          Actualidad del proyecto
+        </p>
+
+        <h2>
+          Novedades de la Cátedra
+        </h2>
+
+        <p>
+          Conoce nuevos contenidos, actividades, documentos y avances
+          del Repositorio Digital de la Cátedra de la Pacoreñidad.
+        </p>
+
+      </div>
+
+
+      <div class="novedades-grid">
+
+
+        <article class="novedad-card">
+
+          <span class="novedad-icono">
+            📚
+          </span>
+
+          <div>
+
+            <span class="novedad-tipo">
+              Biblioteca Digital
+            </span>
+
+            <h3>
+              Nuevos documentos disponibles
+            </h3>
+
+            <p>
+              Consulta documentos históricos, institucionales y educativos
+              incorporados al repositorio de la Cátedra.
+            </p>
+
+            <a href="biblioteca.html">
+              Explorar la biblioteca →
+            </a>
+
+          </div>
+
+        </article>
+
+
+        <article class="novedad-card">
+
+          <span class="novedad-icono">
+            📍
+          </span>
+
+          <div>
+
+            <span class="novedad-tipo">
+              Territorio
+            </span>
+
+            <h3>
+              Explora Pácora en el mapa interactivo
+            </h3>
+
+            <p>
+              Descubre lugares de interés patrimonial, cultural y turístico
+              identificados por la comunidad.
+            </p>
+
+            <a href="mapa.html">
+              Explorar el mapa →
+            </a>
+
+          </div>
+
+        </article>
+
+
+        <article class="novedad-card">
+
+          <span class="novedad-icono">
+            🎓
+          </span>
+
+          <div>
+
+            <span class="novedad-tipo">
+              Participación
+            </span>
+
+            <h3>
+              Construimos juntos la memoria de Pácora
+            </h3>
+
+            <p>
+              Docentes, estudiantes y ciudadanos pueden contribuir con
+              artículos, documentos y recursos pedagógicos.
+            </p>
+
+            <a href="solicitar-acceso.html">
+              Quiero participar →
+            </a>
+
+          </div>
+
+        </article>
+
+
+      </div>
+
+    </section>
+
+
   </main>
 
+
+  <!-- ========================================
+       PIE DE PÁGINA
+  ========================================= -->
+
   <footer>
-    <p>Cátedra de la Pacoreñidad · Pácora, Caldas</p>
+
+    <p>
+      Cátedra de la Pacoreñidad · Pácora, Caldas
+    </p>
+
+    <p class="contador-visitas">
+      👁️ Este repositorio ha recibido
+      <strong id="totalVisitas">—</strong>
+      visitas
+    </p>
+
   </footer>
 
+
+  <!-- ========================================
+       SCRIPTS
+  ========================================= -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script src="js/supabase-client.js"></script>
+
   <script src="js/app.js"></script>
-<script src="js/inicio.js"></script>
+
+  <script src="js/inicio.js"></script>
+
 </body>
+
 </html>

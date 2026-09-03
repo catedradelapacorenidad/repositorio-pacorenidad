@@ -34,6 +34,20 @@ let personajes = [];
 async function iniciarPersonajes() {
     await cargarPersonajes();
     configurarEventos();
+
+    const parametros = new URLSearchParams(window.location.search);
+    const personajeId = parametros.get("id");
+
+    if (personajeId) {
+
+        const personajeEncontrado = personajes.find(
+            personaje => String(personaje.id) === String(personajeId)
+        );
+
+        if (personajeEncontrado) {
+            abrirModal(personajeEncontrado);
+        }
+    }
 }
 
 /* =========================================

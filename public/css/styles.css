@@ -1289,3 +1289,30 @@ img {
     background:#a16a3d;
 
 }
+/* =========================================
+   POPUP DE LUGARES EN EL MAPA
+========================================= */
+
+.leaflet-popup-content-wrapper {
+    min-width: 280px;
+}
+
+.leaflet-popup-content {
+    width: 280px !important;
+    margin: 16px 18px !important;
+}
+
+.map-popup {
+    width: 100%;
+}
+
+.map-popup h3 {
+    margin: 0 0 10px;
+}
+
+.map-popup p {
+    margin: 7px 0;
+    line-height: 1.5;
+    white-space: normal;
+    word-break: normal;
+}

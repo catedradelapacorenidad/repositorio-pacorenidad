@@ -42,11 +42,40 @@ async function iniciarMapa() {
 
     setMapStatus("Selecciona un punto en el mapa.");
 
-    await cargarLugaresAprobados();
+    const lugaresAprobados = await cargarLugaresAprobados();
 
+const parametros = new URLSearchParams(window.location.search);
+const lugarId = parametros.get("id");
+
+if (lugarId && Array.isArray(lugaresAprobados)) {
+  const lugarEncontrado = lugaresAprobados.find(
+    lugar => String(lugar.id) === String(lugarId)
+  );
+
+  if (lugarEncontrado) {
     setTimeout(() => {
-      map.invalidateSize();
-    }, 200);
+
+      focusPlace(
+        Number(lugarEncontrado.latitud),
+        Number(lugarEncontrado.longitud)
+      );
+
+      publishedMarkers.eachLayer((marcador) => {
+        if (
+          String(marcador.lugarId) ===
+          String(lugarEncontrado.id)
+        ) {
+          marcador.openPopup();
+        }
+      });
+
+    }, 300);
+  }
+}
+
+setTimeout(() => {
+  map.invalidateSize();
+}, 200);
   } catch (error) {
     console.error("Error al iniciar el mapa:", error);
 
@@ -412,7 +441,9 @@ async function cargarLugaresAprobados() {
 
     lugares.forEach(crearMarcadorPublicado);
 
-    renderPlacesList(lugares);
+renderPlacesList(lugares);
+
+return lugares;
   } catch (error) {
     console.error("Error al cargar lugares:", error);
 
@@ -460,7 +491,7 @@ function crearMarcadorPublicado(lugar) {
     `
     : "";
 
-  L.marker([latitud, longitud], {
+  const marcador = L.marker([latitud, longitud], {
     title: lugar.nombre
   })
     .bindPopup(`
@@ -479,7 +510,8 @@ function crearMarcadorPublicado(lugar) {
       </article>
     `)
     .addTo(publishedMarkers);
-}
+    marcador.lugarId = lugar.id;
+}  
 
 /* =========================================
    LISTA
