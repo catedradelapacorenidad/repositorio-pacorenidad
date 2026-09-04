@@ -116,6 +116,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                 colorEstado = "#a33";
             }
 
+            if (estado === "requiere_correcciones") {
+                colorEstado = "#c9a227";
+            }
+
             const fecha = recurso.created_at
                 ? new Date(
                     recurso.created_at
@@ -238,99 +242,123 @@ document.addEventListener("DOMContentLoaded", async () => {
                     Enviado: ${fecha}
                 </p>
 
-               <div style="
-    margin-top:18px;
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-">
+                <div style="
+                    margin-top:18px;
+                    display:flex;
+                    flex-wrap:wrap;
+                    gap:10px;
+                ">
 
-    <button
-        type="button"
-        class="boton-enlace abrir-archivo"
-        data-path="${escaparAtributo(
-            recurso.archivo_path || ""
-        )}"
-    >
-        📄 Abrir archivo
-    </button>
+                    <button
+                        type="button"
+                        class="boton-enlace abrir-archivo"
+                        data-path="${escaparAtributo(
+                            recurso.archivo_path || ""
+                        )}"
+                    >
+                        📄 Abrir archivo
+                    </button>
 
-    ${
-        estado !== "publicado"
-        ? `
-            <button
-                type="button"
-                class="boton-publicar"
-                data-id="${recurso.id}"
-                style="
-                    padding:12px 18px;
-                    border:none;
-                    border-radius:8px;
-                    background:#235437;
-                    color:white;
-                    font-weight:bold;
-                    cursor:pointer;
-                "
-            >
-                ✅ Publicar
-            </button>
+                    ${
+                        estado !== "publicado"
+                        ? `
+                            <button
+                                type="button"
+                                class="boton-publicar"
+                                data-id="${recurso.id}"
+                                style="
+                                    padding:12px 18px;
+                                    border:none;
+                                    border-radius:8px;
+                                    background:#235437;
+                                    color:white;
+                                    font-weight:bold;
+                                    cursor:pointer;
+                                "
+                            >
+                                ✅ Publicar
+                            </button>
 
-            <button
-                type="button"
-                class="boton-correcciones"
-                data-id="${recurso.id}"
-                style="
-                    padding:12px 18px;
-                    border:none;
-                    border-radius:8px;
-                    background:#c9a227;
-                    color:#222;
-                    font-weight:bold;
-                    cursor:pointer;
-                "
-            >
-                ✏️ Solicitar correcciones
-            </button>
+                            <button
+                                type="button"
+                                class="boton-correcciones"
+                                data-id="${recurso.id}"
+                                style="
+                                    padding:12px 18px;
+                                    border:none;
+                                    border-radius:8px;
+                                    background:#c9a227;
+                                    color:#222;
+                                    font-weight:bold;
+                                    cursor:pointer;
+                                "
+                            >
+                                ✏️ Solicitar correcciones
+                            </button>
 
-            <button
-                type="button"
-                class="boton-rechazar"
-                data-id="${recurso.id}"
-                style="
-                    padding:12px 18px;
-                    border:none;
-                    border-radius:8px;
-                    background:#9b2c2c;
-                    color:white;
-                    font-weight:bold;
-                    cursor:pointer;
-                "
-            >
-                ❌ Rechazar
-            </button>
-        `
-        : ""
-    }
+                            <button
+                                type="button"
+                                class="boton-rechazar"
+                                data-id="${recurso.id}"
+                                style="
+                                    padding:12px 18px;
+                                    border:none;
+                                    border-radius:8px;
+                                    background:#9b2c2c;
+                                    color:white;
+                                    font-weight:bold;
+                                    cursor:pointer;
+                                "
+                            >
+                                ❌ Rechazar
+                            </button>
+                        `
+                        : ""
+                    }
 
-</div>
+                    <button
+                        type="button"
+                        class="boton-eliminar"
+                        data-id="${recurso.id}"
+                        data-path="${escaparAtributo(
+                            recurso.archivo_path || ""
+                        )}"
+                        style="
+                            padding:12px 18px;
+                            border:none;
+                            border-radius:8px;
+                            background:#5f1616;
+                            color:white;
+                            font-weight:bold;
+                            cursor:pointer;
+                        "
+                    >
+                        🗑️ Eliminar definitivamente
+                    </button>
 
-${
-    recurso.observaciones_admin
-    ? `
-        <div style="
-            margin-top:15px;
-            padding:12px;
-            background:#faf4df;
-            border-left:4px solid #c9a227;
-            border-radius:8px;
-            line-height:1.5;
-        ">
-            <strong>Observaciones del administrador:</strong><br>
-            ${escaparHTML(recurso.observaciones_admin)}
-        </div>
-    `
-    : ""
-}
+                </div>
+
+                ${
+                    recurso.observaciones_admin
+                    ? `
+                        <div style="
+                            margin-top:15px;
+                            padding:12px;
+                            background:#faf4df;
+                            border-left:4px solid #c9a227;
+                            border-radius:8px;
+                            line-height:1.5;
+                        ">
+                            <strong>
+                                Observaciones del administrador:
+                            </strong><br>
+                            ${escaparHTML(
+                                recurso.observaciones_admin
+                            )}
+                        </div>
+                    `
+                    : ""
+                }
 
             `;
 
@@ -338,194 +366,383 @@ ${
         }
 
         // =================================================
-        // BOTONES PARA ABRIR ARCHIVOS PRIVADOS
+        // ABRIR ARCHIVOS PRIVADOS
         // =================================================
 
         document
             .querySelectorAll(".abrir-archivo")
             .forEach((boton) => {
 
-                boton.addEventListener(
-                    "click",
-                    async () => {
+                boton.addEventListener("click", async () => {
 
-                        const path =
-                            boton.dataset.path;
+                    const path = boton.dataset.path;
 
-                        if (!path) {
-                            alert(
-                                "Este recurso no tiene un archivo asociado."
-                            );
-                            return;
-                        }
+                    if (!path) {
+                        alert(
+                            "Este recurso no tiene un archivo asociado."
+                        );
+                        return;
+                    }
 
-                        const textoOriginal =
-                            boton.textContent;
+                    const textoOriginal =
+                        boton.textContent;
 
-                        boton.disabled = true;
-                        boton.textContent =
-                            "Abriendo...";
+                    boton.disabled = true;
+                    boton.textContent =
+                        "Abriendo...";
 
-                        const {
-                            data,
-                            error
-                        } = await supabaseClient.storage
-                            .from(
-                                "recursos-pedagogicos"
-                            )
-                            .createSignedUrl(
-                                path,
-                                300
-                            );
+                    const {
+                        data,
+                        error
+                    } = await supabaseClient.storage
+                        .from("recursos-pedagogicos")
+                        .createSignedUrl(
+                            path,
+                            300
+                        );
+
+                    boton.disabled = false;
+                    boton.textContent =
+                        textoOriginal;
+
+                    if (
+                        error ||
+                        !data?.signedUrl
+                    ) {
+
+                        console.error(error);
+
+                        alert(
+                            "No fue posible abrir el archivo."
+                        );
+
+                        return;
+                    }
+
+                    window.open(
+                        data.signedUrl,
+                        "_blank",
+                        "noopener,noreferrer"
+                    );
+
+                });
+
+            });
+
+        // =================================================
+        // PUBLICAR RECURSO
+        // =================================================
+
+        document
+            .querySelectorAll(".boton-publicar")
+            .forEach((boton) => {
+
+                boton.addEventListener("click", async () => {
+
+                    const id =
+                        boton.dataset.id;
+
+                    const confirmar =
+                        confirm(
+                            "¿Deseas publicar este recurso pedagógico?"
+                        );
+
+                    if (!confirmar) {
+                        return;
+                    }
+
+                    boton.disabled = true;
+                    boton.textContent =
+                        "Publicando...";
+
+                    const {
+                        error
+                    } = await supabaseClient
+                        .from("recursos_pedagogicos")
+                        .update({
+                            estado: "publicado",
+                            observaciones_admin: null,
+                            published_at:
+                                new Date().toISOString(),
+                            updated_at:
+                                new Date().toISOString()
+                        })
+                        .eq("id", id);
+
+                    if (error) {
+
+                        console.error(error);
+
+                        alert(
+                            "No fue posible publicar el recurso: " +
+                            error.message
+                        );
 
                         boton.disabled = false;
                         boton.textContent =
-                            textoOriginal;
+                            "✅ Publicar";
 
-                        if (error || !data?.signedUrl) {
+                        return;
+                    }
 
-                            console.error(error);
+                    alert(
+                        "El recurso fue publicado correctamente."
+                    );
+
+                    await cargarRecursos();
+
+                });
+
+            });
+
+        // =================================================
+        // SOLICITAR CORRECCIONES
+        // =================================================
+
+        document
+            .querySelectorAll(".boton-correcciones")
+            .forEach((boton) => {
+
+                boton.addEventListener("click", async () => {
+
+                    const id =
+                        boton.dataset.id;
+
+                    const observacion =
+                        prompt(
+                            "Escribe las correcciones que debe realizar el colaborador:"
+                        );
+
+                    if (observacion === null) {
+                        return;
+                    }
+
+                    if (!observacion.trim()) {
+                        alert(
+                            "Debes escribir una observación antes de solicitar correcciones."
+                        );
+                        return;
+                    }
+
+                    boton.disabled = true;
+                    boton.textContent =
+                        "Guardando...";
+
+                    const {
+                        error
+                    } = await supabaseClient
+                        .from("recursos_pedagogicos")
+                        .update({
+                            estado:
+                                "requiere_correcciones",
+                            observaciones_admin:
+                                observacion.trim(),
+                            updated_at:
+                                new Date().toISOString()
+                        })
+                        .eq("id", id);
+
+                    if (error) {
+
+                        console.error(error);
+
+                        alert(
+                            "No fue posible solicitar las correcciones: " +
+                            error.message
+                        );
+
+                        boton.disabled = false;
+                        boton.textContent =
+                            "✏️ Solicitar correcciones";
+
+                        return;
+                    }
+
+                    alert(
+                        "Se solicitaron correcciones al colaborador."
+                    );
+
+                    await cargarRecursos();
+
+                });
+
+            });
+
+        // =================================================
+        // RECHAZAR RECURSO
+        // =================================================
+
+        document
+            .querySelectorAll(".boton-rechazar")
+            .forEach((boton) => {
+
+                boton.addEventListener("click", async () => {
+
+                    const id =
+                        boton.dataset.id;
+
+                    const confirmar =
+                        confirm(
+                            "¿Seguro que deseas rechazar este recurso pedagógico?"
+                        );
+
+                    if (!confirmar) {
+                        return;
+                    }
+
+                    boton.disabled = true;
+                    boton.textContent =
+                        "Rechazando...";
+
+                    const {
+                        error
+                    } = await supabaseClient
+                        .from("recursos_pedagogicos")
+                        .update({
+                            estado: "rechazado",
+                            published_at: null,
+                            updated_at:
+                                new Date().toISOString()
+                        })
+                        .eq("id", id);
+
+                    if (error) {
+
+                        console.error(error);
+
+                        alert(
+                            "No fue posible rechazar el recurso: " +
+                            error.message
+                        );
+
+                        boton.disabled = false;
+                        boton.textContent =
+                            "❌ Rechazar";
+
+                        return;
+                    }
+
+                    alert(
+                        "El recurso fue rechazado correctamente."
+                    );
+
+                    await cargarRecursos();
+
+                });
+
+            });
+
+        // =================================================
+        // ELIMINAR DEFINITIVAMENTE
+        // =================================================
+
+        document
+            .querySelectorAll(".boton-eliminar")
+            .forEach((boton) => {
+
+                boton.addEventListener("click", async () => {
+
+                    const id =
+                        boton.dataset.id;
+
+                    const path =
+                        boton.dataset.path;
+
+                    const confirmar =
+                        confirm(
+                            "Esta acción eliminará definitivamente el recurso y su archivo. ¿Deseas continuar?"
+                        );
+
+                    if (!confirmar) {
+                        return;
+                    }
+
+                    const segundaConfirmacion =
+                        confirm(
+                            "¿Confirmas la eliminación definitiva? Esta acción no se puede deshacer."
+                        );
+
+                    if (!segundaConfirmacion) {
+                        return;
+                    }
+
+                    boton.disabled = true;
+                    boton.textContent =
+                        "Eliminando...";
+
+                    // -----------------------------------------
+                    // ELIMINAR ARCHIVO DEL STORAGE
+                    // -----------------------------------------
+
+                    if (path) {
+
+                        const {
+                            error: errorArchivo
+                        } = await supabaseClient.storage
+                            .from("recursos-pedagogicos")
+                            .remove([path]);
+
+                        if (errorArchivo) {
+
+                            console.error(
+                                "Error al eliminar archivo:",
+                                errorArchivo
+                            );
 
                             alert(
-                                "No fue posible abrir el archivo."
+                                "No fue posible eliminar el archivo del recurso: " +
+                                errorArchivo.message
                             );
+
+                            boton.disabled = false;
+                            boton.textContent =
+                                "🗑️ Eliminar definitivamente";
 
                             return;
                         }
 
-                        window.open(
-                            data.signedUrl,
-                            "_blank",
-                            "noopener,noreferrer"
+                    }
+
+                    // -----------------------------------------
+                    // ELIMINAR REGISTRO DE LA BASE DE DATOS
+                    // -----------------------------------------
+
+                    const {
+                        error: errorRegistro
+                    } = await supabaseClient
+                        .from("recursos_pedagogicos")
+                        .delete()
+                        .eq("id", id);
+
+                    if (errorRegistro) {
+
+                        console.error(
+                            "Error al eliminar registro:",
+                            errorRegistro
                         );
 
+                        alert(
+                            "El archivo fue eliminado, pero no fue posible eliminar el registro: " +
+                            errorRegistro.message
+                        );
+
+                        boton.disabled = false;
+                        boton.textContent =
+                            "🗑️ Eliminar definitivamente";
+
+                        return;
                     }
-                );
+
+                    alert(
+                        "El recurso fue eliminado definitivamente."
+                    );
+
+                    await cargarRecursos();
+
+                });
 
             });
-// =================================================
-// PUBLICAR RECURSO
-// =================================================
 
-document
-    .querySelectorAll(".boton-publicar")
-    .forEach((boton) => {
-
-        boton.addEventListener("click", async () => {
-
-            const id = boton.dataset.id;
-
-            const confirmar = confirm(
-                "¿Deseas publicar este recurso pedagógico?"
-            );
-
-            if (!confirmar) {
-                return;
-            }
-
-            boton.disabled = true;
-            boton.textContent = "Publicando...";
-
-            const {
-                error
-            } = await supabaseClient
-                .from("recursos_pedagogicos")
-                .update({
-                    estado: "publicado",
-                    observaciones_admin: null,
-                    published_at: new Date().toISOString(),
-                    updated_at: new Date().toISOString()
-                })
-                .eq("id", id);
-
-            if (error) {
-
-                console.error(error);
-
-                alert(
-                    "No fue posible publicar el recurso: " +
-                    error.message
-                );
-
-                boton.disabled = false;
-                boton.textContent = "✅ Publicar";
-
-                return;
-            }
-
-            alert(
-                "El recurso fue publicado correctamente."
-            );
-
-            await cargarRecursos();
-
-        });
-
-    });
-
-    // =================================================
-// SOLICITAR CORRECCIONES
-// =================================================
-
-document
-    .querySelectorAll(".boton-correcciones")
-    .forEach((boton) => {
-
-        boton.addEventListener("click", async () => {
-
-            const id = boton.dataset.id;
-
-            const observacion = prompt(
-                "Escribe las correcciones que debe realizar el colaborador:"
-            );
-
-            if (observacion === null) {
-                return;
-            }
-
-            if (!observacion.trim()) {
-                alert(
-                    "Debes escribir una observación antes de solicitar correcciones."
-                );
-                return;
-            }
-
-            boton.disabled = true;
-            boton.textContent = "Guardando...";
-
-            const { error } = await supabaseClient
-                .from("recursos_pedagogicos")
-                .update({
-                    estado: "requiere_correcciones",
-                    observaciones_admin: observacion.trim(),
-                    updated_at: new Date().toISOString()
-                })
-                .eq("id", id);
-
-            if (error) {
-
-                console.error(error);
-
-                alert(
-                    "No fue posible solicitar las correcciones: " +
-                    error.message
-                );
-
-                boton.disabled = false;
-                boton.textContent = "✏️ Solicitar correcciones";
-
-                return;
-            }
-
-            alert(
-                "Se solicitaron correcciones al colaborador."
-            );
-
-            await cargarRecursos();
-
-        });
-
-    });
     }
 
     // =====================================================
