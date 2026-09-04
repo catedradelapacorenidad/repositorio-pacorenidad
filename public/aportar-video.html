@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Publicar video | Cátedra de la Pacoreñidad
+    </title>
+
+    <link rel="stylesheet" href="css/styles.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(
+                135deg,
+                #f7f4ec,
+                #eef5ed
+            );
+            font-family: Arial, Helvetica, sans-serif;
+            color: #333;
+        }
+
+        .video-container {
+            width: 90%;
+            max-width: 900px;
+            margin: 45px auto;
+            padding: 35px;
+            background: white;
+            border-radius: 20px;
+            border-top: 6px solid #c9a227;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #235437;
+        }
+
+        .introduccion {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin: 18px 0 8px;
+            color: #235437;
+            font-weight: bold;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .ayuda {
+            display: block;
+            margin-top: 7px;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .aviso {
+            margin-top: 20px;
+            padding: 16px;
+            background: #eef5ed;
+            border-left: 4px solid #235437;
+            border-radius: 8px;
+            color: #235437;
+            line-height: 1.5;
+        }
+
+        .acciones {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 24px;
+        }
+
+        button,
+        .volver {
+            padding: 13px 22px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        #publicar {
+            background: #235437;
+            color: white;
+        }
+
+        #publicar:hover {
+            background: #2f6f4e;
+        }
+
+        #publicar:disabled {
+            opacity: 0.65;
+            cursor: wait;
+        }
+
+        .volver {
+            background: #8b5a33;
+            color: white;
+        }
+
+        #mensaje {
+            margin-top: 18px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 650px) {
+            .video-container {
+                width: 94%;
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="video-container">
+
+        <h1>Publicar video en la Galería</h1>
+
+        <p class="introduccion">
+            Comparte un video relacionado con la historia,
+            el patrimonio, la cultura, la música, la educación
+            o la memoria de Pácora mediante un enlace público.
+        </p>
+
+        <label for="titulo">
+            Título
+        </label>
+
+        <input
+            type="text"
+            id="titulo"
+            placeholder="Título del video"
+        >
+
+        <label for="descripcion">
+            Descripción
+        </label>
+
+        <textarea
+            id="descripcion"
+            placeholder="Describe brevemente el contenido del video"
+        ></textarea>
+
+        <label for="categoria">
+            Categoría temática
+        </label>
+
+        <select id="categoria">
+            <option value="Historia">Historia</option>
+            <option value="Patrimonio">Patrimonio</option>
+            <option value="Tradiciones y costumbres">
+                Tradiciones y costumbres
+            </option>
+            <option value="Personajes">Personajes</option>
+            <option value="Paisaje y territorio">
+                Paisaje y territorio
+            </option>
+            <option value="Eventos">Eventos</option>
+            <option value="Educación">Educación</option>
+            <option value="Cultura">Cultura</option>
+            <option value="Música pacoreña">
+                Música pacoreña
+            </option>
+            <option value="Álbum musical pacoreño">
+                Álbum musical pacoreño
+            </option>
+            <option value="Otros">Otros</option>
+        </select>
+
+        <label for="enlace">
+            Enlace del video
+        </label>
+
+        <input
+            type="url"
+            id="enlace"
+            placeholder="https://www.youtube.com/watch?v=..."
+        >
+
+        <small class="ayuda">
+            Pega el enlace público del video.
+        </small>
+
+        <div class="aviso">
+            🎬 El video permanecerá alojado en su plataforma original.
+            El repositorio guardará únicamente el enlace.
+            La administración podrá retirar contenidos que no correspondan
+            con los propósitos de la Cátedra de la Pacoreñidad.
+        </div>
+
+        <div class="acciones">
+
+            <button
+                type="button"
+                id="publicar"
+            >
+                Publicar video
+            </button>
+
+            <a
+                href="panel.html"
+                class="volver"
+            >
+                Volver al panel
+            </a>
+
+        </div>
+
+        <div id="mensaje"></div>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/aportar-video.js"></script>
+
+</body>
+
+</html>

@@ -150,6 +150,44 @@
     .abrir-multimedia:hover {
       background: #0f351d;
     }
+        .filtros-video {
+      margin: -10px 0 35px;
+      padding: 18px;
+      border-radius: 14px;
+      background: #f7f4ec;
+      text-align: center;
+    }
+
+    .titulo-filtros-video {
+      margin: 0 0 14px;
+      color: #184d2b;
+      font-weight: bold;
+    }
+
+    .botones-filtros-video {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .filtro-video {
+      padding: 8px 14px;
+      border: 1px solid #d8dfd9;
+      border-radius: 20px;
+      background: white;
+      color: #184d2b;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .filtro-video:hover,
+    .filtro-video.activo {
+      background: #c9a227;
+      color: white;
+      border-color: #c9a227;
+    }
   </style>
 </head>
 
@@ -231,6 +269,120 @@
       >
         Audios
       </button>
+
+    </section>
+
+        <!-- Filtros temáticos exclusivos para videos -->
+
+    <section
+      id="filtros-video"
+      class="filtros-video"
+      style="display: none;"
+    >
+
+      <p class="titulo-filtros-video">
+        Explorar videos por categoría
+      </p>
+
+      <div class="botones-filtros-video">
+
+        <button
+          type="button"
+          class="filtro-video activo"
+          data-categoria-video="todas"
+        >
+          Todas
+        </button>
+
+        <button
+          type="button"
+          class="filtro-video"
+          data-categoria-video="Historia"
+        >
+          Historia
+        </button>
+
+        <button
+          type="button"
+          class="filtro-video"
+          data-categoria-video="Patrimonio"
+        >
+          Patrimonio
+        </button>
+
+        <button
+          type="button"
+          class="filtro-video"
+          data-categoria-video="Tradiciones y costumbres"
+        >
+          Tradiciones y costumbres
+        </button>
+
+        <button
+          type="button"
+          class="filtro-video"
+          data-categoria-video="Personajes"
+        >
+          Personajes
+        </button>
+
+        <button
+          type="button"
+          class="filtro-video"
+          data-categoria-video="Paisaje y territorio"
+        >
+          Paisaje y territorio
+        </button>
+
+        <button
+          type="button"
+          class="filtro-video"
+          data-categoria-video="Eventos"
+        >
+          Eventos
+        </button>
+
+        <button
+          type="button"
+          class="filtro-video"
+          data-categoria-video="Educación"
+        >
+          Educación
+        </button>
+
+        <button
+          type="button"
+          class="filtro-video"
+          data-categoria-video="Cultura"
+        >
+          Cultura
+        </button>
+
+        <button
+          type="button"
+          class="filtro-video"
+          data-categoria-video="Música pacoreña"
+        >
+          Música pacoreña
+        </button>
+
+        <button
+          type="button"
+          class="filtro-video"
+          data-categoria-video="Álbum musical pacoreño"
+        >
+          Álbum musical pacoreño
+        </button>
+
+        <button
+          type="button"
+          class="filtro-video"
+          data-categoria-video="Otros"
+        >
+          Otros
+        </button>
+
+      </div>
 
     </section>
 
