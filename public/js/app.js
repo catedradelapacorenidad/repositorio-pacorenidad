@@ -85,43 +85,104 @@ function escapeHtml(value) {
     .replaceAll("'", "&#039;");
 }
 
-uploadForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
+// =====================================================
+// FUNCIONES DE DOCUMENTOS
+// Solo se ejecutan en páginas que tengan estos elementos
+// =====================================================
 
-  const submitButton = uploadForm.querySelector("button");
-  const formData = new FormData(uploadForm);
+if (uploadForm && uploadMessage) {
 
-  uploadMessage.className = "form-message";
-  uploadMessage.textContent = "Subiendo documento...";
-  submitButton.disabled = true;
+  uploadForm.addEventListener("submit", async (event) => {
 
-  try {
-    const response = await fetch("/api/documents", {
-      method: "POST",
-      body: formData
-    });
+    event.preventDefault();
 
-    const result = await response.json();
+    const submitButton =
+      uploadForm.querySelector("button");
 
-    if (!response.ok) {
-      throw new Error(result.message || "No se pudo subir el documento");
+    const formData =
+      new FormData(uploadForm);
+
+    uploadMessage.className =
+      "form-message";
+
+    uploadMessage.textContent =
+      "Subiendo documento...";
+
+    submitButton.disabled = true;
+
+    try {
+
+      const response =
+        await fetch("/api/documents", {
+          method: "POST",
+          body: formData
+        });
+
+      const result =
+        await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          result.message ||
+          "No se pudo subir el documento"
+        );
+      }
+
+      uploadForm.reset();
+
+      uploadMessage.className =
+        "form-message success";
+
+      uploadMessage.textContent =
+        "Documento subido correctamente.";
+
+      if (
+        categoryFilter &&
+        documentsList &&
+        statusMessage &&
+        documentCount
+      ) {
+        await loadDocuments();
+      }
+
+    } catch (error) {
+
+      uploadMessage.className =
+        "form-message error";
+
+      uploadMessage.textContent =
+        error.message;
+
+    } finally {
+
+      submitButton.disabled = false;
+
     }
 
-    uploadForm.reset();
-    uploadMessage.className = "form-message success";
-    uploadMessage.textContent = "Documento subido correctamente.";
-    await loadDocuments();
-  } catch (error) {
-    uploadMessage.className = "form-message error";
-    uploadMessage.textContent = error.message;
-  } finally {
-    submitButton.disabled = false;
-  }
-});
+  });
 
-categoryFilter.addEventListener("change", loadDocuments);
+}
 
-loadDocuments();
+
+// =====================================================
+// LISTADO Y FILTRO DE DOCUMENTOS
+// =====================================================
+
+if (
+  categoryFilter &&
+  documentsList &&
+  statusMessage &&
+  documentCount
+) {
+
+  categoryFilter.addEventListener(
+    "change",
+    loadDocuments
+  );
+
+  loadDocuments();
+
+}
 const menuButton = document.getElementById("menuButton");
 const mainNav = document.getElementById("mainNav");
 
