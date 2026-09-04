@@ -153,21 +153,26 @@ function crearVistaPrevia(contenido) {
             );
 
         if (enlaceEmbed) {
-            const iframe =
-                document.createElement("iframe");
+    const idVideo = enlaceEmbed
+        .split("/embed/")[1]
+        ?.split("?")[0];
 
-            iframe.src = enlaceEmbed;
-            iframe.loading = "lazy";
-            iframe.allow =
-                "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-            iframe.allowFullscreen = true;
-            iframe.title =
-                contenido.titulo || "Video de la galería";
+    if (idVideo) {
+        const miniatura = document.createElement("img");
 
-            contenedor.appendChild(iframe);
+        miniatura.src =
+            `https://img.youtube.com/vi/${idVideo}/hqdefault.jpg`;
 
-            return contenedor;
-        }
+        miniatura.alt =
+            contenido.titulo || "Video de la galería";
+
+        miniatura.loading = "lazy";
+
+        contenedor.appendChild(miniatura);
+    }
+
+    return contenedor;
+}
 
         const iconoVideo =
             document.createElement("div");
