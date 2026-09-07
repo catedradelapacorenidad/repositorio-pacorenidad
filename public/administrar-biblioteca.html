@@ -1,59 +1,100 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Administrar Biblioteca</title>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<link rel="stylesheet" href="css/styles.css">
+    <title>Administrar Biblioteca</title>
 
-<style>
+    <link rel="stylesheet" href="css/styles.css">
 
-.admin-box{
-    max-width:900px;
-    margin:50px auto;
-    background:white;
-    padding:35px;
-    border-radius:20px;
-    box-shadow:0 10px 30px rgba(0,0,0,.12);
-}
+    <style>
 
-.admin-box h1{
-    color:#14532d;
-    margin-bottom:20px;
-}
+        .admin-box {
+            max-width: 900px;
+            margin: 50px auto;
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,.12);
+        }
 
-input,
-textarea,
-select{
-    width:100%;
-    padding:12px;
-    margin-bottom:18px;
-    border:1px solid #ccc;
-    border-radius:10px;
-    font-size:16px;
-}
+        .admin-box h1 {
+            color: #14532d;
+            margin-bottom: 20px;
+        }
 
-button{
-    background:#14532d;
-    color:white;
-    border:none;
-    padding:14px 28px;
-    border-radius:10px;
-    cursor:pointer;
-    font-size:16px;
-}
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 18px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
 
-button:hover{
-    background:#0d3b1f;
-}
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
 
-#mensaje{
-    margin-top:20px;
-    font-weight:bold;
-}
+        button {
+            background: #14532d;
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
 
-</style>
+        button:hover {
+            background: #0d3b1f;
+        }
+
+        #mensaje {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        #editor-documento {
+            display: none;
+            margin: 25px 0 35px;
+            padding: 25px;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            background: #f8f8f8;
+        }
+
+        #editor-documento h2 {
+            color: #14532d;
+            margin-top: 0;
+        }
+
+        .editor-acciones {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        #cancelar-edicion {
+            background: #777;
+        }
+
+        #mensaje-edicion {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+    </style>
 
 </head>
 
@@ -61,67 +102,247 @@ button:hover{
 
 <div class="admin-box">
 
-<h1>Biblioteca Digital</h1>
+    <h1>Biblioteca Digital</h1>
 
-<input
-id="titulo"
-placeholder="Título del documento">
+    <!-- =====================================
+         SUBIR NUEVO DOCUMENTO
+         ===================================== -->
 
-<input
-id="autor"
-placeholder="Autor del documento">
+    <input
+        id="titulo"
+        type="text"
+        placeholder="Título del documento"
+    >
 
-<textarea
-id="descripcion"
-placeholder="Descripción"></textarea>
+    <input
+        id="autor"
+        type="text"
+        placeholder="Autor del documento"
+    >
 
-<select id="categoria">
+    <textarea
+        id="descripcion"
+        placeholder="Descripción"
+    ></textarea>
 
-<option value="Cartillas">Cartillas</option>
-<option value="Libros">Libros</option>
-<option value="Guías">Guías</option>
-<option value="Investigación">Investigación</option>
-<option value="Otros">Otros</option>
+    <select id="categoria">
 
-</select>
+        <option value="Cartillas">
+            Cartillas
+        </option>
 
-<label for="portada">
-    <strong>Portada del documento (opcional)</strong>
-</label>
+        <option value="Libros">
+            Libros
+        </option>
 
-<input
-type="file"
-id="portada"
-accept="image/jpeg,image/png,image/webp">
+        <option value="Guías">
+            Guías
+        </option>
 
-<label for="archivo">
-    <strong>Archivo del documento</strong>
-</label>
+        <option value="Investigación">
+            Investigación
+        </option>
 
-<input
-type="file"
-id="archivo"
-accept=".pdf,.doc,.docx">
+        <option value="Otros">
+            Otros
+        </option>
 
-<button id="subir">
+    </select>
 
-Subir documento
+    <label for="portada">
+        <strong>
+            Portada del documento (opcional)
+        </strong>
+    </label>
 
-</button>
+    <input
+        type="file"
+        id="portada"
+        accept="image/jpeg,image/png,image/webp"
+    >
 
-<div id="mensaje"></div>
-<hr style="margin:50px 0;">
+    <label for="archivo">
+        <strong>
+            Archivo del documento
+        </strong>
+    </label>
 
-<h2>Documentos publicados</h2>
+    <input
+        type="file"
+        id="archivo"
+        accept=".pdf,.doc,.docx"
+    >
 
-<div id="lista-admin-documentos">
-    Cargando documentos...
+    <button id="subir">
+        Subir documento
+    </button>
+
+    <div id="mensaje"></div>
+
+
+    <hr style="margin:50px 0;">
+
+
+    <!-- =====================================
+         DOCUMENTOS PUBLICADOS
+         ===================================== -->
+
+    <h2>
+        Documentos publicados
+    </h2>
+
+
+    <!-- =====================================
+         EDITOR DE DOCUMENTOS
+         ===================================== -->
+
+    <div id="editor-documento">
+
+        <h2>
+            Editar documento
+        </h2>
+
+        <input
+            type="hidden"
+            id="editar-id"
+        >
+
+
+        <label for="editar-titulo">
+            <strong>Título</strong>
+        </label>
+
+        <input
+            type="text"
+            id="editar-titulo"
+        >
+
+
+        <label for="editar-autor">
+            <strong>Autor</strong>
+        </label>
+
+        <input
+            type="text"
+            id="editar-autor"
+        >
+
+
+        <label for="editar-descripcion">
+            <strong>Descripción</strong>
+        </label>
+
+        <textarea
+            id="editar-descripcion"
+        ></textarea>
+
+
+        <label for="editar-categoria">
+            <strong>Categoría</strong>
+        </label>
+
+        <select id="editar-categoria">
+
+            <option value="Cartillas">
+                Cartillas
+            </option>
+
+            <option value="Libros">
+                Libros
+            </option>
+
+            <option value="Guías">
+                Guías
+            </option>
+
+            <option value="Investigación">
+                Investigación
+            </option>
+
+            <option value="Otros">
+                Otros
+            </option>
+
+        </select>
+
+
+        <hr style="margin:25px 0;">
+
+
+        <label for="editar-portada">
+            <strong>
+                Reemplazar portada
+            </strong>
+        </label>
+
+        <p style="color:#666;">
+            Si no seleccionas una imagen,
+            se conservará la portada actual.
+        </p>
+
+        <input
+            type="file"
+            id="editar-portada"
+            accept="image/jpeg,image/png,image/webp"
+        >
+
+
+        <label for="editar-archivo">
+            <strong>
+                Reemplazar PDF o documento
+            </strong>
+        </label>
+
+        <p style="color:#666;">
+            Si no seleccionas un archivo,
+            se conservará el documento actual.
+        </p>
+
+        <input
+            type="file"
+            id="editar-archivo"
+            accept=".pdf,.doc,.docx"
+        >
+
+
+        <div class="editor-acciones">
+
+            <button
+                type="button"
+                id="guardar-edicion"
+            >
+                Guardar cambios
+            </button>
+
+            <button
+                type="button"
+                id="cancelar-edicion"
+            >
+                Cancelar
+            </button>
+
+        </div>
+
+        <p id="mensaje-edicion"></p>
+
+    </div>
+
+
+    <div id="lista-admin-documentos">
+        Cargando documentos...
+    </div>
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2">
+</script>
+
 <script src="js/supabase-client.js"></script>
-<script src="js/administrar-biblioteca.js?v=5"></script>
+
+<script src="js/administrar-biblioteca.js?v=7"></script>
 
 </body>
+
 </html>
