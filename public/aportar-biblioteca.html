@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Aportar a la Biblioteca Digital
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="css/styles.css"
+    >
+
+    <style>
+
+        body {
+            background: #f7f3ec;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: #2f2f2f;
+        }
+
+        .contenedor-aporte {
+            width: min(950px, 92%);
+            margin: 40px auto;
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .contenedor-aporte h1 {
+            color: #0f5d2f;
+            font-family: Georgia, serif;
+            font-size: 42px;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .introduccion {
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        .campo-formulario {
+            margin-bottom: 20px;
+        }
+
+        .campo-formulario label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 7px;
+            font-size: 16px;
+        }
+
+        .campo-formulario input[type="text"],
+        .campo-formulario textarea,
+        .campo-formulario select,
+        .campo-formulario input[type="file"] {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 16px;
+            background: white;
+        }
+
+        .campo-formulario textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .ayuda {
+            display: block;
+            margin-top: 5px;
+            font-size: 14px;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .autorizacion {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            background: #f5f1e8;
+            padding: 15px;
+            border-radius: 10px;
+            line-height: 1.5;
+        }
+
+        .autorizacion input {
+            margin-top: 4px;
+            transform: scale(1.2);
+        }
+
+        .autorizacion label {
+            font-weight: normal;
+            margin: 0;
+            cursor: pointer;
+        }
+
+        #enviar {
+            background: #0f5d2f;
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 9px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #enviar:hover {
+            background: #0b4824;
+        }
+
+        #enviar:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        #mensaje {
+            margin-top: 18px;
+            font-weight: bold;
+            line-height: 1.5;
+        }
+
+        .volver {
+            display: inline-block;
+            margin-top: 25px;
+            text-decoration: none;
+            color: #0f5d2f;
+            font-weight: bold;
+        }
+
+        .volver:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 700px) {
+
+            .contenedor-aporte {
+                padding: 22px;
+                margin: 20px auto;
+            }
+
+            .contenedor-aporte h1 {
+                font-size: 32px;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <main class="contenedor-aporte">
+
+        <h1>
+            Aportar a la Biblioteca Digital
+        </h1>
+
+        <p class="introduccion">
+            Comparte libros, cartillas, investigaciones,
+            guías y otros documentos relacionados con Pácora.
+            Tu aporte contribuirá a fortalecer la memoria escrita
+            y el patrimonio documental del municipio.
+        </p>
+
+
+        <!-- =========================================
+             TÍTULO DEL DOCUMENTO
+             ========================================= -->
+
+        <div class="campo-formulario">
+
+            <label for="titulo">
+                Título del documento
+            </label>
+
+            <input
+                type="text"
+                id="titulo"
+                placeholder="Escribe el título"
+            >
+
+        </div>
+
+
+        <!-- =========================================
+             AUTOR DEL DOCUMENTO
+             ========================================= -->
+
+        <div class="campo-formulario">
+
+            <label for="autor">
+                Autor
+            </label>
+
+            <input
+                type="text"
+                id="autor"
+                placeholder="Nombre del autor"
+            >
+
+        </div>
+
+
+        <!-- =========================================
+             NOMBRE DE QUIEN HACE EL APORTE
+             ========================================= -->
+
+        <div class="campo-formulario">
+
+            <label for="nombre-colaborador">
+                Tu nombre
+            </label>
+
+            <input
+                type="text"
+                id="nombre-colaborador"
+                placeholder="Escribe tu nombre"
+            >
+
+            <span class="ayuda">
+                Este dato permite identificar quién realizó
+                el aporte al repositorio.
+            </span>
+
+        </div>
+
+
+        <!-- =========================================
+             AUTORIZACIÓN PARA MOSTRAR EL NOMBRE
+             ========================================= -->
+
+        <div class="campo-formulario">
+
+            <div class="autorizacion">
+
+                <input
+                    type="checkbox"
+                    id="mostrar-colaborador"
+                >
+
+                <label for="mostrar-colaborador">
+                    Autorizo que mi nombre aparezca públicamente
+                    como persona que aportó este documento
+                    a la Biblioteca Digital de la Cátedra
+                    de la Pacoreñidad.
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             DESCRIPCIÓN
+             ========================================= -->
+
+        <div class="campo-formulario">
+
+            <label for="descripcion">
+                Descripción
+            </label>
+
+            <textarea
+                id="descripcion"
+                placeholder="Describe brevemente el contenido del documento"
+            ></textarea>
+
+        </div>
+
+
+        <!-- =========================================
+             CATEGORÍA
+             ========================================= -->
+
+        <div class="campo-formulario">
+
+            <label for="categoria">
+                Categoría
+            </label>
+
+            <select id="categoria">
+
+                <option value="Libros">
+                    Libros
+                </option>
+
+                <option value="Cartillas">
+                    Cartillas
+                </option>
+
+                <option value="Guías">
+                    Guías
+                </option>
+
+                <option value="Investigación">
+                    Investigación
+                </option>
+
+                <option value="Otros">
+                    Otros
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- =========================================
+             PORTADA
+             ========================================= -->
+
+        <div class="campo-formulario">
+
+            <label for="portada">
+                Portada del documento
+            </label>
+
+            <span class="ayuda">
+                La portada es opcional. Si no la tienes,
+                el administrador podrá agregarla posteriormente.
+            </span>
+
+            <input
+                type="file"
+                id="portada"
+                accept="image/jpeg,image/png,image/webp"
+            >
+
+        </div>
+
+
+        <!-- =========================================
+             ARCHIVO
+             ========================================= -->
+
+        <div class="campo-formulario">
+
+            <label for="archivo">
+                Archivo del documento
+            </label>
+
+            <span class="ayuda">
+                Puedes subir PDF, Word u otro documento permitido.
+                Tamaño máximo: 30 MB.
+            </span>
+
+            <input
+                type="file"
+                id="archivo"
+                accept=".pdf,.doc,.docx"
+            >
+
+        </div>
+
+
+        <!-- =========================================
+             BOTÓN
+             ========================================= -->
+
+        <button
+            type="button"
+            id="enviar"
+        >
+            Enviar para revisión
+        </button>
+
+
+        <div id="mensaje"></div>
+
+
+        <a
+            href="panel.html"
+            class="volver"
+        >
+            ← Volver al panel del colaborador
+        </a>
+
+    </main>
+
+
+    <!-- SUPABASE -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+    <script src="js/supabase-client.js"></script>
+
+    <script src="js/aportar-biblioteca.js"></script>
+
+</body>
+
+</html>
