@@ -6,15 +6,17 @@ async function cargarDocumentos() {
     const { data, error } = await supabaseClient
         .from("documentos")
         .select(`
-            id,
-            titulo,
-            descripcion,
-            categoria,
-            archivo_url,
-            archivo_nombre,
-            tipo_archivo,
-            created_at
-        `)
+    id,
+    titulo,
+    autor,
+    descripcion,
+    categoria,
+    archivo_url,
+    archivo_nombre,
+    tipo_archivo,
+    portada_url,
+    created_at
+`)
         .order("created_at", { ascending: false });
 
     if (error) {
@@ -77,23 +79,53 @@ function crearTarjetaDocumento(documento) {
     const tarjeta = document.createElement("article");
     tarjeta.className = "documento-card";
 
-    const icono = obtenerIcono(documento.tipo_archivo);
-
     const descripcion =
         documento.descripcion?.trim() ||
         "Documento disponible para consulta.";
 
+    const autor =
+        documento.autor?.trim() ||
+        "Autor no registrado";
+
+    const portada = documento.portada_url
+        ? `
+            <img
+                src="${documento.portada_url}"
+                alt="Portada de ${escaparHTML(documento.titulo || "documento")}"
+                class="documento-portada"
+                loading="lazy"
+            >
+        `
+        : `
+            <div class="documento-portada documento-portada-generica">
+                <span>📚</span>
+                <small>Sin portada</small>
+            </div>
+        `;
+
     tarjeta.innerHTML = `
-        <div class="documento-icono">${icono}</div>
+        <a
+            href="${documento.archivo_url}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="documento-portada-enlace"
+            aria-label="Leer ${escaparHTML(documento.titulo || "documento")}"
+        >
+            ${portada}
+        </a>
 
         <div class="documento-contenido">
-            <h4>${escaparHTML(documento.titulo || "Documento sin título")}</h4>
+            <h4>
+                ${escaparHTML(documento.titulo || "Documento sin título")}
+            </h4>
 
-            <p>${escaparHTML(descripcion)}</p>
+            <p class="documento-autor">
+                ${escaparHTML(autor)}
+            </p>
 
-            <small>
-                ${escaparHTML(documento.archivo_nombre || "")}
-            </small>
+            <p class="documento-descripcion">
+                ${escaparHTML(descripcion)}
+            </p>
 
             <a
                 href="${documento.archivo_url}"
@@ -101,7 +133,7 @@ function crearTarjetaDocumento(documento) {
                 rel="noopener noreferrer"
                 class="documento-boton"
             >
-                Ver documento
+                Leer documento
             </a>
         </div>
     `;

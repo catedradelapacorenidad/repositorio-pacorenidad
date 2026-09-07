@@ -1,6 +1,8 @@
 const titulo = document.getElementById("titulo");
+const autor = document.getElementById("autor");
 const descripcion = document.getElementById("descripcion");
 const categoria = document.getElementById("categoria");
+const portada = document.getElementById("portada");
 const archivo = document.getElementById("archivo");
 const boton = document.getElementById("subir");
 const mensaje = document.getElementById("mensaje");
@@ -14,9 +16,11 @@ function limpiarNombreArchivo(nombre) {
 
 boton.addEventListener("click", async () => {
     const tituloValor = titulo.value.trim();
-    const descripcionValor = descripcion.value.trim();
-    const categoriaValor = categoria.value;
-    const file = archivo.files[0];
+const autorValor = autor.value.trim();
+const descripcionValor = descripcion.value.trim();
+const categoriaValor = categoria.value;
+const portadaFile = portada.files[0];
+const file = archivo.files[0];
 
     mensaje.textContent = "";
 
@@ -25,7 +29,11 @@ boton.addEventListener("click", async () => {
         mensaje.textContent = "Escribe el título del documento.";
         return;
     }
-
+if (!autorValor) {
+    mensaje.style.color = "red";
+    mensaje.textContent = "Escribe el autor del documento.";
+    return;
+}
     if (!file) {
         mensaje.style.color = "red";
         mensaje.textContent = "Selecciona un archivo.";
@@ -83,25 +91,80 @@ boton.addEventListener("click", async () => {
         return;
     }
 
-    // 2. Obtener la URL pública
-    const { data: datosUrl } = supabaseClient.storage
-        .from("biblioteca")
-        .getPublicUrl(rutaArchivo);
+    // 2. Obtener la URL pública del documento
+const { data: datosUrl } = supabaseClient.storage
+    .from("biblioteca")
+    .getPublicUrl(rutaArchivo);
 
-    const urlArchivo = datosUrl.publicUrl;
+const urlArchivo = datosUrl.publicUrl;
 
-    // 3. Guardar la información en la tabla documentos
-    const { error: errorTabla } = await supabaseClient
-        .from("documentos")
-        .insert({
-            titulo: tituloValor,
-            descripcion: descripcionValor || null,
-            categoria: categoriaValor,
-            archivo_url: urlArchivo,
-            archivo_nombre: file.name,
-            tipo_archivo: file.type || "archivo",
-            usuario_id: session.user.id
-        });
+// 3. Subir portada si el usuario seleccionó una
+let urlPortada = null;
+let rutaPortada = null;
+
+if (portadaFile) {
+    const nombrePortadaLimpio =
+        limpiarNombreArchivo(portadaFile.name);
+
+    const nombrePortada =
+        `${Date.now()}_${nombrePortadaLimpio}`;
+
+    rutaPortada =
+        `${session.user.id}/portadas/${nombrePortada}`;
+
+    const { error: errorPortada } =
+        await supabaseClient.storage
+            .from("biblioteca")
+            .upload(rutaPortada, portadaFile, {
+                cacheControl: "3600",
+                upsert: false,
+                contentType: portadaFile.type
+            });
+
+    if (errorPortada) {
+        console.error(
+            "Error al subir la portada:",
+            errorPortada
+        );
+
+        await supabaseClient.storage
+            .from("biblioteca")
+            .remove([rutaArchivo]);
+
+        boton.disabled = false;
+        boton.textContent = "Subir documento";
+
+        mensaje.style.color = "red";
+        mensaje.textContent =
+            "No fue posible subir la portada: " +
+            errorPortada.message;
+
+        return;
+    }
+
+    const { data: datosPortada } =
+        supabaseClient.storage
+            .from("biblioteca")
+            .getPublicUrl(rutaPortada);
+
+    urlPortada = datosPortada.publicUrl;
+}
+
+// 4. Guardar la información en la tabla documentos
+const { error: errorTabla } = await supabaseClient
+    .from("documentos")
+    .insert({
+        titulo: tituloValor,
+        autor: autorValor,
+        descripcion: descripcionValor || null,
+        categoria: categoriaValor,
+        archivo_url: urlArchivo,
+        archivo_nombre: file.name,
+        tipo_archivo: file.type || "archivo",
+        portada_url: urlPortada,
+        portada_path: rutaPortada,
+        usuario_id: session.user.id
+    });
 
     if (errorTabla) {
         console.error("Error al registrar el documento:", errorTabla);
@@ -129,9 +192,11 @@ boton.addEventListener("click", async () => {
     mensaje.textContent = "Documento subido correctamente.";
 
     titulo.value = "";
-    descripcion.value = "";
-    categoria.selectedIndex = 0;
-    archivo.value = "";
+autor.value = "";
+descripcion.value = "";
+categoria.selectedIndex = 0;
+portada.value = "";
+archivo.value = "";
 
 await cargarDocumentosAdmin();
 }); const listaAdminDocumentos = document.getElementById(
@@ -145,13 +210,16 @@ async function cargarDocumentosAdmin() {
     const { data, error } = await supabaseClient
         .from("documentos")
         .select(`
-            id,
-            titulo,
-            descripcion,
-            categoria,
-            archivo_url,
-            archivo_nombre
-        `)
+    id,
+    titulo,
+    autor,
+    descripcion,
+    categoria,
+    archivo_url,
+    archivo_nombre,
+    portada_url,
+    portada_path
+`)
         .order("id", { ascending: false });
 
     if (error) {
@@ -253,10 +321,16 @@ async function eliminarDocumento(documento, botonEliminar) {
     botonEliminar.disabled = true;
     botonEliminar.textContent = "Eliminando...";
 
-    const { error: errorStorage } =
-        await supabaseClient.storage
-            .from("biblioteca")
-            .remove([rutaArchivo]);
+    const archivosAEliminar = [rutaArchivo];
+
+if (documento.portada_path) {
+    archivosAEliminar.push(documento.portada_path);
+}
+
+const { error: errorStorage } =
+    await supabaseClient.storage
+        .from("biblioteca")
+        .remove(archivosAEliminar);
 
     if (errorStorage) {
         console.error(

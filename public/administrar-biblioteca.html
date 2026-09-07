@@ -67,6 +67,10 @@ button:hover{
 id="titulo"
 placeholder="Título del documento">
 
+<input
+id="autor"
+placeholder="Autor del documento">
+
 <textarea
 id="descripcion"
 placeholder="Descripción"></textarea>
@@ -81,9 +85,23 @@ placeholder="Descripción"></textarea>
 
 </select>
 
+<label for="portada">
+    <strong>Portada del documento (opcional)</strong>
+</label>
+
 <input
 type="file"
-id="archivo">
+id="portada"
+accept="image/jpeg,image/png,image/webp">
+
+<label for="archivo">
+    <strong>Archivo del documento</strong>
+</label>
+
+<input
+type="file"
+id="archivo"
+accept=".pdf,.doc,.docx">
 
 <button id="subir">
 
